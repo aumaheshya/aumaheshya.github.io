@@ -210,34 +210,8 @@
   .scroll-hint i { width: 1px; height: 26px; background: linear-gradient(var(--glow), transparent); animation: drip 1.6s ease-in-out infinite; }
   @keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
   .scroll-hint.gone { opacity: 0; }
-  .hud {
-    position: fixed; left: 16px; bottom: 16px; z-index: 40; width: 268px; padding: 12px 14px;
-    border-radius: 14px; background: rgba(6, 10, 19, 0.72); border: 1px solid rgba(92, 196, 205, 0.25);
-    color: var(--ink); font-size: 12px; pointer-events: none;
-  }
-  .hud-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--glow); margin-bottom: 8px; }
-  .hud-row { display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 8px; margin-bottom: 6px; color: var(--ink-muted); }
-  .hud-row b { display: block; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
-  .hud-row i { display: block; height: 100%; width: 100%; border-radius: 3px; background: #78dcff; }
-  .hud-row i.cap { background: linear-gradient(90deg, #5cc4cd, #a99bff, #ffbe6e); }
-  .legend { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 8px; list-style: none; margin: 8px 0 0; padding: 0; color: var(--ink-muted); }
-  .legend li { display: flex; align-items: center; gap: 6px; }
-  .legend em { width: 8px; height: 8px; border-radius: 50%; flex: none; box-shadow: 0 0 6px currentColor; }
-  .legend em.sq { border-radius: 2px; background: transparent; border: 1px solid #78dcff; }
-  .vision .lead { font-size: 1.08rem; font-weight: 600; }
-  .pillars { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
-  .pillars li { padding: 7px 10px; border-left: 3px solid var(--accent2); background: var(--tag); border-radius: 0 6px 6px 0; }
-  .card3d .pillars li { background: rgba(92, 196, 205, 0.1); border-left-color: var(--glow); }
-  .card3d .vision .lead { color: #fff; }
-  .note3d { margin-top: 10px; font-size: 0.9rem; color: var(--ink-muted); }
   @media (max-width: 760px) {
-    .hud { width: auto; right: 16px; left: 16px; bottom: 12px; padding: 8px 12px; }
-    .hud .legend, .hud-title { display: none; }
-    .hud-row { margin-bottom: 3px; grid-template-columns: 96px 1fr; }
-    .scroll-hint { display: none; }
-  }
-  @media (max-height: 560px) { .hud { display: none; } }
-
+  
   @media (max-width: 900px) { .dots { display: none; } }
   @media (max-width: 600px) {
     #cv { padding: 76px 16px 48px; }
@@ -277,7 +251,6 @@
 <ul class="dots only-3d" id="dots"></ul>
 <div class="progress only-3d" id="progress"></div>
 <div class="scroll-hint only-3d" id="scroll-hint">SCROLL TO ENTER THE MIND<i></i></div>
-
 <div id="measure" aria-hidden="true"></div>
 
 <main id="cv">
@@ -311,17 +284,6 @@
     </ul>
   </section>
 
-  <section data-card data-label="Research vision" class="vision">
-    <h2>Research Vision · ARMOUR-MIND</h2>
-    <p class="lead">The support that helps most now may leave the weakest capability later.</p>
-    <p>As extended reality (XR) and AI become a continuous cognitive layer across learning, work and everyday life, intelligent systems will decide what cue to provide, when to vary or fade it, when to restore it, and when to remain silent. My research asks when such support becomes an internal, durable route to knowledge, and how AI should govern it so that people keep their cognitive autonomy.</p>
-    <ul class="pillars">
-      <li><b>Routes</b> · how external support becomes independent access to knowledge.</li>
-      <li><b>Resilience</b> · telling dependence on help apart from robustness to disruption.</li>
-      <li><b>Autonomy</b> · AI that knows when to step back.</li>
-    </ul>
-    <p class="note3d only-3d">The brain around you shows the idea: the cyan XR scaffold fades as you go deeper, while semantic (teal) and spatial (violet) routes keep each memory (amber) alive, even when one route is disrupted.</p>
-  </section>
 
   <section data-card data-label="Appointments">
     <h2>Academic Appointments</h2>
@@ -470,8 +432,6 @@
   var dotsEl = document.getElementById('dots');
   var progressEl = document.getElementById('progress');
   var hintEl = document.getElementById('scroll-hint');
-  var hudSup = document.getElementById('hud-sup');
-  var hudCap = document.getElementById('hud-cap');
   var menu = document.getElementById('menu');
   var menuBtn = document.getElementById('menu-btn');
   var viewBtn = document.getElementById('view-btn');
@@ -1149,8 +1109,6 @@
     var support = 1 - smooth(0, 0.85, prog);
     var capability = 0.2 + 0.8 * smooth(0.02, 0.95, prog);
     drawScene(time, support, capability, 0.1 + 0.9 * smooth(0.25, 0.85, s));
-    hudSup.style.width = (support * 100).toFixed(1) + '%';
-    hudCap.style.width = (capability * 100).toFixed(1) + '%';
 
     progressEl.style.width = (prog * 100).toFixed(2) + '%';
     if (window.scrollY > 40) hintEl.classList.add('gone'); else hintEl.classList.remove('gone');
