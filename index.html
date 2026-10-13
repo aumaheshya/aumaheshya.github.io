@@ -1,0 +1,1273 @@
+<!doctype html>
+<html lang="en" class="is-classic">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maheshya Weerasinghe, PhD</title>
+<meta name="description" content="Maheshya Weerasinghe, Assistant Professor in Human-Computer Interaction and Extended Reality at FAMNIT, University of Primorska. Academic CV with publications, teaching and service.">
+<meta property="og:title" content="Maheshya Weerasinghe, PhD">
+<meta property="og:description" content="Assistant Professor | Human-Computer Interaction & Extended Reality | University of Primorska">
+<script>
+  // Choose the view before first paint: 3D by default, classic for reduced motion or a saved choice.
+  (function () {
+    var pref = null;
+    try { pref = localStorage.getItem('cv-view'); } catch (e) {}
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ok3d = window.CSS && CSS.supports && CSS.supports('transform-style', 'preserve-3d');
+    var mode = pref || (reduce ? 'classic' : '3d');
+    if (!ok3d) mode = 'classic';
+    if (mode === '3d') document.documentElement.className = 'is-3d';
+  })();
+</script>
+<style>
+  /* ---------- tokens ---------- */
+  :root {
+    --accent: #174A73;
+    --accent2: #2F6F8F;
+    --text: #1f2933;
+    --muted: #4B5563;
+    --rule: #D7E0E7;
+    --tag: #EAF2F8;
+    --bg: #ffffff;
+    --surface: #f6f8fa;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Arial, sans-serif;
+    /* 3D theme */
+    --space: #060a13;
+    --card: rgba(11, 18, 32, 0.9);
+    --card-line: rgba(92, 196, 205, 0.38);
+    --ink: #e7eef8;
+    --ink-muted: #a3b3c9;
+    --glow: #5cc4cd;
+    --glow2: #a99bff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --accent: #7fb6e0;
+      --accent2: #6fc0d6;
+      --text: #e6ebf2;
+      --muted: #a7b2c2;
+      --rule: #2b3442;
+      --tag: #1c2a38;
+      --bg: #10151d;
+      --surface: #161d27;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; font: 16px/1.55 var(--font); background: var(--bg); color: var(--text); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font: inherit; }
+
+  /* ---------- top bar (both views) ---------- */
+  .topbar {
+    position: fixed; inset: 0 0 auto 0; height: 56px; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 0 16px; background: var(--bg); background: color-mix(in srgb, var(--bg) 88%, transparent);
+    border-bottom: 1px solid var(--rule); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand .mono {
+    flex: none; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center;
+    font-size: 13px; letter-spacing: 0.02em; color: #fff; background: linear-gradient(135deg, #2F6F8F, #174A73);
+  }
+  .actions { display: flex; gap: 8px; flex: none; }
+  .btn {
+    border: 1px solid var(--rule); background: var(--surface); color: var(--text);
+    border-radius: 999px; padding: 6px 14px; font-size: 14px; cursor: pointer; white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--accent2); }
+  .btn:focus-visible, a:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+  .menu-wrap { position: relative; }
+  .menu {
+    position: absolute; right: 0; top: calc(100% + 8px); min-width: 210px; max-height: 70vh; overflow: auto;
+    margin: 0; padding: 6px; list-style: none; border-radius: 12px; border: 1px solid var(--rule);
+    background: var(--bg); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25); display: none;
+  }
+  .menu.open { display: block; }
+  .menu button, .menu a {
+    display: block; width: 100%; text-align: left; padding: 8px 12px; border: 0; border-radius: 8px;
+    background: none; color: var(--text); cursor: pointer; font-size: 14px;
+  }
+  .menu button:hover, .menu a:hover, .menu .active { background: var(--tag); text-decoration: none; }
+
+  /* ---------- classic document ---------- */
+  .is-classic .only-3d { display: none !important; }
+  .is-3d .only-classic { display: none !important; }
+  #cv { max-width: 900px; margin: 0 auto; padding: 88px 20px 64px; }
+  .is-3d #cv { display: none; }
+  .hero h1 { margin: 0 0 4px; font-size: 2.3rem; line-height: 1.15; color: var(--accent); letter-spacing: -0.01em; }
+  .hero .role { margin: 0; font-size: 1.1rem; }
+  .hero .place { margin: 2px 0 0; color: var(--muted); }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 14px 0 0; }
+  .links a {
+    display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px;
+    border: 1px solid var(--rule); background: var(--surface); color: var(--text); font-size: 14px;
+  }
+  .links a:hover { border-color: var(--accent2); color: var(--accent); text-decoration: none; }
+  .links svg { width: 15px; height: 15px; fill: currentColor; flex: none; }
+  .hint3d { margin: 16px 0 0; font-size: 14px; color: var(--muted); }
+  #cv section { margin-top: 30px; }
+  h2 {
+    margin: 0 0 10px; padding-bottom: 5px; font-size: 1.1rem; color: var(--accent);
+    border-bottom: 1px solid var(--rule);
+  }
+  h3 { margin: 14px 0 6px; font-size: 0.98rem; color: var(--accent2); }
+  p { margin: 0 0 10px; }
+  .areas { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 8px 0 0; }
+  .areas li { padding: 3px 10px; border-radius: 6px; background: var(--tag); font-size: 14px; }
+  .entry { display: grid; grid-template-columns: 1fr auto; column-gap: 16px; padding: 6px 0; border-bottom: 1px solid var(--rule); }
+  .entry:last-child { border-bottom: 0; }
+  .entry .org { font-weight: 700; }
+  .entry .date { font-weight: 700; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .entry .title, .entry .loc { font-style: italic; color: var(--muted); }
+  .entry .loc { text-align: right; }
+  .entry .thesis { grid-column: 1 / -1; font-size: 0.94rem; }
+  ul.bullets { margin: 0; padding-left: 1.2em; }
+  ul.bullets li { margin-bottom: 5px; }
+  ul.pubs { list-style: none; margin: 0; padding: 0; }
+  ul.pubs li { padding: 6px 0 6px 0; border-bottom: 1px solid var(--rule); font-size: 0.95rem; }
+  ul.pubs li:last-child { border-bottom: 0; }
+  .yr { display: inline-block; min-width: 3.1em; font-weight: 700; color: var(--accent2); font-variant-numeric: tabular-nums; }
+  .me { font-weight: 700; }
+  .ti { font-weight: 600; }
+  .tag {
+    display: inline-block; margin-left: 4px; padding: 0 7px; border-radius: 4px; font-size: 0.72rem;
+    font-weight: 700; letter-spacing: 0.04em; background: var(--tag); color: var(--accent); vertical-align: 1px;
+  }
+  .rows { display: grid; grid-template-columns: 9.5em 1fr; }
+  .rows > div { padding: 5px 0; border-bottom: 1px solid var(--rule); }
+  .rows > div:nth-last-child(-n+2) { border-bottom: 0; }
+  .rows .k { font-weight: 700; padding-right: 12px; }
+  .foot { margin-top: 32px; font-size: 0.9rem; color: var(--muted); }
+
+  /* ---------- 3D view ---------- */
+  .is-3d body {
+    background: radial-gradient(1200px 700px at 70% 10%, #13213a 0%, transparent 60%),
+                radial-gradient(900px 600px at 10% 90%, #1b1638 0%, transparent 60%), var(--space);
+    color: var(--ink);
+  }
+  .is-3d .topbar { background: rgba(6, 10, 19, 0.55); border-bottom-color: rgba(92, 196, 205, 0.18); }
+  .is-3d .brand { color: var(--ink); }
+  .is-3d .btn { background: rgba(255, 255, 255, 0.06); border-color: rgba(92, 196, 205, 0.35); color: var(--ink); }
+  .is-3d .menu { background: #0d1525; border-color: rgba(92, 196, 205, 0.3); }
+  .is-3d .menu button, .is-3d .menu a { color: var(--ink); }
+  .is-3d .menu button:hover, .is-3d .menu .active { background: rgba(92, 196, 205, 0.15); }
+  #bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+  #stage {
+    position: fixed; inset: 0; z-index: 2; overflow: hidden; pointer-events: none;
+    perspective-origin: 50% 50%;
+  }
+  #scroll-space { width: 1px; }
+  .card3d {
+    position: absolute; left: 50%; top: 50%; transform-origin: 0 0; will-change: transform, opacity;
+    padding: 26px 30px 24px; border-radius: 20px; background: var(--card); color: var(--ink);
+    border: 1px solid var(--card-line);
+    box-shadow: 0 0 0 1px rgba(169, 155, 255, 0.08), 0 20px 60px rgba(0, 0, 0, 0.55), 0 0 60px rgba(92, 196, 205, 0.12);
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    font-size: 15px; line-height: 1.5;
+  }
+  .card3d a { color: var(--glow); }
+  .card3d h2 { color: var(--glow); border-bottom-color: rgba(92, 196, 205, 0.25); font-size: 1.05rem; letter-spacing: 0.02em; }
+  .card3d h3 { color: var(--glow2); }
+  .card3d .hero h1 { color: #fff; font-size: 2.1rem; }
+  .card3d .hero .place, .card3d .entry .title, .card3d .entry .loc { color: var(--ink-muted); }
+  .card3d .links a { background: rgba(255, 255, 255, 0.05); border-color: rgba(92, 196, 205, 0.35); color: var(--ink); }
+  .card3d .links a:hover { color: var(--glow); }
+  .card3d .areas li, .card3d .tag { background: rgba(92, 196, 205, 0.14); color: var(--ink); }
+  .card3d .tag { color: var(--glow); }
+  .card3d .yr { color: var(--glow2); }
+  .card3d .entry, .card3d ul.pubs li, .card3d .rows > div { border-bottom-color: rgba(163, 179, 201, 0.16); }
+  .card3d ul.pubs li { font-size: 13.5px; line-height: 1.45; padding: 5px 0; }
+  .card3d .hint3d { color: var(--ink-muted); }
+  .card3d .kicker { margin: 0 0 6px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--glow); }
+  .card3d > :last-child, .card3d section > :last-child { margin-bottom: 0; }
+  .card3d section { margin: 0; }
+  #measure { position: absolute; left: -10000px; top: 0; visibility: hidden; }
+  #measure .card3d { position: static; transform: none; }
+
+  .dots {
+    position: fixed; right: 18px; top: 50%; transform: translateY(-50%); z-index: 40;
+    display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none;
+  }
+  .dots button {
+    position: relative; width: 10px; height: 10px; padding: 0; border-radius: 50%; cursor: pointer;
+    border: 1px solid rgba(92, 196, 205, 0.7); background: transparent;
+  }
+  .dots button.active { background: var(--glow); box-shadow: 0 0 10px var(--glow); }
+  .dots button span {
+    position: absolute; right: 18px; top: 50%; transform: translateY(-50%); white-space: nowrap;
+    font-size: 12px; color: var(--ink); background: rgba(6, 10, 19, 0.85); padding: 2px 8px; border-radius: 6px;
+    opacity: 0; pointer-events: none; transition: opacity 0.15s;
+  }
+  .dots button:hover span, .dots button:focus-visible span { opacity: 1; }
+  .progress { position: fixed; left: 0; bottom: 0; height: 3px; width: 0; z-index: 40; background: linear-gradient(90deg, var(--glow), var(--glow2)); }
+  .scroll-hint {
+    position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 40; pointer-events: none;
+    font-size: 13px; letter-spacing: 0.08em; color: var(--ink-muted); transition: opacity 0.5s;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .scroll-hint i { width: 1px; height: 26px; background: linear-gradient(var(--glow), transparent); animation: drip 1.6s ease-in-out infinite; }
+  @keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+  .scroll-hint.gone { opacity: 0; }
+  .hud {
+    position: fixed; left: 16px; bottom: 16px; z-index: 40; width: 268px; padding: 12px 14px;
+    border-radius: 14px; background: rgba(6, 10, 19, 0.72); border: 1px solid rgba(92, 196, 205, 0.25);
+    color: var(--ink); font-size: 12px; pointer-events: none;
+  }
+  .hud-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--glow); margin-bottom: 8px; }
+  .hud-row { display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 8px; margin-bottom: 6px; color: var(--ink-muted); }
+  .hud-row b { display: block; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+  .hud-row i { display: block; height: 100%; width: 100%; border-radius: 3px; background: #78dcff; }
+  .hud-row i.cap { background: linear-gradient(90deg, #5cc4cd, #a99bff, #ffbe6e); }
+  .legend { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 8px; list-style: none; margin: 8px 0 0; padding: 0; color: var(--ink-muted); }
+  .legend li { display: flex; align-items: center; gap: 6px; }
+  .legend em { width: 8px; height: 8px; border-radius: 50%; flex: none; box-shadow: 0 0 6px currentColor; }
+  .legend em.sq { border-radius: 2px; background: transparent; border: 1px solid #78dcff; }
+  .vision .lead { font-size: 1.08rem; font-weight: 600; }
+  .pillars { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
+  .pillars li { padding: 7px 10px; border-left: 3px solid var(--accent2); background: var(--tag); border-radius: 0 6px 6px 0; }
+  .card3d .pillars li { background: rgba(92, 196, 205, 0.1); border-left-color: var(--glow); }
+  .card3d .vision .lead { color: #fff; }
+  .note3d { margin-top: 10px; font-size: 0.9rem; color: var(--ink-muted); }
+  @media (max-width: 760px) {
+    .hud { width: auto; right: 16px; left: 16px; bottom: 12px; padding: 8px 12px; }
+    .hud .legend, .hud-title { display: none; }
+    .hud-row { margin-bottom: 3px; grid-template-columns: 96px 1fr; }
+    .scroll-hint { display: none; }
+  }
+  @media (max-height: 560px) { .hud { display: none; } }
+
+  @media (max-width: 900px) { .dots { display: none; } }
+  @media (max-width: 600px) {
+    #cv { padding: 76px 16px 48px; }
+    .hero h1 { font-size: 1.8rem; }
+    .entry { grid-template-columns: 1fr; }
+    .entry .date, .entry .loc { text-align: left; }
+    .rows { grid-template-columns: 1fr; }
+    .rows .k { border-bottom: 0 !important; padding-bottom: 0; }
+    .card3d { padding: 18px 18px 16px; font-size: 14px; border-radius: 16px; }
+    .card3d .hero h1 { font-size: 1.6rem; }
+    .brand .full { display: none; }
+  }
+  @media print {
+    .topbar, #bg, #stage, .dots, .progress, .scroll-hint, #scroll-space, .hint3d { display: none !important; }
+    .is-3d #cv { display: block; }
+    #cv { padding: 0; max-width: none; }
+    body { background: #fff !important; color: #000 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="mono">MW</span><span class="full">Maheshya Weerasinghe</span></div>
+  <div class="actions">
+    <div class="menu-wrap">
+      <button class="btn" id="menu-btn" aria-haspopup="true" aria-expanded="false" aria-controls="menu">Sections</button>
+      <ul class="menu" id="menu" role="menu"></ul>
+    </div>
+    <button class="btn" id="view-btn" type="button"></button>
+  </div>
+</div>
+
+<canvas id="bg" class="only-3d" aria-hidden="true"></canvas>
+<div id="stage" class="only-3d"></div>
+<div id="scroll-space" class="only-3d"></div>
+<ul class="dots only-3d" id="dots"></ul>
+<div class="progress only-3d" id="progress"></div>
+<div class="scroll-hint only-3d" id="scroll-hint">SCROLL TO ENTER THE MIND<i></i></div>
+<div class="hud only-3d" aria-hidden="true">
+  <div class="hud-title">The ARMOUR-MIND idea</div>
+  <div class="hud-row"><span>XR support</span><b><i id="hud-sup"></i></b></div>
+  <div class="hud-row"><span>Own capability</span><b><i id="hud-cap" class="cap"></i></b></div>
+  <ul class="legend">
+    <li><em style="background:#5cc4cd"></em>Semantic route</li>
+    <li><em style="background:#a99bff"></em>Spatial route</li>
+    <li><em style="background:#ffbe6e"></em>Memory</li>
+    <li><em class="sq"></em>XR support</li>
+  </ul>
+</div>
+<div id="measure" aria-hidden="true"></div>
+
+<main id="cv">
+
+  <header class="hero" data-card data-label="Home">
+    <p class="kicker only-3d">Academic CV</p>
+    <h1>Maheshya Weerasinghe</h1>
+    <p class="role">Assistant Professor | Human-Computer Interaction &amp; Extended Reality</p>
+    <p class="place">FAMNIT, University of Primorska, Koper, Slovenia</p>
+    <ul class="links">
+      <li><a href="mailto:maheshya.weerasinghe@famnit.upr.si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4.4 7H19.6L12 12.2zM4 8.9V17h16V8.9l-8 5.4-8-5.4z"/></svg>Email</a></li>
+      <li><a href="https://scholar.google.com/citations?user=79gDe7oAAAAJ&amp;hl=en"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9.5l4 2.4V17l7 4 7-4v-5.1l2-1.2V16h2V9.5L12 3zm0 2.3 7.4 4.2L12 13.7 4.6 9.5 12 5.3zM7 13.1l5 2.9 5-2.9v2.7l-5 2.9-5-2.9v-2.7z"/></svg>Google Scholar</a></li>
+      <li><a href="https://orcid.org/0000-0003-2691-601X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM8.3 7.1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM7.5 10h1.6v7H7.5v-7zm3 0h3.1c2.4 0 3.8 1.6 3.8 3.5S15 17 13.6 17h-3.1v-7zm1.6 1.4v4.2h1.4c1.4 0 2.3-.9 2.3-2.1s-.8-2.1-2.3-2.1h-1.4z"/></svg>ORCID</a></li>
+      <li><a href="https://uk.linkedin.com/in/maheshya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3v-11zm6.5 0h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6v5.4h-4v-4.8c0-1.2 0-2.6-1.6-2.6s-1.9 1.2-1.9 2.5v4.9h-4v-11z"/></svg>LinkedIn</a></li>
+      <li><a href="https://github.com/auvoidsky"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>GitHub</a></li>
+      <!-- To add a PDF download: upload cv.pdf to the repository and uncomment the next line. -->
+      <!-- <li><a href="cv.pdf">CV (PDF)</a></li> -->
+    </ul>
+    <p class="hint3d only-3d">Scroll to fly into the mind and through the CV, or jump with <b>Sections</b>. Prefer a plain page? Choose <b>Classic view</b>.</p>
+  </header>
+
+  <section data-card data-label="Profile">
+    <h2>Academic Profile</h2>
+    <p>Early-career XR/HCI researcher and educator with a joint PhD in Computer Science and research experience across Europe and Asia. My work spans immersive learning and cognition, social VR, browser-based XR systems, and human-AI/embodied interaction.</p>
+    <ul class="areas">
+      <li>Extended Reality (AR/VR/MR)</li>
+      <li>Human-Computer Interaction</li>
+      <li>Learning and Cognition</li>
+      <li>WebXR and Immersive Systems</li>
+      <li>Human-AI and Embodied Interaction</li>
+    </ul>
+  </section>
+
+  <section data-card data-label="Research vision" class="vision">
+    <h2>Research Vision · ARMOUR-MIND</h2>
+    <p class="lead">The support that helps most now may leave the weakest capability later.</p>
+    <p>As extended reality (XR) and AI become a continuous cognitive layer across learning, work and everyday life, intelligent systems will decide what cue to provide, when to vary or fade it, when to restore it, and when to remain silent. My research asks when such support becomes an internal, durable route to knowledge, and how AI should govern it so that people keep their cognitive autonomy.</p>
+    <ul class="pillars">
+      <li><b>Routes</b> · how external support becomes independent access to knowledge.</li>
+      <li><b>Resilience</b> · telling dependence on help apart from robustness to disruption.</li>
+      <li><b>Autonomy</b> · AI that knows when to step back.</li>
+    </ul>
+    <p class="note3d only-3d">The brain around you shows the idea: the cyan XR scaffold fades as you go deeper, while semantic (teal) and spatial (violet) routes keep each memory (amber) alive, even when one route is disrupted.</p>
+  </section>
+
+  <section data-card data-label="Appointments">
+    <h2>Academic Appointments</h2>
+    <div class="split">
+      <div class="entry"><span class="org">University of Primorska, FAMNIT</span><span class="date">Sep 2024–Present</span><span class="title">Assistant Professor</span><span class="loc">Koper, Slovenia</span></div>
+      <div class="entry"><span class="org">SIRIUS Lab, University of Glasgow</span><span class="date">Sep 2023–May 2024</span><span class="title">Research Associate</span><span class="loc">Glasgow, United Kingdom</span></div>
+      <div class="entry"><span class="org">IDM Lab, Nara Institute of Science and Technology</span><span class="date">Oct–Nov 2022</span><span class="title">Visiting Researcher</span><span class="loc">Nara, Japan</span></div>
+      <div class="entry"><span class="org">Mixed Reality Lab, Coburg University of Applied Sciences</span><span class="date">Oct 2021–May 2022</span><span class="title">Research Collaborator</span><span class="loc">Coburg, Germany</span></div>
+      <div class="entry"><span class="org">LK Simulations Private Limited</span><span class="date">Aug 2015–Jun 2018</span><span class="title">Research Engineer</span><span class="loc">Sri Lanka</span></div>
+      <div class="entry"><span class="org">Monash University</span><span class="date">Jul 2014–Jul 2015</span><span class="title">Research Engineer</span><span class="loc">Malaysia</span></div>
+      <div class="entry"><span class="org">Modelling &amp; Simulation Group, University of Colombo</span><span class="date">Mar 2013–Jul 2015</span><span class="title">Research Assistant</span><span class="loc">Colombo, Sri Lanka</span></div>
+    </div>
+  </section>
+
+  <section data-card data-label="Education">
+    <h2>Education</h2>
+    <div class="split">
+      <div class="entry"><span class="org">University of St Andrews &amp; University of Primorska</span><span class="date">2018–2023</span><span class="title">Joint PhD in Computer Science</span><span class="loc">United Kingdom / Slovenia</span><span class="thesis"><b>Thesis:</b> Instructional guidance and adaptive learning in Extended Reality.</span></div>
+      <div class="entry"><span class="org">University of Colombo</span><span class="date">2010–2014</span><span class="title">BSc (Hons) in Computer Science</span><span class="loc">Sri Lanka</span><span class="thesis"><b>Thesis:</b> A Novel Approach to Simulate Wind-Driven Ocean Waves in the Deep Ocean.</span></div>
+    </div>
+  </section>
+
+  <section data-card data-label="Awards">
+    <h2>Selected Awards, Scholarships &amp; Recognition</h2>
+    <ul class="bullets split">
+      <li><b>Best Paper Award</b>, 30th ACM Conference on Intelligent User Interfaces (IUI), 2025.</li>
+      <li><b>IDEA Scholarship</b>, IEEE International Symposium on Mixed and Augmented Reality (ISMAR), 2022.</li>
+      <li><b>School Scholarship for PhD</b>, University of St Andrews, 2020.</li>
+      <li><b>Faculty Reward for Research Work</b>, FAMNIT, University of Primorska, 2019.</li>
+      <li><b>Local Winner and Global Nominee</b>, NASA Space Apps Challenge, 2019.</li>
+      <li><b>ACM Scholarship</b>, womENcourage, 2018.</li>
+      <li>National/regional ICT recognition in R&amp;D, e-health, education, and digital inclusion, including NBQSA, e-Swabhimani, Manthan, and APICTA recognition (2013–2018).</li>
+      <li><b>Gold Medal for Best Performance in Industrial Training</b>, University of Colombo, 2014.</li>
+    </ul>
+  </section>
+
+  <section data-card data-label="Journal articles">
+    <h2>Peer-Reviewed Journal Articles</h2>
+    <ul class="pubs split">
+      <li><span class="yr">2026</span> <span class="me">M. Weerasinghe</span>, M. Kljun, N. T. Attygalle, A. Quigley, J. Grubert, V. Biener, J. Yoneyama, H. Kato, and K. Čopič Pucihar. <span class="ti">“ARText: Vocabulary Learning with Personalised and Predefined Keyword-Associations in Augmented Reality.”</span> <i>International Journal of Human-Computer Interaction</i>, in press. <a href="https://doi.org/10.21203/rs.3.rs-6399390/v2">Preprint</a> <span class="tag">IN PRESS</span></li>
+      <li><span class="yr">2026</span> K. Čopič Pucihar, K. Trajkovska, <span class="me">M. Weerasinghe</span>, A. Waqas, D. A. Parry, D. B. le Roux, and M. Kljun. <span class="ti">“Can Immersion Protect us From Distraction? The Impact of Real-World Distractions on Learning in Augmented Reality.”</span> <i>International Journal of Human-Computer Interaction</i>, online first. DOI: <a href="https://doi.org/10.1080/10447318.2026.2633224">10.1080/10447318.2026.2633224</a></li>
+      <li><span class="yr">2025</span> <span class="me">M. Weerasinghe</span>, S. Macdonald, C. Fiani, J. O'Hagan, M. Chollet, M. McGill, and M. Khamis. <span class="ti">“Beyond Mute and Block: Adoption and Effectiveness of Safety Tools in Social VR, from Ubiquitous Harassment to Social Sculpting.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 31(5), 3275–3284. DOI: <a href="https://doi.org/10.1109/TVCG.2025.3549860">10.1109/TVCG.2025.3549860</a></li>
+      <li><span class="yr">2025</span> J. A. Deja, S. Štor, I. Pucihar, <span class="me">M. Weerasinghe</span>, R. M. Balbin, K. Čopič Pucihar, and M. Kljun. <span class="ti">“ImproVisAR: Designing Augmented Reality Piano Roll for Teaching Improvisation.”</span> <i>Virtual Reality</i>, 29(3), Article 140. DOI: <a href="https://doi.org/10.1007/s10055-025-01215-z">10.1007/s10055-025-01215-z</a></li>
+      <li><span class="yr">2023</span> <span class="me">M. Weerasinghe</span>, K. Čopič Pucihar, J. Ducasse, A. Quigley, A. Toniolo, A. Miguel, N. Caluya, and M. Kljun. <span class="ti">“Exploring the Future Building: Representational Effects on Projecting Oneself into the Future Office Space.”</span> <i>Virtual Reality</i>, 27(1), 51–70. DOI: <a href="https://doi.org/10.1007/s10055-022-00673-z">10.1007/s10055-022-00673-z</a></li>
+      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, A. Quigley, K. Čopič Pucihar, A. Toniolo, A. Miguel, and M. Kljun. <span class="ti">“Arigatō: Effects of Adaptive Guidance on Engagement and Performance in Augmented Reality Learning Environments.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3737–3747. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203088">10.1109/TVCG.2022.3203088</a></li>
+      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, V. Biener, J. Grubert, A. Quigley, A. Toniolo, K. Čopič Pucihar, and M. Kljun. <span class="ti">“VocabulARy: Learning Vocabulary in AR Supported by Keyword Visualisations.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3748–3758. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203116">10.1109/TVCG.2022.3203116</a></li>
+      <li><span class="yr">2022</span> V. Biener, S. Kalamkar, N. Nouri, E. Ofek, M. Pahud, J. J. Dudley, J. Hu, P. O. Kristensson, <span class="me">M. Weerasinghe</span>, K. Čopič Pucihar, M. Kljun, S. Streuber, and J. Grubert. <span class="ti">“Quantifying the Effects of Working in VR for One Week.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3810–3820. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203103">10.1109/TVCG.2022.3203103</a></li>
+      <li><span class="yr">2020</span> S. S. Vithanage, M. S. Ratnadiwakara, D. Sandaruwan, S. Arunathileka, <span class="me">M. Weerasinghe</span>, and C. Ranasinghe. <span class="ti">“Identifying Muscle Strength Imbalances in Athletes using Motion Analysis Incorporated with Sensory Inputs.”</span> <i>International Journal of Advanced Computer Science and Applications</i>, 11(4). DOI: <a href="https://doi.org/10.14569/IJACSA.2020.01104105">10.14569/IJACSA.2020.01104105</a></li>
+      <li><span class="yr">2018</span> S. Vithanage, M. Ratnadiwakara, D. Sandaruwan, S. M. K. D. Arunathileka, <span class="me">M. Weerasinghe</span>, and C. Ranasinghe. <span class="ti">“A Novel Approach to Detect Muscle Strength Imbalances via Motion Analysis Using Sensory Inputs.”</span> <i>European Journal of Computer Science and Information Technology</i>, 6(5), 37–50.</li>
+      <li><span class="yr">2018</span> H. Tennakoon, C. Paranamana, <span class="me">M. Weerasinghe</span>, D. Sandaruwan, and K. Mahindarathne. <span class="ti">“A Novel Musculoskeletal Imbalance Identification Mechanism for Lower Body Analyzing Gait Cycle by Motion Tracking.”</span> <i>International Journal of Information Technology and Computer Science</i>, 10(3), 27–34. DOI: <a href="https://doi.org/10.5815/ijitcs.2018.03.04">10.5815/ijitcs.2018.03.04</a></li>
+      <li><span class="yr">2018</span> H. Gunatilake, D. Hidellaarachchi, S. Perera, D. Sandaruwan, and <span class="me">M. Weerasinghe</span>. <span class="ti">“An ICT Based Solution for Virtual Garment Fitting for Online Market Place.”</span> <i>International Journal of Information Technology and Computer Science</i>, 10(2), 60–72. DOI: <a href="https://doi.org/10.5815/ijitcs.2018.02.06">10.5815/ijitcs.2018.02.06</a></li>
+      <li><span class="yr">2017</span> C. Paranamana, H. Tennakoon, D. Sandaruwan, <span class="me">M. Weerasinghe</span>, and K. Mahindarathne. <span class="ti">“An ICT Oriented Approach to Identify Imbalances of Lower Body Musculoskeletal System via Gait and Posture Analysis Using Kinect.”</span> <i>European Journal of Computer Science and Information Technology</i>, 5(6), 1–10.</li>
+      <li><span class="yr">2017</span> H. Gunatilake, D. Hidellaarachchi, S. Perera, D. Sandaruwan, and <span class="me">M. Weerasinghe</span>. <span class="ti">“An ICT Based Solution for Virtual Garment Fitting for Online Market Place: A Review of Related Literature.”</span> <i>International Journal of Computer and Information Technology</i>, 6(6).</li>
+      <li><span class="yr">2017</span> S. Gunasinghe, G. K. A. Dias, D. Sandaruwan, and <span class="me">M. Weerasinghe</span>. <span class="ti">“A Real-Time 6DOF Computational Model to Simulate Ram-Air Parachute Dynamics.”</span> <i>International Journal of Information Technology and Computer Science</i>, 9(3), 19–27. DOI: <a href="https://doi.org/10.5815/ijitcs.2017.03.03">10.5815/ijitcs.2017.03.03</a></li>
+      <li><span class="yr">2015</span> A. Nisansala, <span class="me">M. Weerasinghe</span>, G. K. A. Dias, D. Sandaruwan, and N. Kodikara. <span class="ti">“Soft Tissue Modeling Techniques in Surgery Simulation.”</span> <i>International Journal of Computer and Information Technology</i>, 4(5), 826–831.</li>
+      <li><span class="yr">2015</span> A. Nisansala, <span class="me">M. Weerasinghe</span>, G. K. A. Dias, D. Sandaruwan, C. Keppitiyagama, N. Kodikara, C. Perera, and P. Samarasinghe. <span class="ti">“Flight Simulator for Serious Gaming.”</span> <i>European Journal of Computer Science and Information Technology</i>, 3(1), 53–64.</li>
+    </ul>
+  </section>
+
+  <section data-card data-label="Conference papers">
+    <h2>Selected Conference, Workshop &amp; Demo Publications</h2>
+    <ul class="pubs split">
+      <li><span class="yr">2026</span> R. Rodrigo, D. Sandaruwan, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Moving the Bottleneck: Performance Trade-offs of WebAssembly and WebGPU in WebXR.”</span> <i>ACM Symposium on Virtual Reality Software and Technology (VRST 2026)</i>. Full paper. <span class="tag">ACCEPTED</span></li>
+      <li><span class="yr">2026</span> J. A. Deja, I. Butaslac III, N. R. Caluya, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Directing the Robot: Scaffolding Creative Human-AI-Robot Interaction.”</span> <i>3rd InterAI Workshop at ACM CHI 2026</i>.</li>
+      <li><span class="yr">2026</span> K. Trajkovska, M. Kljun, <span class="me">M. Weerasinghe</span>, and K. Čopič Pucihar. <span class="ti">“Personalised 3D Mnemonics for Vocabulary Learning in Context.”</span> <i>IEEE ISMAR 2026</i>, poster; associated <i>VocabulARy 2.0</i> research demo.</li>
+      <li><span class="yr">2025</span> N. T. Attygalle, M. Kljun, A. Quigley, K. Čopič Pucihar, J. Grubert, V. Biener, L. A. Leiva, J. Yoneyama, A. Toniolo, A. Miguel, H. Kato, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Text-to-Image Generation for Vocabulary Learning Using the Keyword Method.”</span> <i>ACM IUI 2025</i>, 1381–1397. <span class="tag">BEST PAPER</span></li>
+      <li><span class="yr">2024</span> <span class="me">M. Weerasinghe</span>, M. Kljun, and K. Čopič Pucihar. <span class="ti">“A Cross-Device Interaction with the Smartphone and HMD for Vocabulary Learning.”</span> <i>EICS 2024 International Workshops</i>, LNCS 15518, 269–282.</li>
+      <li><span class="yr">2024</span> <span class="me">M. Weerasinghe</span>, L. Ribič, M. Kljun, K. Čopič Pucihar, and I. Devetak. <span class="ti">“Augmented Reality Training System Fusing the Triple Nature of Chemical Concepts.”</span> <i>HCI Slovenia 2024</i>, 64–70.</li>
+      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, V. Biener, J. Grubert, J. A. Deja, N. T. Attygalle, K. Trajkovska, M. Kljun, and K. Čopič Pucihar. <span class="ti">“VocabulARy Replicated: Comparing Teenagers to Young Adults.”</span> <i>IEEE ISMAR 2022 Adjunct</i>, 283–285.</li>
+      <li><span class="yr">2021</span> <span class="me">M. Weerasinghe</span>. <span class="ti">“Instructional Guidance in Extended Reality for Learning.”</span> <i>ACM MobileHCI 2021 Adjunct</i>.</li>
+      <li><span class="yr">2021</span> <span class="me">M. Weerasinghe</span>, M. Kljun, K. Čopič Pucihar, and P. Coulton. <span class="ti">“Playing with the Artworks: A Personalised Artwork Experience.”</span> <i>HCI Slovenia 2021</i>, 74–79.</li>
+      <li><span class="yr">2019</span> M. Kljun, K. Čopič Pucihar, J. M. Alexander, <span class="me">M. Weerasinghe</span>, C. Campos, J. Ducasse, B. Kopačin, J. Grubert, P. Coulton, and M. Čelar. <span class="ti">“Augmentation not Duplication: Considerations for the Design of Digitally-Augmented Comic Books.”</span> <i>ACM CHI 2019</i>, 1–12. DOI: <a href="https://doi.org/10.1145/3290605.3300333">10.1145/3290605.3300333</a></li>
+      <li><span class="yr">2019</span> <span class="me">M. Weerasinghe</span>, N. T. Attygalle, and J. Ducasse. <span class="ti">“Virtual Reality and Neurocognitive Intervention: Rehabilitation Approaches towards Assisting Autistic Children with Cognitive Deficit.”</span> <i>HCI-IS 2019</i>.</li>
+      <li><span class="yr">2018</span> <span class="me">M. Weerasinghe</span>, M. Kljun, K. Čopič Pucihar, and A. Quigley. <span class="ti">“Novel Technologies in Teaching and Learning towards Enhanced Knowledge Retention.”</span> <i>ACM womENcourage 2018</i>.</li>
+      <li><span class="yr">2018</span> <span class="me">M. Weerasinghe</span>, et al. <span class="ti">“An Active Video Game Based Lower-Limb Rehabilitation Approach to Assist Children with Cerebral Palsy.”</span> <i>ACM womENcourage 2018</i>.</li>
+      <li><span class="yr">2016</span> <span class="me">M. Weerasinghe</span>, G. K. A. Dias, A. Dharmaratne, D. Sandaruwan, A. Nisansala, C. Keppitiyagama, and N. Kodikara. <span class="ti">“Computer Aid Assessment of Muscular Imbalance for Preventing Overuse Injuries in Athletes.”</span> <i>ACM ICCIP 2016</i>, 244–248.</li>
+      <li><span class="yr">2016</span> <span class="me">M. Weerasinghe</span>, A. Nisansala, D. Sandaruwan, N. Kodikara, C. Keppitiyagama, K. Dias, et al. <span class="ti">“Virtual Eye: A Smarter Mode of Interaction to Virtual Tours.”</span> <i>ACM MobiSys 2016 Companion</i>, poster.</li>
+      <li><span class="yr">2013</span> <span class="me">M. Weerasinghe</span>, D. Sandaruwan, C. Keppitiyagama, and N. Kodikara. <span class="ti">“A Novel Approach to Simulate Wind-Driven Ocean Waves in the Deep Ocean.”</span> <i>IEEE ICTer 2013</i>.</li>
+    </ul>
+  </section>
+
+  <section data-card data-label="Books">
+    <h2>Books &amp; Chapters</h2>
+    <ul class="pubs split">
+      <li><span class="yr">2024</span> <span class="me">M. Weerasinghe</span>, A. Quigley, J. Ducasse, K. Čopič Pucihar, and M. Kljun. <span class="ti">“Educational Augmented Reality Games.”</span> In <i>Augmented Reality Games II: The Gamification of Education, Medicine and Art</i>, Springer, 3–38.</li>
+      <li><span class="yr">2019</span> <span class="me">M. Weerasinghe</span>, et al. <span class="ti">“Educational Augmented Reality Games.”</span> In <i>Augmented Reality Games II</i>, Springer, 3–32.</li>
+    </ul>
+  </section>
+
+  <section data-card data-label="Service">
+    <h2>Academic Service &amp; Peer Reviewing</h2>
+    <ul class="bullets split">
+      <li><b>International Program Committee (IPC) Member:</b> ACM Symposium on Virtual Reality Software and Technology (VRST 2026); IEEE International Symposium on Mixed and Augmented Reality (ISMAR 2023, 2024 and 2026); IEEE Conference on Virtual Reality and 3D User Interfaces (IEEE VR 2026); International Conference on Extended Reality (ICXR 2026).</li>
+      <li><b>Peer Reviewer:</b> ACM CHI Papers / Late-Breaking Work (2023–2026); ACM IUI Papers (2025–2026); ACM MobileHCI Papers / Late-Breaking Work (2024–2025); IEEE ISMAR Papers (2025); IEEE VR Papers (2023–2024); Mensch und Computer Short Papers (2024–2026); HCI-IS (2021); ICTer (2015–2016).</li>
+      <li><b>Journal Reviewing:</b> <i>IEEE Transactions on Visualization and Computer Graphics</i> (TVCG), 2024; <i>Computers &amp; Education Open</i>, 2025.</li>
+    </ul>
+  </section>
+
+  <section data-card data-label="Teaching">
+    <h2>Teaching, Mentoring &amp; Knowledge Transfer</h2>
+    <h3>University of Primorska, FAMNIT</h3>
+    <ul class="bullets split">
+      <li><b>Lecturer – Augmented Reality (Unity 3D Game Development)</b>, BSc Computer Science, 2024–Present; previously Teaching Assistant in Augmented Reality, 2018–2023.</li>
+      <li><b>Research supervision and mentoring:</b> PhD co-supervision (2024–Present), MSc research projects (2023–2024), and BSc final-year research projects (2022–2024).</li>
+      <li><b>Teaching Assistant – Computer Practicum II (Web Development)</b>, 2018–2023; <b>Computer Practicum I (Bash and C)</b>, 2019–2020.</li>
+    </ul>
+    <h3>Public Engagement &amp; Cross-Disciplinary Knowledge Transfer</h3>
+    <ul class="bullets split">
+      <li><b>Motion Capture Assistant – <i>Jump into the Future</i></b>, HICUP Lab / University of Primorska, 2024; contributed motion-capture expertise to an interdisciplinary animated-film production selected for the 27th Festival of Slovenian Film.</li>
+      <li><b>Workshop Instructor – “Mixed Reality”</b>, Google Developers Club FAMNIT Hackathon, 2022.</li>
+      <li><b>Co-organiser / Instructor – Practical XR Workshops:</b> Introduction to Motion Capture; Full-Body Motion Capture; and Head-Mounted Displays (AR/VR/MR), multiple editions, 2019–2024.</li>
+      <li><b>Demonstrator – Virtual, Augmented and Mixed Reality</b>, European Researchers' Night, Koper, 2018 and 2019.</li>
+      <li><b>VR Demonstrator</b>, InnoRenew CoE, presenting an immersive experience of the new InnoRenew building to international visitors, 2019.</li>
+    </ul>
+    <h3>University of Colombo School of Computing</h3>
+    <ul class="bullets split">
+      <li><b>Co-supervisor / Mentor</b>, final-year BSc Computer Science and Information Systems research projects, 2015–Present.</li>
+      <li><b>Teaching Assistant – Virtual Reality and Simulations</b>, Master of IT, 2015.</li>
+      <li><b>Visiting Lecturer – Modelling and Simulation Workshop</b>, Department of History and Archaeology, University of Colombo, 2014.</li>
+    </ul>
+  </section>
+
+  <section data-card data-label="Expertise">
+    <h2>Professional Memberships &amp; Technical Expertise</h2>
+    <div class="rows">
+      <div class="k">Memberships</div><div>ACM and ACM SIGCHI (2018–Present); IEEE (2018–Present).</div>
+      <div class="k">Programming</div><div>C, C++, C#, Python, Java, R, Bash, web technologies, Android and iOS development.</div>
+      <div class="k">XR / graphics</div><div>Unity 3D (AR/VR/MR), WebXR, WebGL, WebGPU, WebAssembly, Ogre3D; immersive interaction prototyping and performance benchmarking.</div>
+      <div class="k">Research tools</div><div>iMotions (GSR/ECG/EEG/eye tracking), Tobii Pro VR Analytics, OptiTrack Motive, motion capture and physiological sensing.</div>
+    </div>
+    <p class="foot">Full publication record: <a href="https://scholar.google.com/citations?user=79gDe7oAAAAJ&amp;hl=en">Google Scholar</a> · ORCID: <a href="https://orcid.org/0000-0003-2691-601X">0000-0003-2691-601X</a></p>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  var cv = document.getElementById('cv');
+  var stage = document.getElementById('stage');
+  var canvas = document.getElementById('bg');
+  var ctx = canvas.getContext('2d');
+  var space = document.getElementById('scroll-space');
+  var measure = document.getElementById('measure');
+  var dotsEl = document.getElementById('dots');
+  var progressEl = document.getElementById('progress');
+  var hintEl = document.getElementById('scroll-hint');
+  var hudSup = document.getElementById('hud-sup');
+  var hudCap = document.getElementById('hud-cap');
+  var menu = document.getElementById('menu');
+  var menuBtn = document.getElementById('menu-btn');
+  var viewBtn = document.getElementById('view-btn');
+
+  var FOV = 50 * Math.PI / 180;
+  var SPACING = 1750;
+  var cards = [];          // {el, label, first, w, h, pos, look, th, n, cam, B}
+  var sections = [];       // {label, index, el}
+  var focal = 1, W = innerWidth, H = innerHeight, dpr = 1, mobile = false;
+  var running = false, built = false;
+  var prog = 0, progTarget = 0, mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+  var lastBuildW = 0, lastBuildH = 0;
+  var brain = null, heroRight = [1, 0, 0], heroD = 1;
+
+  /* ---------------- 4x4 matrix helpers (column-major) ---------------- */
+  function ident() { return [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1]; }
+  function mul(a, b) {
+    var o = new Array(16);
+    for (var c = 0; c < 4; c++) for (var r = 0; r < 4; r++) {
+      o[c*4+r] = a[r]*b[c*4] + a[4+r]*b[c*4+1] + a[8+r]*b[c*4+2] + a[12+r]*b[c*4+3];
+    }
+    return o;
+  }
+  function trans(x, y, z) { var m = ident(); m[12] = x; m[13] = y; m[14] = z; return m; }
+  function rotY(t) { var m = ident(), c = Math.cos(t), s = Math.sin(t); m[0] = c; m[2] = -s; m[8] = s; m[10] = c; return m; }
+  var FLIP = [1,0,0,0, 0,-1,0,0, 0,0,1,0, 0,0,0,1];
+  function add(a, b) { return [a[0]+b[0], a[1]+b[1], a[2]+b[2]]; }
+  function sub(a, b) { return [a[0]-b[0], a[1]-b[1], a[2]-b[2]]; }
+  function scl(a, k) { return [a[0]*k, a[1]*k, a[2]*k]; }
+  function len(a) { return Math.hypot(a[0], a[1], a[2]); }
+  function norm(a) { var l = len(a) || 1; return [a[0]/l, a[1]/l, a[2]/l]; }
+  function cross(a, b) { return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
+  function dot(a, b) { return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]; }
+  function lookAt(eye, target) {
+    var z = norm(sub(eye, target)), x = norm(cross([0,1,0], z)), y = cross(z, x);
+    return [x[0], y[0], z[0], 0,  x[1], y[1], z[1], 0,  x[2], y[2], z[2], 0,
+            -dot(x, eye), -dot(y, eye), -dot(z, eye), 1];
+  }
+  function apply(m, p) {
+    return [m[0]*p[0] + m[4]*p[1] + m[8]*p[2] + m[12],
+            m[1]*p[0] + m[5]*p[1] + m[9]*p[2] + m[13],
+            m[2]*p[0] + m[6]*p[1] + m[10]*p[2] + m[14]];
+  }
+  function css(m) {
+    var s = 'matrix3d(';
+    for (var i = 0; i < 16; i++) { var v = Math.abs(m[i]) < 1e-9 ? 0 : m[i]; s += (i ? ',' : '') + v.toFixed(6); }
+    return s + ')';
+  }
+  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+  function smooth(a, b, x) { var t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function lerp3(a, b, t) { return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)]; }
+  function catmull(p0, p1, p2, p3, t) {
+    var t2 = t * t, t3 = t2 * t, o = [];
+    for (var k = 0; k < 3; k++) {
+      o[k] = 0.5 * (2 * p1[k] + (-p0[k] + p2[k]) * t + (2 * p0[k] - 5 * p1[k] + 4 * p2[k] - p3[k]) * t2 +
+                    (-p0[k] + 3 * p1[k] - 3 * p2[k] + p3[k]) * t3);
+    }
+    return o;
+  }
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  /* ---------------- cards from the classic content ---------------- */
+  function newCard(width, label, first, headingEl, cont) {
+    var card = document.createElement('div');
+    card.className = 'card3d';
+    card.style.width = width + 'px';
+    if (headingEl) {
+      var h = headingEl.cloneNode(true);
+      if (cont) h.textContent = headingEl.textContent + ' (continued)';
+      card.appendChild(h);
+    }
+    measure.appendChild(card);
+    return { el: card, label: label, first: first };
+  }
+
+  function buildCards() {
+    measure.innerHTML = '';
+    stage.innerHTML = '';
+    cards = []; sections = [];
+    var width = Math.min(660, innerWidth - 28);
+    var maxH = Math.max(320, Math.min(innerHeight - 150, 720));
+    cv.querySelectorAll('[data-card]').forEach(function (sec) {
+      var label = sec.getAttribute('data-label');
+      var heading = sec.querySelector('h2');
+      sections.push({ label: label, index: cards.length, el: sec });
+      var cur = newCard(width, label, true, null, false);
+      cards.push(cur);
+      var holder = sec.tagName === 'HEADER' ? document.createElement('header') : document.createElement('section');
+      holder.className = sec.className;
+      cur.el.appendChild(holder);
+
+      function overflow() { return cur.el.offsetHeight > maxH; }
+      function startNew() {
+        cur = newCard(width, label, false, heading, true);
+        cards.push(cur);
+        holder = document.createElement('section');
+        holder.className = sec.className;
+        cur.el.appendChild(holder);
+      }
+      function contentCount(list) {
+        var n = 0;
+        Array.prototype.forEach.call(holder.children, function (el) {
+          if (el === list) n += list.children.length;
+          else if (!/^H[23]$/.test(el.tagName)) n += 1;
+        });
+        return n;
+      }
+      function takeOrphanHeading() {
+        var last = holder.lastElementChild;
+        return last && last.tagName === 'H3' ? last : null;
+      }
+      Array.prototype.forEach.call(sec.children, function (child) {
+        if (child.classList.contains('only-classic')) return;
+        if (child.classList.contains('split')) {
+          var list = child.cloneNode(false);
+          holder.appendChild(list);
+          Array.prototype.forEach.call(child.children, function (item) {
+            var c = item.cloneNode(true);
+            list.appendChild(c);
+            if (overflow() && contentCount(list) > 1) {
+              list.removeChild(c);
+              if (!list.children.length) holder.removeChild(list);
+              var orphan = takeOrphanHeading();
+              startNew();
+              if (orphan) holder.appendChild(orphan);
+              list = child.cloneNode(false);
+              holder.appendChild(list);
+              list.appendChild(c);
+            }
+          });
+        } else {
+          var n = child.cloneNode(true);
+          holder.appendChild(n);
+          if (overflow() && child.tagName !== 'H2' && contentCount(null) > 1) {
+            holder.removeChild(n);
+            var orphan2 = takeOrphanHeading();
+            startNew();
+            if (orphan2) holder.appendChild(orphan2);
+            holder.appendChild(n);
+          }
+        }
+      });
+    });
+    cards.forEach(function (c, i) {
+      c.w = c.el.offsetWidth; c.h = c.el.offsetHeight;
+      c.el.setAttribute('data-i', i);
+      stage.appendChild(c.el);
+    });
+    measure.innerHTML = '';
+    built = true;
+    lastBuildW = innerWidth; lastBuildH = innerHeight;
+    buildNav();
+  }
+
+  /* ---------------- world layout: a brain, with the CV flying through it ---------------- */
+  function setStop(c, pos, th, dist) {
+    var n = [Math.sin(th), 0, Math.cos(th)];
+    c.pos = pos; c.th = th; c.n = n; c.look = pos;
+    c.cam = add(pos, scl(n, dist));
+    c.B = mul(mul(trans(pos[0], pos[1], pos[2]), rotY(th)), FLIP);
+  }
+
+  function layout() {
+    W = innerWidth; H = innerHeight; mobile = W < 760;
+    focal = (H / 2) / Math.tan(FOV / 2);
+    stage.style.perspective = focal.toFixed(2) + 'px';
+    var N = cards.length;
+    var amp = Math.min(560, W * 0.45);
+    var inner = Math.max(1, N - 2);
+    var rz = inner * SPACING / 2 + 5200;
+    brain = { c: [0, -250, -inner * SPACING / 2], rx: rz * 0.78, ry: rz * 0.74, rz: rz };
+
+    for (var i = 1; i < N; i++) {
+      var c = cards[i];
+      var x = Math.sin(i * 0.82) * amp, y = Math.cos(i * 0.57) * 200 - 60, z = -(i - 1) * SPACING;
+      var th = -Math.sin(i * 0.82) * 0.36;
+      var scale = Math.min(1, (H - 140) / c.h, (W - 24) / c.w);
+      setStop(c, [x, y, z], th, focal / scale);
+    }
+
+    // hero: outside the brain, three-quarter view, brain beside (desktop) or above (phone) the card
+    var c0 = cards[0];
+    var span = 2 * brain.rz * 1.02;
+    var D0 = focal * span / ((mobile ? 0.8 : 0.37) * W);
+    var a = -1.18;
+    var C0 = [brain.c[0] + Math.sin(a) * D0, brain.c[1], brain.c[2] + Math.cos(a) * D0];
+    if (mobile) C0[1] = brain.c[1] - 0.19 * H * D0 / focal;
+    var toB = sub(brain.c, C0);
+    var hb = Math.atan2(toB[0], -toB[2]);
+    var h = mobile ? hb : hb - Math.atan(0.24 * W / focal);
+    heroRight = [Math.cos(hb), 0, Math.sin(hb)]; heroD = D0;
+    var d = [Math.sin(h), 0, -Math.cos(h)], r = [Math.cos(h), 0, Math.sin(h)];
+    var look = add(C0, scl(d, focal));
+    var pos0 = mobile ? sub(look, [0, 0.16 * H, 0])
+                      : sub(look, scl(r, Math.min(0.21 * W, W / 2 - c0.w / 2 - 24)));
+    var th0 = -h;
+    c0.pos = pos0; c0.look = look; c0.th = th0; c0.n = [Math.sin(th0), 0, Math.cos(th0)]; c0.cam = C0;
+    c0.B = mul(mul(trans(pos0[0], pos0[1], pos0[2]), rotY(th0)), FLIP);
+
+    space.style.height = ((N - 1) * 95 + 100) + 'vh';
+    sizeCanvas();
+    buildScene();
+  }
+
+  function camAt(p) {
+    var N = cards.length;
+    if (N < 2) return { eye: cards[0].cam, target: cards[0].look, s: 0 };
+    var s = clamp(p, 0, 1) * (N - 1);
+    var i = Math.min(Math.floor(s), N - 2);
+    var t = smooth(0.24, 0.76, s - i);
+    var C = function (k) { return cards[k].cam; };
+    var p1 = C(i), p2 = C(i + 1);
+    var p0 = i > 0 ? C(i - 1) : [2 * p1[0] - p2[0], 2 * p1[1] - p2[1], 2 * p1[2] - p2[2]];
+    var p3 = i + 2 < N ? C(i + 2) : [2 * p2[0] - p1[0], 2 * p2[1] - p1[1], 2 * p2[2] - p1[2]];
+    if (i === 0) p0 = p1; // the dive from outside: no overshoot
+    var eye = catmull(p0, p1, p2, p3, t);
+    if (i > 0) eye[1] += Math.sin(t * Math.PI) * 120;
+    var target = lerp3(cards[i].look, cards[i + 1].look, t);
+    return { eye: eye, target: target, s: i + t };
+  }
+
+  /* ---------------- the neural scene ---------------- */
+  var sprites = {};
+  function sprite(rgb) {
+    if (sprites[rgb]) return sprites[rgb];
+    var c = document.createElement('canvas'); c.width = c.height = 64;
+    var g = c.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, 'rgba(' + rgb + ',1)');
+    gr.addColorStop(0.22, 'rgba(' + rgb + ',0.6)');
+    gr.addColorStop(1, 'rgba(' + rgb + ',0)');
+    g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+    return (sprites[rgb] = c);
+  }
+  var TEAL = '92,196,205', VIOLET = '169,155,255', WHITE = '225,236,255', AMBER = '255,190,110',
+      CORTEX = '150,170,255', SUPPORT = '120,220,255';
+
+  // node sets: {p:[[x,y,z]], col:[], size:[], adj:[[]], edges:[[a,b]]}
+  var shell, inner, stars, routes, engrams, lattice, panels, pulses, sulci = [];
+
+  function nodeSet() { return { p: [], col: [], size: [], edges: [], adj: [] }; }
+  function link(set, maxNeighbours, maxDist) {
+    var n = set.p.length, idx = [];
+    for (var i = 0; i < n; i++) idx.push(i);
+    idx.sort(function (a, b) { return set.p[a][2] - set.p[b][2]; });
+    set.adj = []; for (var k = 0; k < n; k++) set.adj.push([]);
+    var seen = {};
+    for (var ii = 0; ii < n; ii++) {
+      var a = idx[ii], pa = set.p[a], best = [];
+      for (var dir = -1; dir <= 1; dir += 2) {
+        for (var jj = ii + dir; jj >= 0 && jj < n; jj += dir) {
+          var b = idx[jj], pb = set.p[b];
+          if (Math.abs(pb[2] - pa[2]) > maxDist) break;
+          var d = Math.hypot(pa[0] - pb[0], pa[1] - pb[1], pa[2] - pb[2]);
+          if (d < maxDist) best.push([d, b]);
+        }
+      }
+      best.sort(function (x, y) { return x[0] - y[0]; });
+      for (var q = 0; q < Math.min(maxNeighbours, best.length); q++) {
+        var bb = best[q][1], key = a < bb ? a + '_' + bb : bb + '_' + a;
+        if (seen[key]) continue;
+        seen[key] = 1;
+        set.edges.push([a, bb]); set.adj[a].push(bb); set.adj[bb].push(a);
+      }
+    }
+  }
+
+  function insideBrain(p, k) {
+    var b = brain;
+    var x = (p[0] - b.c[0]) / b.rx, y = (p[1] - b.c[1]) / b.ry, z = (p[2] - b.c[2]) / b.rz;
+    return x * x + y * y + z * z < k;
+  }
+
+  function pathXY(z) {
+    // interpolate the card path (cards 1..N-1) at depth z
+    var N = cards.length;
+    if (N < 3) return [0, 0];
+    var f = clamp(-z / SPACING, 0, N - 2), i = Math.floor(f), t = f - i;
+    var a = cards[1 + Math.min(i, N - 2)].pos, bb = cards[1 + Math.min(i + 1, N - 2)].pos;
+    return [lerp(a[0], bb[0], t), lerp(a[1], bb[1], t)];
+  }
+
+  // anatomical-ish cerebrum surface for a unit direction (x: left-right, y: up, z: front)
+  function brainSurface(d) {
+    var b = brain, dx = d[0], dy = d[1], dz = d[2], ax = Math.abs(dx);
+    var fold = 1 + 0.035 * Math.sin(11 * dx + 7 * dz) * Math.sin(9 * dy + 4 * dz);
+    var y;
+    if (dy >= 0) y = dy * b.ry * (1 - 0.14 * dz * dz);
+    else {
+      var temporal = Math.exp(-Math.pow((dz - 0.12) / 0.32, 2)) * smooth(0.3, 0.75, ax);
+      y = dy * b.ry * (0.55 + 0.38 * temporal);
+    }
+    var z = dz * b.rz * (dz > 0 ? 0.95 : 1.0);
+    var x = dx * b.rx * (0.9 + 0.1 * Math.max(0, dy));
+    if (dz > 0.55) x *= 1 - 0.28 * (dz - 0.55);                  // narrower frontal pole
+    x += (dx >= 0 ? 1 : -1) * b.rx * 0.05 * smooth(-0.35, 0.1, dy); // longitudinal fissure
+    return [x * fold, y * fold, z * fold];
+  }
+
+  function buildScene() {
+    var b = brain, N = cards.length;
+    var nShell = mobile ? 1100 : 2300, nInner = mobile ? 520 : 1150;
+
+    // cortex: two hemispheres covered in meandering gyri (folds), drawn as connected curves
+    shell = nodeSet();
+    var walks = mobile ? 110 : 210, steps = mobile ? 18 : 22;
+    for (var w = 0; w < walks; w++) {
+      var dir = norm([rnd(-1, 1), rnd(-0.45, 1), rnd(-1, 1)]);
+      var head = norm(cross(dir, norm([rnd(-1, 1), rnd(-1, 1), rnd(-1, 1)])));
+      var side = dir[0] >= 0 ? 1 : -1, prev = -1, turn = rnd(-0.4, 0.4);
+      var col = Math.random() < 0.78 ? CORTEX : TEAL;
+      for (var st = 0; st < steps; st++) {
+        if ((dir[0] >= 0 ? 1 : -1) !== side) break;          // never cross the midline fissure
+        var p = brainSurface(dir);
+        var idx = shell.p.length;
+        shell.p.push([b.c[0] + p[0], b.c[1] + p[1], b.c[2] + p[2]]);
+        shell.col.push(col); shell.size.push(st % 3 ? 0 : rnd(70, 120)); shell.adj.push([]);
+        if (prev >= 0) { shell.edges.push([prev, idx]); shell.adj[prev].push(idx); shell.adj[idx].push(prev); }
+        prev = idx;
+        // meander along the surface
+        turn = clamp(turn + rnd(-0.35, 0.35), -0.8, 0.8);
+        var bin = cross(dir, head);
+        head = norm(add(scl(head, Math.cos(turn * 0.5)), scl(bin, Math.sin(turn * 0.5))));
+        dir = norm(add(dir, scl(head, 0.042)));
+        head = norm(sub(head, scl(dir, dot(head, dir))));
+      }
+    }
+    // landmark sulci: lateral (Sylvian) and central sulcus on each hemisphere
+    sulci = [];
+    [-1, 1].forEach(function (sd) {
+      var lat = [], cen = [];
+      for (var q = 0; q <= 24; q++) {
+        var t = q / 24;
+        var pl = brainSurface(norm([sd * 0.95, -0.18 + 0.38 * t + 0.05 * Math.sin(t * 9), 0.62 - 0.95 * t]));
+        lat.push([b.c[0] + pl[0] * 1.01, b.c[1] + pl[1] * 1.01, b.c[2] + pl[2] * 1.01]);
+        var pc = brainSurface(norm([sd * (0.08 + 0.85 * t), 0.98 - 0.85 * t, 0.02 + 0.3 * t + 0.04 * Math.sin(t * 11)]));
+        cen.push([b.c[0] + pc[0] * 1.01, b.c[1] + pc[1] * 1.01, b.c[2] + pc[2] * 1.01]);
+      }
+      sulci.push(lat, cen);
+    });
+    // cerebellum: striped folia at the back, below the cerebrum
+    var cb = [b.c[0], b.c[1] - 0.5 * b.ry, b.c[2] - 0.68 * b.rz];
+    for (var ring = 0; ring < 9; ring++) {
+      var vy = -0.8 + ring * 0.2, rr0 = Math.sqrt(1 - vy * vy), first = -1, prevR = -1;
+      for (var q0 = 0; q0 < 34; q0++) {
+        var an0 = Math.PI * 0.05 + q0 / 33 * Math.PI * 1.9 - Math.PI * 0.5;
+        var wig = 1 + 0.05 * Math.sin(q0 * 1.7 + ring);
+        var pt0 = [cb[0] + Math.cos(an0) * rr0 * b.rx * 0.5 * wig, cb[1] + vy * b.ry * 0.27, cb[2] - Math.abs(Math.sin(an0)) * rr0 * b.rz * 0.22 * wig];
+        var id0 = shell.p.length;
+        shell.p.push(pt0); shell.col.push(VIOLET); shell.size.push(rnd(55, 95)); shell.adj.push([]);
+        if (prevR >= 0) { shell.edges.push([prevR, id0]); shell.adj[prevR].push(id0); shell.adj[id0].push(prevR); }
+        prevR = id0;
+      }
+    }
+    // brain stem
+    for (var lane = 0; lane < 5; lane++) {
+      var an1 = lane / 5 * Math.PI * 2, prevS = -1;
+      for (var q1 = 0; q1 < 9; q1++) {
+        var t1 = q1 / 8;
+        var pt1 = [b.c[0] + Math.cos(an1) * b.rx * 0.1, b.c[1] - 0.38 * b.ry - t1 * 0.62 * b.ry, b.c[2] - 0.38 * b.rz - t1 * 0.1 * b.rz + Math.sin(an1) * b.rx * 0.1];
+        var id1 = shell.p.length;
+        shell.p.push(pt1); shell.col.push(CORTEX); shell.size.push(rnd(55, 90)); shell.adj.push([]);
+        if (prevS >= 0) { shell.edges.push([prevS, id1]); shell.adj[prevS].push(id1); shell.adj[id1].push(prevS); }
+        prevS = id1;
+      }
+    }
+
+    // neurons along the flight path, connected by synapses
+    inner = nodeSet();
+    var z0 = (N > 1 ? cards[1].pos[2] : 0) + 2600, z1 = (N > 1 ? cards[N - 1].pos[2] : 0) - 2600;
+    var tries = 0;
+    while (inner.p.length < nInner && tries++ < nInner * 6) {
+      var zz = rnd(z1, z0), xy = pathXY(zz), rr = 450 + Math.pow(Math.random(), 0.75) * 3800, aa = Math.random() * Math.PI * 2;
+      var pp = [xy[0] + Math.cos(aa) * rr, xy[1] + Math.sin(aa) * rr * 0.75, zz];
+      if (!insideBrain(pp, 0.82)) continue;
+      inner.p.push(pp);
+      var cc = Math.random();
+      inner.col.push(cc < 0.45 ? TEAL : cc < 0.8 ? VIOLET : WHITE);
+      inner.size.push(rnd(30, 70));
+    }
+    link(inner, 3, 1500);
+
+    // memory engrams between cards, each reached by a semantic and a spatial route
+    routes = []; engrams = [];
+    for (var i = 1; i < N - 1; i++) {
+      var A = cards[i].pos, B = cards[i + 1].pos;
+      var side = i % 2 ? 1 : -1;
+      var E = [lerp(A[0], B[0], 0.5) + side * 950, lerp(A[1], B[1], 0.5) + 320, lerp(A[2], B[2], 0.5)];
+      var eng = { p: E, semantic: null, spatial: null, phase: rnd(0, 7) };
+      engrams.push(eng);
+      [[TEAL, [-2700, 1200, 900], 'semantic'], [VIOLET, [2700, -1000, 700], 'spatial']].forEach(function (r) {
+        var S = add(E, r[1]);
+        var mid = scl(add(S, E), 0.5);
+        var ctrl = add(mid, [0, r[2] === 'semantic' ? 900 : -900, 600]);
+        var pts = [];
+        for (var q = 0; q <= 10; q++) {
+          var t = q / 10, a1 = lerp3(S, ctrl, t), b1 = lerp3(ctrl, E, t), pt = lerp3(a1, b1, t);
+          if (q > 0 && q < 10) pt = add(pt, [rnd(-90, 90), rnd(-90, 90), rnd(-90, 90)]);
+          pts.push(pt);
+        }
+        var route = { pts: pts, col: r[0], kind: r[2], eng: eng };
+        eng[r[2]] = route;
+        routes.push(route);
+      });
+    }
+
+    // XR support: a holographic scaffold around the brain, and cue panels along the path
+    lattice = [];
+    var LR = 1.16;
+    for (var li = 1; li < 9; li++) {
+      var v = -1 + li * 0.222, rr2 = Math.sqrt(1 - v * v), ring = [];
+      for (var sgi = 0; sgi <= 72; sgi++) {
+        var an = sgi / 72 * Math.PI * 2;
+        ring.push([b.c[0] + Math.cos(an) * rr2 * b.rx * LR, b.c[1] + v * b.ry * LR, b.c[2] + Math.sin(an) * rr2 * b.rz * LR]);
+      }
+      lattice.push(ring);
+    }
+    for (var mi = 0; mi < 14; mi++) {
+      var an2 = mi / 14 * Math.PI * 2, mer = [];
+      for (var sj = 0; sj <= 36; sj++) {
+        var v2 = -Math.PI / 2 + sj / 36 * Math.PI;
+        mer.push([b.c[0] + Math.cos(an2) * Math.cos(v2) * b.rx * LR, b.c[1] + Math.sin(v2) * b.ry * LR, b.c[2] + Math.sin(an2) * Math.cos(v2) * b.rz * LR]);
+      }
+      lattice.push(mer);
+    }
+    panels = [];
+    for (var pi2 = 1; pi2 < N; pi2++) {
+      var P = cards[pi2].pos, sd = pi2 % 2 ? -1 : 1;
+      var ctr = [P[0] + sd * 1500, P[1] + 520, P[2] - 500], w2 = 520, h2 = 300, th2 = sd * 0.5;
+      var cx = Math.cos(th2) * w2 / 2, sz = Math.sin(th2) * w2 / 2;
+      var p1 = [ctr[0] - cx, ctr[1] + h2 / 2, ctr[2] + sz], p2 = [ctr[0] + cx, ctr[1] + h2 / 2, ctr[2] - sz];
+      var p3 = [ctr[0] + cx, ctr[1] - h2 / 2, ctr[2] - sz], p4 = [ctr[0] - cx, ctr[1] - h2 / 2, ctr[2] + sz];
+      var l1a = lerp3(p1, p4, 0.3), l1b = lerp3(p2, p3, 0.3), l2a = lerp3(p1, p4, 0.55), l2b = lerp3(lerp3(p2, p3, 0.55), lerp3(p1, p4, 0.55), 0.35);
+      panels.push([[p1, p2, p3, p4, p1], [l1a, l1b], [l2a, l2b]]);
+    }
+
+    // distant stars, outside the brain
+    stars = [];
+    for (var si = 0; si < (mobile ? 260 : 520); si++) {
+      var su = Math.random() * 2 - 1, sp = Math.random() * Math.PI * 2, ss = Math.sqrt(1 - su * su), R = rnd(2.2, 5) * b.rz;
+      stars.push({ p: [b.c[0] + ss * Math.cos(sp) * R, b.c[1] + su * R * 0.6, b.c[2] + ss * Math.sin(sp) * R], s: rnd(200, 600), ph: rnd(0, 6.3) });
+    }
+    pulses = [];
+    projShell = new Float32Array(shell.p.length * 4);
+    projInner = new Float32Array(inner.p.length * 4);
+  }
+  var projShell, projInner;
+
+  function sizeCanvas() {
+    dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 1.75);
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  }
+
+  /* ---------------- drawing ---------------- */
+  var V = null, fogFar = 1, curEye = [0, 0, 0];
+  function project(p, out, o) {
+    var x = V[0]*p[0] + V[4]*p[1] + V[8]*p[2] + V[12];
+    var y = V[1]*p[0] + V[5]*p[1] + V[9]*p[2] + V[13];
+    var z = V[2]*p[0] + V[6]*p[1] + V[10]*p[2] + V[14];
+    if (z > -30) { out[o + 3] = -1; return false; }
+    var k = focal / -z;
+    out[o] = (W / 2 + x * k) * dpr; out[o + 1] = (H / 2 - y * k) * dpr; out[o + 2] = k; out[o + 3] = -z;
+    return true;
+  }
+  var fogNear = 0;
+  function fog(depth) { var f = 1 - (depth - fogNear) / fogFar; f = f > 1 ? 1 : f; return f <= 0.05 ? 0.05 * (f > 0 ? 1 : 0.4) : f * f; }
+
+  // line batching: buckets per colour and alpha level
+  var buckets = {};
+  function seg(col, alpha, x1, y1, x2, y2) {
+    if (alpha < 0.015) return;
+    var lvl = Math.min(7, Math.floor(alpha * 8)), key = col + '|' + lvl;
+    var bk = buckets[key] || (buckets[key] = { col: col, a: (lvl + 0.5) / 8, xs: [] });
+    bk.xs.push(x1, y1, x2, y2);
+  }
+  function flush(width) {
+    ctx.lineWidth = width;
+    for (var key in buckets) {
+      var bk = buckets[key], xs = bk.xs;
+      if (!xs.length) continue;
+      ctx.globalAlpha = bk.a; ctx.strokeStyle = 'rgb(' + bk.col + ')';
+      ctx.beginPath();
+      for (var i = 0; i < xs.length; i += 4) { ctx.moveTo(xs[i], xs[i + 1]); ctx.lineTo(xs[i + 2], xs[i + 3]); }
+      ctx.stroke();
+      bk.xs = [];
+    }
+  }
+  function dot2(rgb, x, y, size, alpha) {
+    if (alpha < 0.015) return;
+    ctx.globalAlpha = alpha > 1 ? 1 : alpha;
+    ctx.drawImage(sprite(rgb), x - size / 2, y - size / 2, size, size);
+  }
+
+  var tmpA = new Float32Array(4), tmpB = new Float32Array(4);
+  function drawPolyline(pts, col, alpha) {
+    for (var i = 0; i < pts.length - 1; i++) {
+      if (!project(pts[i], tmpA, 0) || !project(pts[i + 1], tmpB, 0)) continue;
+      seg(col, alpha * fog(Math.max(tmpA[3], tmpB[3])), tmpA[0], tmpA[1], tmpB[0], tmpB[1]);
+    }
+  }
+
+  function spawnPulse(set, proj, from) {
+    var a = from != null ? from : Math.floor(Math.random() * set.p.length);
+    var nb = set.adj[a];
+    if (!nb || !nb.length) return;
+    var b = nb[Math.floor(Math.random() * nb.length)];
+    pulses.push({ set: set, proj: proj, a: a, b: b, t: 0, dur: rnd(0.35, 0.8), hops: from != null ? 0 : 3 + Math.floor(Math.random() * 4) });
+  }
+
+  var lastT = 0;
+  function drawScene(time, support, capability, interior) {
+    var dt = Math.min(0.05, time - lastT); lastT = time;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = 'lighter';
+    var lw = Math.max(1, dpr * 0.9);
+    var i, o;
+
+    // stars
+    for (i = 0; i < stars.length; i++) {
+      if (!project(stars[i].p, tmpA, 0)) continue;
+      dot2(WHITE, tmpA[0], tmpA[1], clamp(stars[i].s * tmpA[2], 1.2, 5) * dpr, 0.35 + 0.25 * Math.sin(time * 1.3 + stars[i].ph));
+    }
+
+    // XR support scaffold (fades as support is withdrawn)
+    if (support > 0.01) {
+      for (i = 0; i < lattice.length; i++) drawPolyline(lattice[i], SUPPORT, 0.2 * support);
+      for (i = 0; i < panels.length; i++) for (var pl = 0; pl < panels[i].length; pl++) drawPolyline(panels[i][pl], SUPPORT, 0.75 * support * interior);
+      flush(lw);
+    }
+
+    // cortex
+    for (i = 0; i < shell.p.length; i++) project(shell.p[i], projShell, i * 4);
+    var shellLine = 0.5;
+    for (i = 0; i < shell.edges.length; i++) {
+      var ea = shell.edges[i][0] * 4, eb = shell.edges[i][1] * 4;
+      if (projShell[ea + 3] < 0 || projShell[eb + 3] < 0) continue;
+      seg(shell.col[shell.edges[i][0]], shellLine * fog(Math.max(projShell[ea + 3], projShell[eb + 3])),
+          projShell[ea], projShell[ea + 1], projShell[eb], projShell[eb + 1]);
+    }
+    // synapses near the path (brighten with capability)
+    for (i = 0; i < inner.p.length; i++) project(inner.p[i], projInner, i * 4);
+    var synLine = (0.16 + 0.3 * capability) * interior;
+    for (i = 0; i < inner.edges.length; i++) {
+      var ia = inner.edges[i][0] * 4, ib = inner.edges[i][1] * 4;
+      if (projInner[ia + 3] < 0 || projInner[ib + 3] < 0) continue;
+      seg(inner.col[inner.edges[i][0]], synLine * fog(Math.max(projInner[ia + 3], projInner[ib + 3])),
+          projInner[ia], projInner[ia + 1], projInner[ib], projInner[ib + 1]);
+    }
+    flush(lw);
+    // routes: semantic (teal) and spatial (violet), dimmed when perturbed
+    for (i = 0; i < routes.length; i++) {
+      var rt = routes[i];
+      drawPolyline(rt.pts, rt.col, (0.45 + 0.5 * capability) * routeStrength(rt, time) * interior);
+    }
+    flush(lw * 2.2);
+    for (i = 0; i < sulci.length; i++) drawPolyline(sulci[i], TEAL, 0.85);
+    flush(lw * 1.8);
+
+    // neurons
+    for (i = 0; i < shell.p.length; i++) {
+      o = i * 4; if (projShell[o + 3] < 0 || !shell.size[i]) continue;
+      dot2(shell.col[i], projShell[o], projShell[o + 1], clamp(shell.size[i] * projShell[o + 2], 1.5, 14) * dpr, 0.8 * fog(projShell[o + 3]));
+    }
+    for (i = 0; i < inner.p.length; i++) {
+      o = i * 4; if (projInner[o + 3] < 0) continue;
+      dot2(inner.col[i], projInner[o], projInner[o + 1], clamp(inner.size[i] * projInner[o + 2], 1.5, 26) * dpr,
+           (0.45 + 0.5 * capability) * interior * fog(projInner[o + 3]));
+    }
+
+    // action potentials travelling along synapses
+    var target = Math.round((mobile ? 26 : 60) * (0.3 + 0.7 * capability));
+    while (pulses.length < target) spawnPulse(Math.random() < 0.72 * interior ? inner : shell);
+    for (i = pulses.length - 1; i >= 0; i--) {
+      var pu = pulses[i];
+      pu.t += dt / pu.dur;
+      if (pu.t >= 1) {
+        pulses.splice(i, 1);
+        if (pu.hops > 0) {
+          var nb = pu.set.adj[pu.b];
+          if (nb && nb.length) {
+            var nxt = nb[Math.floor(Math.random() * nb.length)];
+            pulses.push({ set: pu.set, a: pu.b, b: nxt, t: 0, dur: rnd(0.35, 0.8), hops: pu.hops - 1 });
+          }
+        }
+        continue;
+      }
+      var P = pu.set.p, pa = P[pu.a], pb = P[pu.b];
+      var pp = lerp3(pa, pb, pu.t);
+      if (!project(pp, tmpA, 0)) continue;
+      var big = pu.set === shell ? 60 : 55;
+      dot2(WHITE, tmpA[0], tmpA[1], clamp(big * tmpA[2], 2.5, 30) * dpr, 0.95 * fog(tmpA[3]));
+      if (project(pa, tmpB, 0)) {
+        ctx.globalAlpha = 0.55 * fog(tmpA[3]); ctx.strokeStyle = 'rgb(' + WHITE + ')'; ctx.lineWidth = lw * 1.4;
+        ctx.beginPath(); ctx.moveTo(tmpB[0], tmpB[1]); ctx.lineTo(tmpA[0], tmpA[1]); ctx.stroke();
+      }
+    }
+
+    // route signals flowing into each memory, and the memories themselves
+    for (i = 0; i < routes.length; i++) {
+      var r = routes[i], str = routeStrength(r, time);
+      if (str < 0.2) continue;
+      for (var q = 0; q < 3; q++) {
+        var f = ((time * 0.35 + q / 3 + (r.kind === 'spatial' ? 0.17 : 0)) % 1), seg2 = f * (r.pts.length - 1), si = Math.floor(seg2);
+        var pt = lerp3(r.pts[si], r.pts[Math.min(si + 1, r.pts.length - 1)], seg2 - si);
+        if (!project(pt, tmpA, 0)) continue;
+        dot2(r.col, tmpA[0], tmpA[1], clamp(140 * tmpA[2], 3, 34) * dpr, str * interior * fog(tmpA[3]));
+      }
+    }
+    for (i = 0; i < engrams.length; i++) {
+      var e = engrams[i];
+      if (!project(e.p, tmpA, 0)) continue;
+      var on = Math.max(routeStrength(e.semantic, time), routeStrength(e.spatial, time));
+      var beat = 0.75 + 0.25 * Math.sin(time * 3 + e.phase);
+      dot2(AMBER, tmpA[0], tmpA[1], clamp(520 * tmpA[2], 6, 90) * dpr, (0.55 + 0.45 * capability) * on * beat * interior * fog(tmpA[3]));
+      dot2(WHITE, tmpA[0], tmpA[1], clamp(120 * tmpA[2], 2, 20) * dpr, on * interior * fog(tmpA[3]));
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  // perturbation cycle: the two routes are disrupted in turn; the memory stays reachable through the other one
+  function routeStrength(r, time) {
+    if (!r) return 0;
+    var c = (time + r.eng.phase) % 8;
+    if (r.kind === 'semantic') return c > 1 && c < 2.6 ? 0.15 : 1;
+    return c > 5 && c < 6.6 ? 0.15 : 1;
+  }
+
+  /* ---------------- per frame ---------------- */
+  var activeIdx = -1;
+  function frame(now) {
+    if (!running) return;
+    var time = now / 1000;
+    var max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    progTarget = clamp(window.scrollY / max, 0, 1);
+    prog += (progTarget - prog) * 0.09;
+    if (Math.abs(progTarget - prog) < 0.00005) prog = progTarget;
+    mouse.x += (mouse.tx - mouse.x) * 0.05; mouse.y += (mouse.ty - mouse.y) * 0.05;
+
+    var cam = camAt(prog);
+    var eye = [cam.eye[0] + mouse.x * 46, cam.eye[1] - mouse.y * 30, cam.eye[2]];
+    var target = [cam.target[0] + mouse.x * 14, cam.target[1] - mouse.y * 9, cam.target[2]];
+    V = lookAt(eye, target);
+    curEye = eye;
+    fogNear = Math.max(0, len(sub(eye, brain.c)) - brain.rz * 1.1);
+    fogFar = brain.rz * 2.5;
+    var A = mul(mul(FLIP, trans(0, 0, focal)), V);
+    var s = cam.s;
+
+    for (var i = 0; i < cards.length; i++) {
+      var c = cards[i], d = i - s, op;
+      if (d < 0) op = 1 - smooth(0, 0.42, -d);
+      else if (d <= 1) op = lerp(1, 0.32, d);
+      else op = Math.max(0, 0.32 - (d - 1) * 0.16);
+      var vz = apply(V, c.pos)[2];
+      if (vz > -60 || op < 0.01) {
+        if (c.vis !== false) { c.el.style.visibility = 'hidden'; c.vis = false; }
+        continue;
+      }
+      if (c.vis !== true) { c.el.style.visibility = 'visible'; c.vis = true; }
+      c.el.style.transform = css(mul(A, c.B)) + ' translate(-50%,-50%)';
+      c.el.style.opacity = op.toFixed(3);
+      c.el.style.zIndex = String(Math.round(100000 + vz));
+      c.el.style.pointerEvents = Math.abs(d) < 0.3 ? 'auto' : 'none';
+    }
+
+    // before the dive, the brain turns slowly so it reads as 3D (cards are not affected)
+    var spin = (1 - smooth(0, 0.6, s)) * Math.sin(time * 0.25) * 0.2;
+    if (Math.abs(spin) > 1e-4) {
+      var bc = brain.c;
+      V = mul(V, mul(mul(trans(bc[0], bc[1], bc[2]), rotY(spin)), trans(-bc[0], -bc[1], -bc[2])));
+    }
+    var support = 1 - smooth(0, 0.85, prog);
+    var capability = 0.2 + 0.8 * smooth(0.02, 0.95, prog);
+    drawScene(time, support, capability, 0.1 + 0.9 * smooth(0.25, 0.85, s));
+    hudSup.style.width = (support * 100).toFixed(1) + '%';
+    hudCap.style.width = (capability * 100).toFixed(1) + '%';
+
+    progressEl.style.width = (prog * 100).toFixed(2) + '%';
+    if (window.scrollY > 40) hintEl.classList.add('gone'); else hintEl.classList.remove('gone');
+    var near = Math.round(s), sec = 0;
+    for (var k = 0; k < sections.length; k++) if (sections[k].index <= near) sec = k;
+    if (sec !== activeIdx) { activeIdx = sec; markActive(sec); }
+    requestAnimationFrame(frame);
+  }
+
+  /* ---------------- navigation ---------------- */
+  function scrollToCard(index) {
+    var max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    var N = Math.max(2, cards.length);
+    window.scrollTo({ top: max * index / (N - 1), behavior: 'smooth' });
+  }
+  function buildNav() {
+    menu.innerHTML = ''; dotsEl.innerHTML = '';
+    var is3d = root.classList.contains('is-3d');
+    var list = is3d ? sections : Array.prototype.map.call(cv.querySelectorAll('[data-card]'), function (el) {
+      return { label: el.getAttribute('data-label'), el: el };
+    });
+    list.forEach(function (sec) {
+      var li = document.createElement('li'), b = document.createElement('button');
+      b.type = 'button'; b.textContent = sec.label; b.setAttribute('role', 'menuitem');
+      b.addEventListener('click', function () {
+        closeMenu();
+        if (root.classList.contains('is-3d')) scrollToCard(sec.index);
+        else sec.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      li.appendChild(b); menu.appendChild(li);
+      if (is3d) {
+        var dl = document.createElement('li'), db = document.createElement('button'), sp = document.createElement('span');
+        db.type = 'button'; db.setAttribute('aria-label', sec.label); sp.textContent = sec.label; db.appendChild(sp);
+        db.addEventListener('click', function () { scrollToCard(sec.index); });
+        dl.appendChild(db); dotsEl.appendChild(dl);
+      }
+    });
+    activeIdx = -1;
+  }
+  function markActive(k) {
+    Array.prototype.forEach.call(menu.querySelectorAll('button'), function (b, i) { b.classList.toggle('active', i === k); });
+    Array.prototype.forEach.call(dotsEl.querySelectorAll('button'), function (b, i) { b.classList.toggle('active', i === k); });
+  }
+  function closeMenu() { menu.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+  menuBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var open = !menu.classList.contains('open');
+    menu.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', function (e) { if (!menu.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+
+  /* ---------------- view modes ---------------- */
+  function setMode(mode, save) {
+    root.className = mode === '3d' ? 'is-3d' : 'is-classic';
+    viewBtn.textContent = mode === '3d' ? 'Classic view' : '3D view';
+    if (save) { try { localStorage.setItem('cv-view', mode); } catch (e) {} }
+    window.scrollTo(0, 0);
+    if (mode === '3d') {
+      if (!built) buildCards();
+      layout();
+      buildNav();
+      prog = progTarget = 0;
+      if (!running) { running = true; requestAnimationFrame(frame); }
+    } else {
+      running = false;
+      buildNav();
+    }
+  }
+  viewBtn.addEventListener('click', function () {
+    setMode(root.classList.contains('is-3d') ? 'classic' : '3d', true);
+  });
+
+  addEventListener('pointermove', function (e) {
+    if (e.pointerType === 'touch') return;
+    mouse.tx = (e.clientX / innerWidth) * 2 - 1;
+    mouse.ty = (e.clientY / innerHeight) * 2 - 1;
+  }, { passive: true });
+
+  var rtimer = null;
+  addEventListener('resize', function () {
+    clearTimeout(rtimer);
+    rtimer = setTimeout(function () {
+      if (!root.classList.contains('is-3d')) return;
+      var frac = progTarget;
+      var bigChange = Math.abs(innerWidth - lastBuildW) > 40 || Math.abs(innerHeight - lastBuildH) > 140;
+      if (bigChange) buildCards();
+      layout();
+      var max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      window.scrollTo(0, frac * max);
+    }, 150);
+  });
+
+  addEventListener('keydown', function (e) {
+    if (!root.classList.contains('is-3d') || e.target.closest('input,textarea,select,button,a,[contenteditable]')) return;
+    var N = cards.length; if (N < 2) return;
+    var s = prog * (N - 1);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault(); scrollToCard(Math.min(N - 1, Math.floor(s + 0.01) + 1));
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault(); scrollToCard(Math.max(0, Math.ceil(s - 0.01) - 1));
+    } else if (e.key === 'Home') { e.preventDefault(); scrollToCard(0); }
+    else if (e.key === 'End') { e.preventDefault(); scrollToCard(N - 1); }
+  });
+
+  setMode(root.classList.contains('is-3d') ? '3d' : 'classic', false);
+})();
+</script>
+</body>
+</html>
