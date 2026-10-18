@@ -6,7 +6,7 @@
 <title>Maheshya Weerasinghe, PhD</title>
 <meta name="description" content="Maheshya Weerasinghe, Assistant Professor (Tenure) in Human-Computer Interaction: cognitive augmentation, XR (AR/VR/MR), and AI and biosensing in XR. Academic CV with publications, teaching and service.">
 <meta property="og:title" content="Maheshya Weerasinghe, PhD">
-<meta property="og:description" content="Assistant Professor (Tenure) | Cognitive Augmentation to Create “Smarter Humans” not “Smarter Machines” | XR (AR/VR/MR) | AI and Biosensing in XR">
+<meta property="og:description" content="Assistant Professor (Tenure) | Cognitive Augmentation to Create “Smarter Humans” not “Smarter Machines”">
 <script>
   // Choose the view and theme before first paint: 3D by default, classic for reduced motion,
   // a saved choice, or a link straight to one of the classic pages (e.g. #publications).
@@ -160,6 +160,8 @@
   p { margin: 0 0 10px; }
   .areas { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 8px 0 0; }
   .areas li { padding: 3px 10px; border-radius: 6px; background: var(--tag); font-size: 14px; }
+  /* profile */
+  .hl { color: var(--accent2); background: linear-gradient(transparent 64%, var(--tag) 64%); }
   .entry { display: grid; grid-template-columns: 1fr auto; column-gap: 16px; padding: 6px 0; border-bottom: 1px solid var(--rule); }
   .entry:last-child { border-bottom: 0; }
   .entry .org { font-weight: 700; }
@@ -247,6 +249,11 @@
     background: var(--surface); color: var(--accent); font-size: 0.82rem; font-weight: 600; text-align: center; white-space: normal;
   }
   #cv .entry.current .date { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  #cv .entry.lect .date { background: var(--award-bg); border-color: var(--award-fg); color: var(--award-fg); font-weight: 700; }
+  .lect-note {
+    margin: 4px 0 6px; padding: 10px 14px; border-radius: 10px; border-left: 4px solid var(--award-fg);
+    background: var(--award-bg); color: var(--text); font-size: 0.95rem;
+  }
   #cv .entry .title { grid-area: title; font-style: normal; font-weight: 700; color: var(--text); font-size: 1.02rem; }
   #cv .entry .org { grid-area: org; font-weight: 500; color: var(--accent2); }
   #cv .entry .loc { grid-area: loc; text-align: left; font-size: 0.9rem; }
@@ -256,10 +263,34 @@
   #cv ul.pubs li { position: relative; padding: 11px 6px 11px 4.6em; }
   #cv ul.pubs li .yr { position: absolute; left: 0; top: 11px; min-width: 0; }
   #cv ul.pubs li:hover { background: linear-gradient(90deg, var(--tag), transparent 85%); }
-  #cv ul.awards li { padding-left: 5.8em; }
+  /* awards: year | icon | text, with a medal summary on top */
+  :root { --gold: #D9A21B; --silver: #A3ADB8; --bronze: #C0763E; --rb: #3E86B5; --rb2: #1F5D8C; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --gold: #EDB937; --silver: #BAC3CD; --rb: #6FB3DC; --rb2: #3E86B5; } }
+  :root[data-theme="dark"] { --gold: #EDB937; --silver: #BAC3CD; --rb: #6FB3DC; --rb2: #3E86B5; }
+  ul.awards li { display: grid; grid-template-columns: 4.2em 26px minmax(0, 1fr); column-gap: 10px; align-items: start; }
+  #cv ul.awards li { padding: 10px 8px; }
+  #cv ul.awards li .yr { position: static; }
+  .ai { display: block; width: 24px; height: 24px; margin-top: -1px; color: var(--accent2); }
+  .ai.k-gold, .ai.k-trophy { color: var(--gold); }
+  .ai.k-silver { color: var(--silver); }
+  .ai.k-bronze { color: var(--bronze); }
+  .ai.k-sch { color: var(--accent); }
+  ul.awards li.feat { background: linear-gradient(90deg, var(--award-bg), transparent 92%); border-radius: 10px; }
+  #cv ul.awards li.feat:hover { background: linear-gradient(90deg, var(--award-bg), transparent 92%); }
+  ul.awards li.feat .ai { width: 26px; height: 26px; margin-top: -3px; filter: drop-shadow(0 2px 4px rgba(217, 162, 27, 0.45)); }
+  ul.awards li[data-k="gold"] .at > b:first-child, ul.awards li[data-k="trophy"] .at > b:first-child { color: var(--award-fg); }
+  .award-sum { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 6px; }
+  .award-sum .as {
+    display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 8px;
+    border: 1px solid var(--rule); border-radius: 12px; background: var(--surface);
+  }
+  .award-sum .ai { width: 26px; height: 26px; margin: 0; }
+  .award-sum b { font-size: 1.15rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .award-sum span { font-size: 0.86rem; color: var(--muted); }
+  .people { display: flex; flex-wrap: wrap; gap: 6px; }
+  .people span { padding: 2px 10px; border-radius: 999px; background: var(--tag); color: var(--text); font-weight: 600; font-size: 0.9rem; }
 
   /* news */
-  #cv .news-list.collapsed li:nth-child(n+7) { display: none; }
   #cv .news-list li { padding: 11px 0; }
   .more { margin-top: 14px; }
 
@@ -334,11 +365,27 @@
   .card3d .links a { background: rgba(255, 255, 255, 0.05); border-color: rgba(92, 196, 205, 0.35); color: var(--ink); }
   .card3d .links a:hover { color: var(--glow); }
   .card3d .areas li, .card3d .tag { background: rgba(92, 196, 205, 0.14); color: var(--ink); }
+  .card3d .hl { color: var(--glow); background: linear-gradient(transparent 64%, rgba(92, 196, 205, 0.2) 64%); }
   .card3d .tag { color: var(--glow); }
   .card3d .tag.k-award { background: rgba(255, 190, 110, 0.16); color: #ffc983; }
   .card3d .tag.k-role { background: rgba(120, 220, 160, 0.14); color: #8fe3b4; }
   .card3d .tag.k-event { background: rgba(169, 155, 255, 0.16); color: var(--glow2); }
   .card3d .tag.k-q1 { background: rgba(120, 220, 160, 0.14); color: #8fe3b4; }
+  .card3d .lect-note { background: rgba(255, 190, 110, 0.1); border-left-color: #ffc983; color: var(--ink); }
+  .card3d { --gold: #F2C14E; --silver: #C9D1DA; --bronze: #DB9461; --rb: #5cc4cd; --rb2: #7d6fe0; }
+  .card3d ul.awards li { grid-template-columns: 3.3em 22px minmax(0, 1fr); column-gap: 8px; }
+  .card3d .ai { width: 20px; height: 20px; color: var(--glow); }
+  .card3d .ai.k-gold, .card3d .ai.k-trophy { color: var(--gold); }
+  .card3d .ai.k-silver { color: var(--silver); }
+  .card3d .ai.k-bronze { color: var(--bronze); }
+  .card3d .ai.k-sch { color: var(--glow2); }
+  .card3d ul.awards li.feat { background: linear-gradient(90deg, rgba(255, 190, 110, 0.13), transparent 92%); }
+  .card3d ul.awards li[data-k="gold"] .at > b:first-child, .card3d ul.awards li[data-k="trophy"] .at > b:first-child { color: #ffc983; }
+  .card3d .award-sum .as { background: rgba(255, 255, 255, 0.04); border-color: rgba(92, 196, 205, 0.25); padding: 4px 10px 4px 6px; }
+  .card3d .award-sum .ai { width: 22px; height: 22px; }
+  .card3d .award-sum span { color: var(--ink-muted); font-size: 12.5px; }
+  .card3d .people span { background: rgba(92, 196, 205, 0.14); color: var(--ink); }
+  .card3d .entry.lect .title { color: #ffc983; font-style: normal; font-weight: 600; }
   .card3d .yr { color: var(--glow2); }
   .card3d .entry, .card3d ul.pubs li, .card3d .rows > div, .card3d .news-list li { border-bottom-color: rgba(163, 179, 201, 0.16); }
   .card3d ul.pubs li { font-size: 13.5px; line-height: 1.45; padding: 5px 0; }
@@ -439,7 +486,6 @@
     #cv { padding: 0; max-width: none; }
     #cv .page { display: block !important; animation: none !important; }
     #cv .is-hidden { display: revert !important; }
-    #cv .news-list.collapsed li:nth-child(n+7) { display: grid !important; }
     #cv .solo > h2 { display: flex !important; }
     #cv section { margin-top: 24px; break-inside: auto; }
     #cv .entry, #cv ul.pubs li, #cv .news-list li { break-inside: avoid; }
@@ -448,6 +494,34 @@
 </style>
 </head>
 <body>
+
+<!-- Award icons, used by the Awards section -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
+  <symbol id="i-medal" viewBox="0 0 24 24">
+    <path d="M6.2 1.5h4.4l2.7 6.6-3.4 1.7z" style="fill:var(--rb)"/>
+    <path d="M17.8 1.5h-4.4l-2.7 6.6 3.4 1.7z" style="fill:var(--rb2)"/>
+    <circle cx="12" cy="15.2" r="7" fill="currentColor"/>
+    <circle cx="12" cy="15.2" r="5" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>
+    <path d="M12 11.9l1.02 2.07 2.28.33-1.65 1.6.39 2.27L12 17.1l-2.04 1.07.39-2.27-1.65-1.6 2.28-.33z" fill="#fff" fill-opacity=".9"/>
+  </symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24">
+    <path d="M7 2.5h10v5.8a5 5 0 0 1-10 0z" fill="currentColor"/>
+    <path d="M7 4.5H4.2v1.8A3.6 3.6 0 0 0 7.8 9.9M17 4.5h2.8v1.8a3.6 3.6 0 0 1-3.6 3.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+    <path d="M10.9 13h2.2v3.6h-2.2z" fill="currentColor"/>
+    <rect x="7.6" y="16.4" width="8.8" height="2.4" rx=".7" fill="currentColor"/>
+    <rect x="6.4" y="19.3" width="11.2" height="2.4" rx=".7" style="fill:var(--rb2)"/>
+    <path d="M12 4.6l.85 1.72 1.9.28-1.37 1.34.32 1.89L12 8.94l-1.7.89.32-1.89-1.37-1.34 1.9-.28z" fill="#fff" fill-opacity=".9"/>
+  </symbol>
+  <symbol id="i-rosette" viewBox="0 0 24 24">
+    <path d="M8.4 13.5 6.2 22l3.6-1.6 2.2 2.6 2.2-2.6 3.6 1.6-2.2-8.5z" style="fill:var(--rb2)"/>
+    <path d="M12 1.5l1.9 1.4 2.3-.3.9 2.2 2.2.9-.3 2.3 1.4 1.9-1.4 1.9.3 2.3-2.2.9-.9 2.2-2.3-.3L12 18.3l-1.9-1.4-2.3.3-.9-2.2-2.2-.9.3-2.3L3.6 9.9 5 8l-.3-2.3 2.2-.9.9-2.2 2.3.3z" fill="currentColor"/>
+    <circle cx="12" cy="9.9" r="4.2" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.1"/>
+  </symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24">
+    <path d="M12 3 1.5 8.6 12 14.2l8.4-4.5V16h1.8V8.6z" fill="currentColor"/>
+    <path d="M5.4 11.9v4.2c0 1.8 3 3.6 6.6 3.6s6.6-1.8 6.6-3.6v-4.2L12 15.4z" style="fill:var(--rb2)"/>
+  </symbol>
+</svg>
 
 <div class="topbar">
   <a class="brand" href="#about"><span class="mono"><img src="photo.jpg" alt="" onerror="this.remove()">MW</span><span class="full">Maheshya Weerasinghe</span></a>
@@ -495,8 +569,6 @@
         <p class="tagline">A Simple “Human” Attached to “Computers” and Its “Interactions”</p>
         <ul class="focus">
           <li>Cognitive Augmentation to Create “Smarter Humans” not “Smarter Machines”</li>
-          <li>XR (AR/VR/MR)</li>
-          <li>AI and Biosensing in XR</li>
         </ul>
         <ul class="links">
           <li><a href="mailto:maheshya.weerasinghe@famnit.upr.si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4.4 7H19.6L12 12.2zM4 8.9V17h16V8.9l-8 5.4-8-5.4z"/></svg>Email</a></li>
@@ -513,9 +585,10 @@
 
   <section data-card data-label="Profile">
     <h2>Academic Profile</h2>
-    <p>I work at the meeting point of people, computers, and the interactions between them. My research is about cognitive augmentation: designing technology that makes people smarter, rather than only making machines smarter. I build and study extended reality (AR/VR/MR) systems that use AI and biosensing to understand the person using them and adapt the guidance they give, with applications in vocabulary and skill learning, music improvisation, attention and distraction, and safety in social VR. I hold a joint PhD in Computer Science and have collaborated with research groups across Europe and Asia.</p>
+    <p>I work at the meeting point of people, computers, and the interactions between them. My research explores <strong>Cognitive</strong> (mental processing, attention, and memory) and <strong>Affective</strong> (emotions, moods, and social presence) <strong>Incorporation as an XR Design Space</strong>: designing technology that helps people by adapting to them. I build and study extended reality (AR/VR/MR) systems that use AI and biosensing to understand the person using them and adapt to their needs, with applications in skill learning, attention and distraction, and neurocognitive impairments.</p>
     <ul class="areas">
       <li>Cognitive Augmentation</li>
+      <li>Affective Engagement</li>
       <li>Extended Reality (AR/VR/MR)</li>
       <li>AI and Biosensing in XR</li>
       <li>Human-Computer Interaction</li>
@@ -524,7 +597,7 @@
     </ul>
   </section>
 
-  <!-- News: newest first. Add an <li> at the top for each new item; the first six show until "Show all" is clicked.
+  <!-- News: newest first. Add an <li> at the top for each new item; only the 10 most recent are shown, so delete the oldest when you add one.
        Tag classes: plain .tag (paper), .k-award, .k-role, .k-event (demos, workshops, service, outreach). -->
   <section data-card data-label="News" class="news">
     <h2>News</h2>
@@ -539,13 +612,7 @@
       <li><span class="nd">2026</span><span class="nt"><span class="tag k-event">WORKSHOP</span><i>Directing the Robot: Scaffolding Creative Human-AI-Robot Interaction</i> at the 3rd InterAI Workshop, ACM CHI 2026.</span></li>
       <li><span class="nd">2025</span><span class="nt"><span class="tag k-award">AWARD</span>Best Paper Award at ACM IUI 2025 for <i>Text-to-Image Generation for Vocabulary Learning Using the Keyword Method</i>.</span></li>
       <li><span class="nd">2025</span><span class="nt"><span class="tag">PAPER</span><i>Beyond Mute and Block</i>, on the adoption and effectiveness of safety tools in social VR, published in <i>IEEE TVCG</i>.</span></li>
-      <li><span class="nd">2025</span><span class="nt"><span class="tag">PAPER</span><i>ImproVisAR</i>, an augmented reality piano roll for teaching improvisation, published in <i>Virtual Reality</i>.</span></li>
-      <li><span class="nd">Sep 2024</span><span class="nt"><span class="tag k-role">ROLE</span>Joined FAMNIT, University of Primorska, as Assistant Professor.</span></li>
-      <li><span class="nd">2024</span><span class="nt"><span class="tag k-event">OUTREACH</span>Motion capture for the animated film <i>Jump into the Future</i>, selected for the 27th Festival of Slovenian Film.</span></li>
-      <li><span class="nd">Sep 2023</span><span class="nt"><span class="tag k-role">ROLE</span>Joined the SIRIUS Lab, University of Glasgow, as Research Associate.</span></li>
-      <li><span class="nd">2023</span><span class="nt"><span class="tag k-role">PHD</span>Completed my joint PhD in Computer Science at the University of St Andrews and the University of Primorska.</span></li>
     </ul>
-    <button class="btn more only-classic" id="news-more" type="button" aria-controls="news-list" hidden>Show all news</button>
   </section>
 
 </div>
@@ -580,35 +647,36 @@
   </section>
 
   <section data-card data-label="Awards">
+    <!-- data-k picks the icon: trophy, gold, silver, bronze, nom (nomination), star, sch (scholarship); class="feat" highlights the row. -->
     <h2>Awards, Scholarships &amp; Recognition</h2>
     <h3>Academic &amp; Research Awards</h3>
     <ul class="pubs awards split">
-      <li><span class="yr">2025</span> <b>Best Paper Award</b>, 30th ACM Conference on Intelligent User Interfaces (IUI).</li>
-      <li><span class="yr">2019</span> <b>Faculty Reward for Research Work</b>, FAMNIT, University of Primorska.</li>
-      <li><span class="yr">2019</span> <b>Local Winner and Global Nominee</b>, NASA Space Apps Challenge.</li>
-      <li><span class="yr">2014</span> <b>Gold Medal for Best Performance in Industrial Training</b>, University of Colombo.</li>
+      <li data-k="trophy" class="feat"><span class="yr">2025</span> <b>Best Paper Award</b>, 30th ACM Conference on Intelligent User Interfaces (IUI).</li>
+      <li data-k="star"><span class="yr">2019</span> <b>Faculty Reward for Research Work</b>, FAMNIT, University of Primorska.</li>
+      <li data-k="star"><span class="yr">2019</span> <b>Local Winner and Global Nominee</b>, NASA Space Apps Challenge.</li>
+      <li data-k="gold" class="feat"><span class="yr">2014</span> <b>Gold Medal for Best Performance in Industrial Training</b>, University of Colombo.</li>
     </ul>
     <h3>Scholarships</h3>
     <ul class="pubs awards split">
-      <li><span class="yr">2022</span> <b>IDEA Scholarship</b>, IEEE International Symposium on Mixed and Augmented Reality (ISMAR).</li>
-      <li><span class="yr">2020</span> <b>School Scholarship for PhD</b>, University of St Andrews.</li>
-      <li><span class="yr">2018</span> <b>ACM Scholarship</b>, womENcourage.</li>
+      <li data-k="sch"><span class="yr">2022</span> <b>IDEA Scholarship</b>, IEEE International Symposium on Mixed and Augmented Reality (ISMAR).</li>
+      <li data-k="sch"><span class="yr">2020</span> <b>School Scholarship for PhD</b>, University of St Andrews.</li>
+      <li data-k="sch"><span class="yr">2018</span> <b>ACM Scholarship</b>, womENcourage.</li>
     </ul>
     <h3>National &amp; International ICT Awards</h3>
     <ul class="pubs awards split">
-      <li><span class="yr">2018</span> <b>Nominated</b> for the Asia Pacific ICT Alliance Awards (APICTA), China.</li>
-      <li><span class="yr">2018</span> <b>Silver Award</b>, R&amp;D category, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
-      <li><span class="yr">2016</span> <b>Gold Award</b>, e-Health (Health Care) category, e-Swabhimani National Best e-Content Award, Sri Lanka.</li>
-      <li><span class="yr">2015</span> <b>Gold Award</b>, e-Health (Health Care) category, Manthan Awards – South Asia &amp; Asia Pacific Digital Inclusion for Development, India.</li>
-      <li><span class="yr">2015</span> <b>Nominated</b> for the Asia Pacific ICT Alliance Awards (APICTA), Sri Lanka.</li>
-      <li><span class="yr">2015</span> <b>Overall Bronze Award</b>, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
-      <li><span class="yr">2015</span> <b>Gold Award</b>, e-Health (Health Care) category, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
-      <li><span class="yr">2015</span> <b>Bronze Award</b>, Education &amp; Training category, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
-      <li><span class="yr">2014</span> <b>Gold Award</b>, e-Science &amp; Technology category, Manthan Awards – South Asia &amp; Asia Pacific Digital Inclusion for Development, India.</li>
-      <li><span class="yr">2014</span> <b>Gold Award</b>, e-Science &amp; Technology category, e-Swabhimani National Best e-Content Award, Sri Lanka.</li>
-      <li><span class="yr">2013</span> <b>Nominated</b> for the Asia Pacific ICT Alliance Awards (APICTA), Hong Kong.</li>
-      <li><span class="yr">2013</span> <b>Overall Gold Award</b>, National Best Quality Software Awards (NBQSA), Sri Lanka.</li>
-      <li><span class="yr">2013</span> <b>Gold Award</b>, R&amp;D category, National Best Quality Software Awards (NBQSA), Sri Lanka.</li>
+      <li data-k="nom"><span class="yr">2018</span> <b>Nominated</b> for the Asia Pacific ICT Alliance Awards (APICTA), China.</li>
+      <li data-k="silver"><span class="yr">2018</span> <b>Silver Award</b>, R&amp;D category, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
+      <li data-k="gold"><span class="yr">2016</span> <b>Gold Award</b>, e-Health (Health Care) category, e-Swabhimani National Best e-Content Award, Sri Lanka.</li>
+      <li data-k="gold"><span class="yr">2015</span> <b>Gold Award</b>, e-Health (Health Care) category, Manthan Awards – South Asia &amp; Asia Pacific Digital Inclusion for Development, India.</li>
+      <li data-k="nom"><span class="yr">2015</span> <b>Nominated</b> for the Asia Pacific ICT Alliance Awards (APICTA), Sri Lanka.</li>
+      <li data-k="bronze"><span class="yr">2015</span> <b>Overall Bronze Award</b>, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
+      <li data-k="gold"><span class="yr">2015</span> <b>Gold Award</b>, e-Health (Health Care) category, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
+      <li data-k="bronze"><span class="yr">2015</span> <b>Bronze Award</b>, Education &amp; Training category, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
+      <li data-k="gold"><span class="yr">2014</span> <b>Gold Award</b>, e-Science &amp; Technology category, Manthan Awards – South Asia &amp; Asia Pacific Digital Inclusion for Development, India.</li>
+      <li data-k="gold"><span class="yr">2014</span> <b>Gold Award</b>, e-Science &amp; Technology category, e-Swabhimani National Best e-Content Award, Sri Lanka.</li>
+      <li data-k="nom"><span class="yr">2013</span> <b>Nominated</b> for the Asia Pacific ICT Alliance Awards (APICTA), Hong Kong.</li>
+      <li data-k="gold" class="feat"><span class="yr">2013</span> <b>Overall Gold Award</b>, National Best Quality Software Awards (NBQSA), Sri Lanka.</li>
+      <li data-k="gold"><span class="yr">2013</span> <b>Gold Award</b>, R&amp;D category, National Best Quality Software Awards (NBQSA), Sri Lanka.</li>
     </ul>
   </section>
 
@@ -700,32 +768,43 @@
 <div class="page" data-page="teaching">
 
   <header class="page-head only-classic">
-    <h1>Teaching</h1>
-    <p>Courses, research supervision, and public engagement.</p>
+    <h1>Teaching &amp; Mentoring</h1>
+    <p>Teaching, research supervision and mentoring, and knowledge transfer.</p>
   </header>
 
-  <section data-card data-label="Teaching" class="solo">
-    <h2>Teaching, Mentoring &amp; Knowledge Transfer</h2>
-    <h3>University of Primorska, FAMNIT</h3>
-    <ul class="bullets split">
-      <li><b>Lecturer – Augmented Reality (Unity 3D Game Development)</b>, BSc Computer Science, 2024–Present; previously Teaching Assistant in Augmented Reality, 2018–2023.</li>
-      <li><b>Research supervision and mentoring:</b> PhD co-supervision (2024–Present), MSc research projects (2023–2024), and BSc final-year research projects (2022–2024).</li>
-      <li><b>Teaching Assistant – Computer Practicum II (Web Development)</b>, 2018–2023; <b>Computer Practicum I (Bash and C)</b>, 2019–2020.</li>
-    </ul>
-    <h3>Public Engagement &amp; Cross-Disciplinary Knowledge Transfer</h3>
-    <ul class="bullets split">
-      <li><b>Motion Capture Assistant – <i>Jump into the Future</i></b>, HICUP Lab / University of Primorska, 2024; contributed motion-capture expertise to an interdisciplinary animated-film production selected for the 27th Festival of Slovenian Film.</li>
-      <li><b>Workshop Instructor – “Mixed Reality”</b>, Google Developers Club FAMNIT Hackathon, 2022.</li>
-      <li><b>Co-organiser / Instructor – Practical XR Workshops:</b> Introduction to Motion Capture; Full-Body Motion Capture; and Head-Mounted Displays (AR/VR/MR), multiple editions, 2019–2024.</li>
-      <li><b>Demonstrator – Virtual, Augmented and Mixed Reality</b>, European Researchers' Night, Koper, 2018 and 2019.</li>
-      <li><b>VR Demonstrator</b>, InnoRenew CoE, presenting an immersive experience of the new InnoRenew building to international visitors, 2019.</li>
-    </ul>
-    <h3>University of Colombo School of Computing</h3>
-    <ul class="bullets split">
-      <li><b>Co-supervisor / Mentor</b>, final-year BSc Computer Science and Information Systems research projects, 2015–Present.</li>
-      <li><b>Teaching Assistant – Virtual Reality and Simulations</b>, Master of IT, 2015.</li>
-      <li><b>Visiting Lecturer – Modelling and Simulation Workshop</b>, Department of History and Archaeology, University of Colombo, 2014.</li>
-    </ul>
+  <!-- Lecturer roles carry class="lect" (gold date badge). -->
+  <section data-card data-label="Teaching">
+    <h2>Teaching</h2>
+    <p class="lect-note"><b>Lecturer positions:</b> Lecturer in Augmented Reality and in Computer Practicum I (Bash and C), University of Primorska, FAMNIT (2024–Present) · Visiting Lecturer, University of Colombo (2014).</p>
+    <div class="split">
+      <div class="entry lect"><span class="org">University of Primorska, FAMNIT</span><span class="date">2024–Present</span><span class="title">Lecturer — Augmented Reality (Unity 3D Game Development)</span><span class="loc">BSc Computer Science</span></div>
+      <div class="entry lect"><span class="org">University of Primorska, FAMNIT</span><span class="date">2024–Present</span><span class="title">Lecturer — Computer Practicum I (Bash and C)</span><span class="loc">BSc Computer Science</span></div>
+      <div class="entry"><span class="org">University of Primorska, FAMNIT</span><span class="date">2018–2023</span><span class="title">Teaching Assistant — Augmented Reality</span><span class="loc">BSc Computer Science</span></div>
+      <div class="entry"><span class="org">University of Primorska, FAMNIT</span><span class="date">2018–2023</span><span class="title">Teaching Assistant — Computer Practicum II (Web Development)</span><span class="loc">BSc Computer Science</span></div>
+      <div class="entry"><span class="org">University of Primorska, FAMNIT</span><span class="date">2019–2020</span><span class="title">Teaching Assistant — Computer Practicum I (Bash and C)</span><span class="loc">BSc Computer Science</span></div>
+      <div class="entry"><span class="org">University of Colombo School of Computing</span><span class="date">2015</span><span class="title">Teaching Assistant — Virtual Reality and Simulations</span><span class="loc">Master of IT</span></div>
+      <div class="entry lect"><span class="org">Department of History and Archaeology, University of Colombo</span><span class="date">2014</span><span class="title">Visiting Lecturer — Modelling and Simulation Workshop</span><span class="loc">Colombo, Sri Lanka</span></div>
+    </div>
+  </section>
+
+  <section data-card data-label="Supervision">
+    <h2>Research Supervision &amp; Mentoring</h2>
+    <div class="split">
+      <div class="entry current"><span class="org">University of Primorska, FAMNIT</span><span class="date">2024–Present</span><span class="title">PhD Co-supervision</span><span class="loc">Current students</span><span class="thesis"><span class="people"><span>Nadun Liyanage</span><span>Karolina Trajkovska</span><span>Michelle Fernando</span></span></span></div>
+      <div class="entry"><span class="org">University of Primorska, FAMNIT</span><span class="date">2023–2024</span><span class="title">MSc Research Projects</span><span class="loc">Supervision</span></div>
+      <div class="entry current"><span class="org">University of Primorska, FAMNIT</span><span class="date">2022–Present</span><span class="title">BSc Final-Year Research Projects</span><span class="loc">Supervision</span></div>
+      <div class="entry current"><span class="org">University of Colombo School of Computing</span><span class="date">2015–Present</span><span class="title">Co-supervisor / Mentor — Final-Year Research Projects</span><span class="loc">BSc Computer Science and Information Systems</span></div>
+    </div>
+  </section>
+
+  <section data-card data-label="Knowledge Transfer">
+    <h2>Knowledge Transfer</h2>
+    <div class="split">
+      <div class="entry current"><span class="org">Practical XR Workshops</span><span class="date">2019–Present</span><span class="title">Co-organiser / Instructor</span><span class="loc">Multiple editions</span><span class="thesis">Introduction to Motion Capture; Full-Body Motion Capture; Head-Mounted Displays (AR/VR/MR).</span></div>
+      <div class="entry"><span class="org">HICUP Lab, University of Primorska</span><span class="date">2024</span><span class="title">Motion Capture Assistant — <i>Jump into the Future</i></span><span class="thesis">Contributed motion-capture expertise to an interdisciplinary animated-film production selected for the 27th Festival of Slovenian Film.</span></div>
+      <div class="entry"><span class="org">Google Developers Club FAMNIT Hackathon</span><span class="date">2022</span><span class="title">Workshop Instructor — “Mixed Reality”</span></div>
+      <div class="entry"><span class="org">European Researchers' Night</span><span class="date">2018, 2019</span><span class="title">Demonstrator — Virtual, Augmented and Mixed Reality</span><span class="loc">Koper, Slovenia</span></div>
+    </div>
   </section>
 
 </div>
@@ -735,7 +814,7 @@
 
   <header class="page-head only-classic">
     <h1>Service</h1>
-    <p>Program committees, peer reviewing, mentoring, memberships, and technical expertise.</p>
+    <p>Program committees, mentoring, peer reviewing, memberships, and research tools.</p>
   </header>
 
   <!-- Service: one line per venue, with each year as its own badge (newest first). -->
@@ -743,8 +822,8 @@
     <h2>International Program Committees</h2>
     <ul class="svc split">
       <li><span class="sv"><b>ACM VRST</b><span class="sd">ACM Symposium on Virtual Reality Software and Technology</span></span><span class="sy"><span>2026</span></span></li>
-      <li><span class="sv"><b>IEEE ISMAR</b><span class="sd">IEEE International Symposium on Mixed and Augmented Reality</span></span><span class="sy"><span>2026</span><span>2024</span><span>2023</span></span></li>
-      <li><span class="sv"><b>IEEE VR</b><span class="sd">IEEE Conference on Virtual Reality and 3D User Interfaces</span></span><span class="sy"><span>2026</span></span></li>
+      <li><span class="sv"><b>IEEE ISMAR</b><span class="sd">IEEE International Symposium on Mixed and Augmented Reality</span></span><span class="sy"><span>2026</span><span>2025</span><span>2024</span><span>2023</span></span></li>
+      <li><span class="sv"><b>IEEE VR</b><span class="sd">IEEE Conference on Virtual Reality and 3D User Interfaces</span></span><span class="sy"><span>2026</span><span>2025</span></span></li>
       <li><span class="sv"><b>ICXR</b><span class="sd">International Conference on Extended Reality</span></span><span class="sy"><span>2026</span></span></li>
     </ul>
   </section>
@@ -776,12 +855,10 @@
     </ul>
   </section>
 
-  <section data-card data-label="Expertise">
-    <h2>Professional Memberships &amp; Technical Expertise</h2>
+  <section data-card data-label="Memberships">
+    <h2>Professional Memberships &amp; Research Tools</h2>
     <div class="rows">
       <div class="k">Memberships</div><div>ACM and ACM SIGCHI (2018–Present); IEEE (2018–Present).</div>
-      <div class="k">Programming</div><div>C, C++, C#, Python, Java, R, Bash, web technologies, Android and iOS development.</div>
-      <div class="k">XR / graphics</div><div>Unity 3D (AR/VR/MR), WebXR, WebGL, WebGPU, WebAssembly, Ogre3D; immersive interaction prototyping and performance benchmarking.</div>
       <div class="k">Research tools</div><div>iMotions (GSR/ECG/EEG/eye tracking), Tobii Pro VR Analytics, OptiTrack Motive, motion capture and physiological sensing.</div>
     </div>
     <p class="foot">Full publication record: <a href="https://scholar.google.com/citations?user=79gDe7oAAAAJ&amp;hl=en">Google Scholar</a> · ORCID: <a href="https://orcid.org/0000-0003-2691-601X">0000-0003-2691-601X</a></p>
@@ -1580,18 +1657,46 @@
     }
   });
 
-  /* ---------------- news: show the latest few, expand on demand ---------------- */
-  var newsList = document.getElementById('news-list'), newsMore = document.getElementById('news-more'), NEWS_SHOWN = 6;
-  if (newsList && newsMore && newsList.children.length > NEWS_SHOWN) {
-    var newsTotal = newsList.children.length;
-    var setNews = function (collapsed) {
-      newsList.classList.toggle('collapsed', collapsed);
-      newsMore.textContent = collapsed ? 'Show all ' + newsTotal + ' news items' : 'Show fewer';
-      newsMore.setAttribute('aria-expanded', String(!collapsed));
-    };
-    setNews(true);
-    newsMore.hidden = false;
-    newsMore.addEventListener('click', function () { setNews(!newsList.classList.contains('collapsed')); });
+  /* ---------------- news: only the 10 most recent items ---------------- */
+  var newsList = document.getElementById('news-list'), NEWS_MAX = 10;
+  if (newsList) Array.prototype.slice.call(newsList.children, NEWS_MAX).forEach(function (li) { li.remove(); });
+
+  /* ---------------- awards: icons and a medal summary ---------------- */
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var AWARD_ICON = { trophy: 'i-trophy', gold: 'i-medal', silver: 'i-medal', bronze: 'i-medal', nom: 'i-rosette', star: 'i-rosette', sch: 'i-cap' };
+  function awardIcon(k) {
+    var s = document.createElementNS(SVGNS, 'svg'), u = document.createElementNS(SVGNS, 'use');
+    s.setAttribute('class', 'ai k-' + k); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true');
+    u.setAttribute('href', '#' + (AWARD_ICON[k] || 'i-rosette'));
+    s.appendChild(u);
+    return s;
+  }
+  var awardsSec = cv.querySelector('[data-label="Awards"]');
+  if (awardsSec) {
+    var awardCount = {};
+    Array.prototype.forEach.call(awardsSec.querySelectorAll('ul.awards > li[data-k]'), function (li) {
+      var k = li.getAttribute('data-k'), yr = li.querySelector('.yr'), body = document.createElement('span');
+      awardCount[k] = (awardCount[k] || 0) + 1;
+      body.className = 'at';
+      while (yr && yr.nextSibling) body.appendChild(yr.nextSibling);
+      li.appendChild(awardIcon(k));
+      li.appendChild(body);
+    });
+    var SUMMARY = [['trophy', 'Best Paper Award', 'Best Paper Awards'], ['gold', 'Gold award', 'Gold awards'],
+                   ['silver', 'Silver award', 'Silver awards'], ['bronze', 'Bronze award', 'Bronze awards'],
+                   ['nom', 'APICTA nomination', 'APICTA nominations'], ['sch', 'Scholarship', 'Scholarships']];
+    var sumEl = document.createElement('div');
+    sumEl.className = 'award-sum';
+    SUMMARY.forEach(function (row) {
+      var n = awardCount[row[0]];
+      if (!n) return;
+      var d = document.createElement('div'), b = document.createElement('b'), t = document.createElement('span');
+      d.className = 'as'; b.textContent = n; t.textContent = n === 1 ? row[1] : row[2];
+      d.appendChild(awardIcon(row[0])); d.appendChild(b); d.appendChild(t);
+      sumEl.appendChild(d);
+    });
+    var awH2 = awardsSec.querySelector('h2');
+    awH2.parentNode.insertBefore(sumEl, awH2.nextSibling);
   }
 
   /* ---------------- publications: search, type and year filters ---------------- */
