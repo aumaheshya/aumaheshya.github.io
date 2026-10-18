@@ -16,7 +16,7 @@
     if (theme === 'light' || theme === 'dark') d.setAttribute('data-theme', theme);
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var ok3d = window.CSS && CSS.supports && CSS.supports('transform-style', 'preserve-3d');
-    var deep = /^#(experience|publications|teaching|service)$/.test(location.hash);
+    var deep = /^#(experience|awards|publications|teaching|service)$/.test(location.hash);
     var mode = pref || (reduce || deep ? 'classic' : '3d');
     if (!ok3d) mode = 'classic';
     if (mode === '3d') d.className = 'is-3d';
@@ -234,6 +234,7 @@
   #cv h3 { margin: 24px 0 8px; font-size: 1.02rem; }
   #cv .solo > h2 { display: none; }
   #cv .solo > h3:first-of-type { margin-top: 0; }
+  #cv .solo > .award-sum + h3 { margin-top: 26px; }
 
   #cv .hero .avatar { order: 2; width: 200px; height: 200px; border-radius: 20px; box-shadow: 0 14px 36px rgba(23, 74, 115, 0.22); }
   #cv .hero .avatar-fallback { font-size: 3.4rem; }
@@ -528,6 +529,7 @@
   <nav class="tabs only-classic" id="tabs" aria-label="Pages">
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
+    <a href="#awards">Awards</a>
     <a href="#publications">Publications</a>
     <a href="#teaching">Teaching</a>
     <a href="#service">Service</a>
@@ -622,7 +624,7 @@
 
   <header class="page-head only-classic">
     <h1>Experience</h1>
-    <p>Academic appointments, education, and awards.</p>
+    <p>Academic appointments and education.</p>
   </header>
 
   <section data-card data-label="Appointments">
@@ -646,7 +648,17 @@
     </div>
   </section>
 
-  <section data-card data-label="Awards">
+</div>
+
+<!-- ================= AWARDS ================= -->
+<div class="page" data-page="awards">
+
+  <header class="page-head only-classic">
+    <h1>Awards, Scholarships &amp; Recognition</h1>
+    <p>Research awards, scholarships, and national and international ICT awards.</p>
+  </header>
+
+  <section data-card data-label="Awards" class="solo">
     <!-- data-k picks the icon: trophy, gold, silver, bronze, nom (nomination), star, sch (scholarship); class="feat" highlights the row. -->
     <h2>Awards, Scholarships &amp; Recognition</h2>
     <h3>Academic &amp; Research Awards</h3>
@@ -730,14 +742,12 @@
   <section data-card data-label="Conference papers" data-pubtype="conference">
     <h2>Selected Conference, Workshop &amp; Demo Publications</h2>
     <ul class="pubs split">
-      <!-- Authors not yet listed for the next two papers: add them before the title in the same style as the entries below. -->
-      <li><span class="yr">2026</span> <span class="ti">“MetaMelodies as a Portable Piano Improvisation Learning Space.”</span> <i>ACM Interactive Surfaces and Spaces (ISS 2026)</i>, demo. <a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=79gDe7oAAAAJ&amp;citation_for_view=79gDe7oAAAAJ:dTyEYWd-f8wC">Google Scholar</a> <span class="tag">ACCEPTED</span></li>
-      <li><span class="yr">2026</span> <span class="ti">“Same Lessons, Different Pathways: Exploring HMD-Based Guidance for Jazz Piano Improvisation.”</span> <i>ACM Interactive Surfaces and Spaces (ISS 2026)</i>, poster. <a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=79gDe7oAAAAJ&amp;citation_for_view=79gDe7oAAAAJ:9vf0nzSNQJEC">Google Scholar</a> <span class="tag">ACCEPTED</span></li>
+      <li><span class="yr">2026</span> J. A. Deja, F. J. Hidalgo, R. M. Sarmiento, J. L. Miranda, E. Ducut, M. D. Gamboa, S. Štor, I. Butaslac III, N. R. Caluya, and <span class="me">M. Weerasinghe</span>. <span class="ti">“MetaMelodies as a Portable Piano Improvisation Learning Space.”</span> <i>ACM Interactive Surfaces and Spaces (ISS 2026)</i>, demo. <span class="tag">ACCEPTED</span></li>
+      <li><span class="yr">2026</span> R. M. Sarmiento, J. L. Miranda, E. Ducut, F. J. Hidalgo, S. Štor, <span class="me">M. Weerasinghe</span>, and J. A. Deja. <span class="ti">“Same Lessons, Different Pathways: Exploring HMD-Based Guidance for Jazz Piano Improvisation.”</span> <i>ACM Interactive Surfaces and Spaces (ISS 2026)</i>, poster. <span class="tag">ACCEPTED</span></li>
       <li><span class="yr">2026</span> R. Rodrigo, D. Sandaruwan, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Moving the Bottleneck: Performance Trade-offs of WebAssembly and WebGPU in WebXR.”</span> <i>ACM Symposium on Virtual Reality Software and Technology (VRST 2026)</i>. Full paper. <span class="tag">ACCEPTED</span></li>
       <li><span class="yr">2026</span> J. A. Deja, I. Butaslac III, N. R. Caluya, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Directing the Robot: Scaffolding Creative Human-AI-Robot Interaction.”</span> <i>3rd InterAI Workshop at ACM CHI 2026</i>.</li>
       <li><span class="yr">2026</span> K. Trajkovska, M. Kljun, <span class="me">M. Weerasinghe</span>, and K. Čopič Pucihar. <span class="ti">“Personalised 3D Mnemonics for Vocabulary Learning in Context.”</span> <i>IEEE International Symposium on Mixed and Augmented Reality (ISMAR 2026)</i>, poster.</li>
-      <!-- Add the demo's authors and full title here when available. -->
-      <li><span class="yr">2026</span> <span class="ti">“VocabulARy 2.0.”</span> <i>IEEE International Symposium on Mixed and Augmented Reality (ISMAR 2026)</i>, demo.</li>
+      <li><span class="yr">2026</span> K. Trajkovska, M. Kljun, <span class="me">M. Weerasinghe</span>, and K. Čopič Pucihar. <span class="ti">“VocabulARy 2.0.”</span> <i>IEEE International Symposium on Mixed and Augmented Reality (ISMAR 2026)</i>, demo.</li>
       <li><span class="yr">2025</span> N. T. Attygalle, M. Kljun, A. Quigley, K. Čopič Pucihar, J. Grubert, V. Biener, L. A. Leiva, J. Yoneyama, A. Toniolo, A. Miguel, H. Kato, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Text-to-Image Generation for Vocabulary Learning Using the Keyword Method.”</span> <i>ACM IUI 2025</i>, 1381–1397. <span class="tag k-award">BEST PAPER</span></li>
       <li><span class="yr">2024</span> <span class="me">M. Weerasinghe</span>, M. Kljun, and K. Čopič Pucihar. <span class="ti">“A Cross-Device Interaction with the Smartphone and HMD for Vocabulary Learning.”</span> <i>EICS 2024 International Workshops</i>, LNCS 15518, 269–282.</li>
       <li><span class="yr">2024</span> <span class="me">M. Weerasinghe</span>, L. Ribič, M. Kljun, K. Čopič Pucihar, and I. Devetak. <span class="ti">“Augmented Reality Training System Fusing the Triple Nature of Chemical Concepts.”</span> <i>HCI Slovenia 2024</i>, 64–70.</li>
