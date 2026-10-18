@@ -4,24 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Maheshya Weerasinghe, PhD</title>
-<meta name="description" content="Maheshya Weerasinghe, Assistant Professor in Human-Computer Interaction and Extended Reality at FAMNIT, University of Primorska. Academic CV with publications, teaching and service.">
+<meta name="description" content="Maheshya Weerasinghe, Assistant Professor (Tenure) in Human-Computer Interaction: cognitive augmentation, XR (AR/VR/MR), and AI and biosensing in XR. Academic CV with publications, teaching and service.">
 <meta property="og:title" content="Maheshya Weerasinghe, PhD">
-<meta property="og:description" content="Assistant Professor | Human-Computer Interaction & Extended Reality | University of Primorska">
+<meta property="og:description" content="Assistant Professor (Tenure) | Cognitive Augmentation to Create “Smarter Humans” not “Smarter Machines” | XR (AR/VR/MR) | AI and Biosensing in XR">
 <script>
-  // Choose the view before first paint: 3D by default, classic for reduced motion or a saved choice.
+  // Choose the view and theme before first paint: 3D by default, classic for reduced motion,
+  // a saved choice, or a link straight to one of the classic pages (e.g. #publications).
   (function () {
-    var pref = null;
-    try { pref = localStorage.getItem('cv-view'); } catch (e) {}
+    var d = document.documentElement, pref = null, theme = null;
+    try { pref = localStorage.getItem('cv-view'); theme = localStorage.getItem('cv-theme'); } catch (e) {}
+    if (theme === 'light' || theme === 'dark') d.setAttribute('data-theme', theme);
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     var ok3d = window.CSS && CSS.supports && CSS.supports('transform-style', 'preserve-3d');
-    var mode = pref || (reduce ? 'classic' : '3d');
+    var deep = /^#(experience|publications|teaching|service)$/.test(location.hash);
+    var mode = pref || (reduce || deep ? 'classic' : '3d');
     if (!ok3d) mode = 'classic';
-    if (mode === '3d') document.documentElement.className = 'is-3d';
+    if (mode === '3d') d.className = 'is-3d';
   })();
 </script>
 <style>
   /* ---------- tokens ---------- */
   :root {
+    color-scheme: light;
     --accent: #174A73;
     --accent2: #2F6F8F;
     --text: #1f2933;
@@ -30,6 +34,9 @@
     --tag: #EAF2F8;
     --bg: #ffffff;
     --surface: #f6f8fa;
+    --award-bg: #FFF2D4; --award-fg: #855400;
+    --role-bg: #E3F4EA; --role-fg: #1B6A3E;
+    --event-bg: #EEEAFB; --event-fg: #563FA3;
     --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Arial, sans-serif;
     /* 3D theme */
     --space: #060a13;
@@ -42,15 +49,17 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --accent: #7fb6e0;
-      --accent2: #6fc0d6;
-      --text: #e6ebf2;
-      --muted: #a7b2c2;
-      --rule: #2b3442;
-      --tag: #1c2a38;
-      --bg: #10151d;
-      --surface: #161d27;
+      color-scheme: dark;
+      --accent: #7fb6e0; --accent2: #6fc0d6; --text: #e6ebf2; --muted: #a7b2c2; --rule: #2b3442;
+      --tag: #1c2a38; --bg: #10151d; --surface: #161d27;
+      --award-bg: #3a2e14; --award-fg: #f2c56b; --role-bg: #173226; --role-fg: #86d6a8; --event-bg: #272140; --event-fg: #bcadff;
     }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --accent: #7fb6e0; --accent2: #6fc0d6; --text: #e6ebf2; --muted: #a7b2c2; --rule: #2b3442;
+    --tag: #1c2a38; --bg: #10151d; --surface: #161d27;
+    --award-bg: #3a2e14; --award-fg: #f2c56b; --role-bg: #173226; --role-fg: #86d6a8; --event-bg: #272140; --event-fg: #bcadff;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -61,23 +70,42 @@
 
   /* ---------- top bar (both views) ---------- */
   .topbar {
-    position: fixed; inset: 0 0 auto 0; height: 56px; z-index: 50;
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 0 16px; background: var(--bg); background: color-mix(in srgb, var(--bg) 88%, transparent);
+    position: fixed; inset: 0 0 auto 0; z-index: 50; min-height: 56px;
+    display: flex; flex-wrap: wrap; align-items: center; column-gap: 12px;
+    padding: 0 16px; background: var(--bg); background: color-mix(in srgb, var(--bg) 90%, transparent);
     border-bottom: 1px solid var(--rule); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand {
+    height: 56px; display: flex; align-items: center; gap: 10px; min-width: 0; flex: 0 1 auto;
+    font-weight: 700; color: var(--text); white-space: nowrap;
+  }
+  .brand:hover { text-decoration: none; }
+  .brand .full { overflow: hidden; text-overflow: ellipsis; }
   .brand .mono {
-    flex: none; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center;
+    position: relative; overflow: hidden; flex: none; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center;
     font-size: 13px; letter-spacing: 0.02em; color: #fff; background: linear-gradient(135deg, #2F6F8F, #174A73);
   }
-  .actions { display: flex; gap: 8px; flex: none; }
+  .brand .mono img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+  .tabs { flex: 1 1 auto; align-self: stretch; display: flex; justify-content: center; gap: 2px; }
+  .tabs a {
+    position: relative; display: flex; align-items: center; padding: 0 12px;
+    color: var(--muted); font-size: 15px; font-weight: 600; white-space: nowrap;
+  }
+  .tabs a:hover { color: var(--accent); text-decoration: none; }
+  .tabs a[aria-current="page"] { color: var(--accent); }
+  .tabs a[aria-current="page"]::after {
+    content: ""; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 3px;
+    border-radius: 3px 3px 0 0; background: var(--accent);
+  }
+  .actions { display: flex; align-items: center; gap: 8px; flex: none; margin-left: auto; height: 56px; }
   .btn {
     border: 1px solid var(--rule); background: var(--surface); color: var(--text);
     border-radius: 999px; padding: 6px 14px; font-size: 14px; cursor: pointer; white-space: nowrap;
   }
   .btn:hover { border-color: var(--accent2); }
-  .btn:focus-visible, a:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+  .btn.icon { width: 34px; height: 34px; padding: 0; display: inline-grid; place-items: center; }
+  .btn.icon svg { width: 17px; height: 17px; fill: currentColor; }
+  .btn:focus-visible, a:focus-visible, .chip:focus-visible, .linkbtn:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
   .menu-wrap { position: relative; }
   .menu {
     position: absolute; right: 0; top: calc(100% + 8px); min-width: 210px; max-height: 70vh; overflow: auto;
@@ -91,14 +119,21 @@
   }
   .menu button:hover, .menu a:hover, .menu .active { background: var(--tag); text-decoration: none; }
 
-  /* ---------- classic document ---------- */
+  /* ---------- shared content ---------- */
   .is-classic .only-3d { display: none !important; }
   .is-3d .only-classic { display: none !important; }
-  #cv { max-width: 900px; margin: 0 auto; padding: 88px 20px 64px; }
+  #cv { max-width: 920px; margin: 0 auto; padding: 96px 24px 56px; }
   .is-3d #cv { display: none; }
   .hero h1 { margin: 0 0 4px; font-size: 2.3rem; line-height: 1.15; color: var(--accent); letter-spacing: -0.01em; }
   .hero .role { margin: 0; font-size: 1.1rem; }
   .hero .place { margin: 2px 0 0; color: var(--muted); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; }
+  .avatar {
+    position: relative; margin: 0; overflow: hidden; border-radius: 50%; display: grid; place-items: center;
+    background: linear-gradient(135deg, #2F6F8F, #174A73);
+  }
+  .avatar-fallback { color: #fff; font-weight: 700; letter-spacing: 0.02em; font-size: 2rem; }
+  .avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
   .links { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 14px 0 0; }
   .links a {
     display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px;
@@ -107,6 +142,15 @@
   .links a:hover { border-color: var(--accent2); color: var(--accent); text-decoration: none; }
   .links svg { width: 15px; height: 15px; fill: currentColor; flex: none; }
   .hint3d { margin: 16px 0 0; font-size: 14px; color: var(--muted); }
+  .hero .role { font-weight: 600; }
+  .hero .role .place { font-weight: 400; }
+  .tagline { margin: 12px 0 0; font-size: 1.15rem; line-height: 1.4; font-style: italic; color: var(--accent2); }
+  .focus { display: flex; flex-wrap: wrap; gap: 4px 18px; list-style: none; padding: 0; margin: 8px 0 0; font-size: 0.97rem; }
+  .focus li { position: relative; padding-left: 15px; }
+  .focus li::before {
+    content: ""; position: absolute; left: 1px; top: 0.6em; width: 6px; height: 6px; border-radius: 1px;
+    background: var(--accent2); transform: rotate(45deg);
+  }
   #cv section { margin-top: 30px; }
   h2 {
     margin: 0 0 10px; padding-bottom: 5px; font-size: 1.1rem; color: var(--accent);
@@ -135,11 +179,119 @@
     display: inline-block; margin-left: 4px; padding: 0 7px; border-radius: 4px; font-size: 0.72rem;
     font-weight: 700; letter-spacing: 0.04em; background: var(--tag); color: var(--accent); vertical-align: 1px;
   }
+  .tag.k-award { background: var(--award-bg); color: var(--award-fg); }
+  .tag.k-role { background: var(--role-bg); color: var(--role-fg); }
+  .tag.k-event { background: var(--event-bg); color: var(--event-fg); }
+  .tag.k-q1 { background: var(--role-bg); color: var(--role-fg); cursor: help; }
+  .page-head .legend { margin-top: 8px; font-size: 0.9rem; }
+  .page-head .legend .tag { margin: 0 4px 0 0; cursor: default; }
+  ul.svc { list-style: none; margin: 0; padding: 0; }
+  ul.svc li {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid var(--rule);
+  }
+  ul.svc li:last-child { border-bottom: 0; }
+  .svc .sv b { display: block; }
+  .svc .sd { display: block; font-size: 0.92rem; color: var(--muted); }
+  .svc .sy { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
+  .svc .sy span {
+    padding: 1px 8px; border-radius: 999px; background: var(--tag); color: var(--accent);
+    font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums;
+  }
   .rows { display: grid; grid-template-columns: 9.5em 1fr; }
   .rows > div { padding: 5px 0; border-bottom: 1px solid var(--rule); }
   .rows > div:nth-last-child(-n+2) { border-bottom: 0; }
   .rows .k { font-weight: 700; padding-right: 12px; }
   .foot { margin-top: 32px; font-size: 0.9rem; color: var(--muted); }
+
+  /* news (both views) */
+  .news-list { list-style: none; margin: 0; padding: 0; }
+  .news-list li { display: grid; grid-template-columns: 6.2rem minmax(0, 1fr); gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--rule); }
+  .news-list li:last-child { border-bottom: 0; }
+  .news-list .nd { font-weight: 700; color: var(--accent2); font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 0.92rem; padding-top: 1px; }
+  .news-list .nt { font-size: 0.97rem; }
+  .news-list .tag { margin: 0 6px 0 0; }
+
+  /* ---------- classic view: pages, al-folio style ---------- */
+  .paged .page:not(.active) { display: none; }
+  .paged .page.active { animation: page-in 0.35s ease both; }
+  @keyframes page-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .page-head { margin: 6px 0 4px; }
+  .page-head h1 { margin: 0 0 4px; font-size: 2.1rem; line-height: 1.2; letter-spacing: -0.01em; color: var(--text); }
+  .page-head p { margin: 0; color: var(--muted); }
+  #cv section { margin-top: 44px; }
+  #cv .page-head + section, #cv .page-head + .pub-tools { margin-top: 26px; }
+  #cv h2 {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 8px;
+    font-size: 1.3rem; color: var(--text);
+  }
+  #cv h2::before {
+    content: ""; flex: none; width: 4px; height: 1.05em; border-radius: 2px;
+    background: linear-gradient(var(--accent2), var(--accent));
+  }
+  #cv h3 { margin: 24px 0 8px; font-size: 1.02rem; }
+  #cv .solo > h2 { display: none; }
+  #cv .solo > h3:first-of-type { margin-top: 0; }
+
+  #cv .hero .avatar { order: 2; width: 200px; height: 200px; border-radius: 20px; box-shadow: 0 14px 36px rgba(23, 74, 115, 0.22); }
+  #cv .hero .avatar-fallback { font-size: 3.4rem; }
+
+  /* experience entries with date badges */
+  #cv .entry {
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    grid-template-areas: "date title" "date org" "date loc" "date thesis";
+    column-gap: 20px; padding: 14px 0;
+  }
+  #cv .entry .date {
+    grid-area: date; align-self: start; padding: 4px 8px; border: 1px solid var(--rule); border-radius: 8px;
+    background: var(--surface); color: var(--accent); font-size: 0.82rem; font-weight: 600; text-align: center; white-space: normal;
+  }
+  #cv .entry.current .date { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  #cv .entry .title { grid-area: title; font-style: normal; font-weight: 700; color: var(--text); font-size: 1.02rem; }
+  #cv .entry .org { grid-area: org; font-weight: 500; color: var(--accent2); }
+  #cv .entry .loc { grid-area: loc; text-align: left; font-size: 0.9rem; }
+  #cv .entry .thesis { grid-area: thesis; margin-top: 6px; color: var(--muted); }
+
+  /* publication and award lists with a hanging year */
+  #cv ul.pubs li { position: relative; padding: 11px 6px 11px 4.6em; }
+  #cv ul.pubs li .yr { position: absolute; left: 0; top: 11px; min-width: 0; }
+  #cv ul.pubs li:hover { background: linear-gradient(90deg, var(--tag), transparent 85%); }
+  #cv ul.awards li { padding-left: 5.8em; }
+
+  /* news */
+  #cv .news-list.collapsed li:nth-child(n+7) { display: none; }
+  #cv .news-list li { padding: 11px 0; }
+  .more { margin-top: 14px; }
+
+  /* publication tools */
+  .pub-tools {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 12px;
+    border: 1px solid var(--rule); border-radius: 14px; background: var(--surface);
+  }
+  .pub-tools input[type="search"], .pub-tools select {
+    padding: 7px 12px; border-radius: 999px; border: 1px solid var(--rule); background: var(--bg); color: var(--text);
+    font: inherit; font-size: 15px;
+  }
+  .pub-tools input[type="search"] { flex: 1 1 220px; min-width: 0; }
+  .pub-tools input:focus, .pub-tools select:focus { outline: 2px solid var(--accent2); outline-offset: 1px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    border: 1px solid var(--rule); background: var(--bg); color: var(--text); border-radius: 999px;
+    padding: 5px 12px; font-size: 14px; cursor: pointer;
+  }
+  .chip .n { margin-left: 4px; font-size: 12px; opacity: 0.7; }
+  .chip:hover { border-color: var(--accent2); }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .pub-count { flex-basis: 100%; margin: 0; font-size: 13px; color: var(--muted); }
+  .no-results { margin-top: 24px; color: var(--muted); }
+  .linkbtn { border: 0; background: none; padding: 0; color: var(--accent); cursor: pointer; font: inherit; }
+  .linkbtn:hover { text-decoration: underline; }
+  #cv .is-hidden { display: none !important; }
+
+  .site-foot {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; margin-top: 56px; padding-top: 16px;
+    border-top: 1px solid var(--rule); font-size: 0.88rem; color: var(--muted);
+  }
 
   /* ---------- 3D view ---------- */
   .is-3d body {
@@ -171,14 +323,31 @@
   .card3d h2 { color: var(--glow); border-bottom-color: rgba(92, 196, 205, 0.25); font-size: 1.05rem; letter-spacing: 0.02em; }
   .card3d h3 { color: var(--glow2); }
   .card3d .hero h1 { color: #fff; font-size: 2.1rem; }
+  .card3d .hero-grid { grid-template-columns: auto minmax(0, 1fr); gap: 24px; }
+  .card3d .avatar {
+    width: 116px; height: 116px;
+    box-shadow: 0 0 0 2px rgba(92, 196, 205, 0.7), 0 0 0 8px rgba(92, 196, 205, 0.12), 0 0 40px rgba(92, 196, 205, 0.45);
+  }
   .card3d .hero .place, .card3d .entry .title, .card3d .entry .loc { color: var(--ink-muted); }
+  .card3d .tagline { color: var(--glow); }
+  .card3d .focus li::before { background: var(--glow2); }
   .card3d .links a { background: rgba(255, 255, 255, 0.05); border-color: rgba(92, 196, 205, 0.35); color: var(--ink); }
   .card3d .links a:hover { color: var(--glow); }
   .card3d .areas li, .card3d .tag { background: rgba(92, 196, 205, 0.14); color: var(--ink); }
   .card3d .tag { color: var(--glow); }
+  .card3d .tag.k-award { background: rgba(255, 190, 110, 0.16); color: #ffc983; }
+  .card3d .tag.k-role { background: rgba(120, 220, 160, 0.14); color: #8fe3b4; }
+  .card3d .tag.k-event { background: rgba(169, 155, 255, 0.16); color: var(--glow2); }
+  .card3d .tag.k-q1 { background: rgba(120, 220, 160, 0.14); color: #8fe3b4; }
   .card3d .yr { color: var(--glow2); }
-  .card3d .entry, .card3d ul.pubs li, .card3d .rows > div { border-bottom-color: rgba(163, 179, 201, 0.16); }
+  .card3d .entry, .card3d ul.pubs li, .card3d .rows > div, .card3d .news-list li { border-bottom-color: rgba(163, 179, 201, 0.16); }
   .card3d ul.pubs li { font-size: 13.5px; line-height: 1.45; padding: 5px 0; }
+  .card3d ul.svc li { padding: 7px 0; border-bottom-color: rgba(163, 179, 201, 0.16); }
+  .card3d .svc .sd { color: var(--ink-muted); font-size: 13px; }
+  .card3d .svc .sy span { background: rgba(169, 155, 255, 0.16); color: var(--glow2); }
+  .card3d .news-list li { grid-template-columns: 5.2rem minmax(0, 1fr); gap: 12px; padding: 7px 0; }
+  .card3d .news-list .nd { color: var(--glow2); }
+  .card3d .news-list .nt { font-size: 14px; }
   .card3d .hint3d { color: var(--ink-muted); }
   .card3d .kicker { margin: 0 0 6px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--glow); }
   .card3d > :last-child, .card3d section > :last-child { margin-bottom: 0; }
@@ -205,29 +374,75 @@
   .scroll-hint {
     position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 40; pointer-events: none;
     font-size: 13px; letter-spacing: 0.08em; color: var(--ink-muted); transition: opacity 0.5s;
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px; white-space: nowrap;
   }
   .scroll-hint i { width: 1px; height: 26px; background: linear-gradient(var(--glow), transparent); animation: drip 1.6s ease-in-out infinite; }
   @keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
   .scroll-hint.gone { opacity: 0; }
-  @media (max-width: 760px) {
-  
-  @media (max-width: 900px) { .dots { display: none; } }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px) {
+    .dots { display: none; }
+    .tabs {
+      order: 3; flex: 0 0 calc(100% + 32px); align-self: auto; justify-content: flex-start; margin: 0 -16px; padding: 0 6px;
+      overflow-x: auto; border-top: 1px solid var(--rule); scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tabs a { padding: 11px 10px; font-size: 14px; }
+    .tabs a[aria-current="page"]::after { left: 8px; right: 8px; }
+    #cv { padding-top: 124px; }
+  }
   @media (max-width: 600px) {
-    #cv { padding: 76px 16px 48px; }
+    #cv { padding: 120px 16px 48px; }
     .hero h1 { font-size: 1.8rem; }
+    .page-head h1 { font-size: 1.7rem; }
     .entry { grid-template-columns: 1fr; }
     .entry .date, .entry .loc { text-align: left; }
     .rows { grid-template-columns: 1fr; }
+    ul.svc li { grid-template-columns: 1fr; }
+    .svc .sy { justify-content: flex-start; }
     .rows .k { border-bottom: 0 !important; padding-bottom: 0; }
+    .news-list li { grid-template-columns: 4.9rem minmax(0, 1fr); gap: 10px; }
+    #cv .hero-grid { grid-template-columns: 1fr; gap: 18px; }
+    #cv .hero .avatar { order: 0; width: 132px; height: 132px; border-radius: 18px; }
+    #cv .entry { grid-template-columns: 1fr; grid-template-areas: "date" "title" "org" "loc" "thesis"; }
+    #cv .entry .date { justify-self: start; margin-bottom: 6px; }
+    #cv ul.pubs li { padding-left: 0; }
+    #cv ul.pubs li .yr { position: static; min-width: 3.1em; }
     .card3d { padding: 18px 18px 16px; font-size: 14px; border-radius: 16px; }
     .card3d .hero h1 { font-size: 1.6rem; }
+    .card3d .hero-grid { grid-template-columns: 1fr; gap: 12px; }
+    .card3d .avatar { width: 64px; height: 64px; }
+    .card3d .kicker { display: none; }
+    .card3d .hero .role { font-size: 1rem; }
+    .card3d .tagline { margin-top: 8px; font-size: 1rem; }
+    .card3d .focus { gap: 2px 14px; font-size: 13.5px; }
+    .card3d .links { margin-top: 12px; gap: 6px; }
+    .card3d .links a { padding: 4px 10px; font-size: 13px; }
+    .card3d .hint3d { display: none; }   /* the top bar and the scroll cue already say this on a phone */
     .brand .full { display: none; }
+    .tabs a { padding: 11px 6px; font-size: 13.5px; }
+    .tabs a[aria-current="page"]::after { left: 5px; right: 5px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .paged .page.active { animation: none; }
   }
   @media print {
-    .topbar, #bg, #stage, .dots, .progress, .scroll-hint, #scroll-space, .hint3d { display: none !important; }
+    :root, :root[data-theme] {
+      --accent: #174A73; --accent2: #2F6F8F; --text: #000; --muted: #444; --rule: #ccc; --tag: #EAF2F8;
+      --bg: #fff; --surface: #fff; --award-bg: #FFF2D4; --award-fg: #855400; --role-bg: #E3F4EA; --role-fg: #1B6A3E;
+      --event-bg: #EEEAFB; --event-fg: #563FA3;
+    }
+    .topbar, #bg, #stage, .dots, .progress, .scroll-hint, #scroll-space, .hint3d,
+    .page-head, .pub-tools, .more, .no-results, .site-foot { display: none !important; }
     .is-3d #cv { display: block; }
     #cv { padding: 0; max-width: none; }
+    #cv .page { display: block !important; animation: none !important; }
+    #cv .is-hidden { display: revert !important; }
+    #cv .news-list.collapsed li:nth-child(n+7) { display: grid !important; }
+    #cv .solo > h2 { display: flex !important; }
+    #cv section { margin-top: 24px; break-inside: auto; }
+    #cv .entry, #cv ul.pubs li, #cv .news-list li { break-inside: avoid; }
     body { background: #fff !important; color: #000 !important; }
   }
 </style>
@@ -235,12 +450,20 @@
 <body>
 
 <div class="topbar">
-  <div class="brand"><span class="mono">MW</span><span class="full">Maheshya Weerasinghe</span></div>
+  <a class="brand" href="#about"><span class="mono"><img src="photo.jpg" alt="" onerror="this.remove()">MW</span><span class="full">Maheshya Weerasinghe</span></a>
+  <nav class="tabs only-classic" id="tabs" aria-label="Pages">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#publications">Publications</a>
+    <a href="#teaching">Teaching</a>
+    <a href="#service">Service</a>
+  </nav>
   <div class="actions">
-    <div class="menu-wrap">
+    <div class="menu-wrap only-3d">
       <button class="btn" id="menu-btn" aria-haspopup="true" aria-expanded="false" aria-controls="menu">Sections</button>
       <ul class="menu" id="menu" role="menu"></ul>
     </div>
+    <button class="btn icon only-classic" id="theme-btn" type="button"></button>
     <button class="btn" id="view-btn" type="button"></button>
   </div>
 </div>
@@ -255,40 +478,90 @@
 
 <main id="cv">
 
+<!-- ================= ABOUT ================= -->
+<div class="page" data-page="about">
+
   <header class="hero" data-card data-label="Home">
-    <p class="kicker only-3d">Academic CV</p>
-    <h1>Maheshya Weerasinghe</h1>
-    <p class="role">Assistant Professor | Human-Computer Interaction &amp; Extended Reality</p>
-    <p class="place">FAMNIT, University of Primorska, Koper, Slovenia</p>
-    <ul class="links">
-      <li><a href="mailto:maheshya.weerasinghe@famnit.upr.si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4.4 7H19.6L12 12.2zM4 8.9V17h16V8.9l-8 5.4-8-5.4z"/></svg>Email</a></li>
-      <li><a href="https://scholar.google.com/citations?user=79gDe7oAAAAJ&amp;hl=en"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9.5l4 2.4V17l7 4 7-4v-5.1l2-1.2V16h2V9.5L12 3zm0 2.3 7.4 4.2L12 13.7 4.6 9.5 12 5.3zM7 13.1l5 2.9 5-2.9v2.7l-5 2.9-5-2.9v-2.7z"/></svg>Google Scholar</a></li>
-      <li><a href="https://orcid.org/0000-0003-2691-601X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM8.3 7.1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM7.5 10h1.6v7H7.5v-7zm3 0h3.1c2.4 0 3.8 1.6 3.8 3.5S15 17 13.6 17h-3.1v-7zm1.6 1.4v4.2h1.4c1.4 0 2.3-.9 2.3-2.1s-.8-2.1-2.3-2.1h-1.4z"/></svg>ORCID</a></li>
-      <li><a href="https://uk.linkedin.com/in/maheshya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3v-11zm6.5 0h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6v5.4h-4v-4.8c0-1.2 0-2.6-1.6-2.6s-1.9 1.2-1.9 2.5v4.9h-4v-11z"/></svg>LinkedIn</a></li>
-      <li><a href="https://github.com/auvoidsky"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>GitHub</a></li>
-      <!-- To add a PDF download: upload cv.pdf to the repository and uncomment the next line. -->
-      <!-- <li><a href="cv.pdf">CV (PDF)</a></li> -->
-    </ul>
+    <div class="hero-grid">
+      <!-- Profile photo: upload a square-ish image named photo.jpg next to this file. Until then, the initials show. -->
+      <figure class="avatar">
+        <span class="avatar-fallback" aria-hidden="true">MW</span>
+        <img src="photo.jpg" alt="Portrait of Maheshya Weerasinghe" width="400" height="400" onerror="this.remove()">
+      </figure>
+      <div class="hero-text">
+        <p class="kicker only-3d">Academic CV</p>
+        <h1>Maheshya Weerasinghe</h1>
+        <p class="role">Assistant Professor (Tenure) <span class="place">· Koper, Slovenia</span></p>
+        <p class="tagline">A Simple “Human” Attached to “Computers” and Its “Interactions”</p>
+        <ul class="focus">
+          <li>Cognitive Augmentation to Create “Smarter Humans” not “Smarter Machines”</li>
+          <li>XR (AR/VR/MR)</li>
+          <li>AI and Biosensing in XR</li>
+        </ul>
+        <ul class="links">
+          <li><a href="mailto:maheshya.weerasinghe@famnit.upr.si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4.4 7H19.6L12 12.2zM4 8.9V17h16V8.9l-8 5.4-8-5.4z"/></svg>Email</a></li>
+          <li><a href="https://scholar.google.com/citations?user=79gDe7oAAAAJ&amp;hl=en"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9.5l4 2.4V17l7 4 7-4v-5.1l2-1.2V16h2V9.5L12 3zm0 2.3 7.4 4.2L12 13.7 4.6 9.5 12 5.3zM7 13.1l5 2.9 5-2.9v2.7l-5 2.9-5-2.9v-2.7z"/></svg>Google Scholar</a></li>
+          <li><a href="https://orcid.org/0000-0003-2691-601X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM8.3 7.1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM7.5 10h1.6v7H7.5v-7zm3 0h3.1c2.4 0 3.8 1.6 3.8 3.5S15 17 13.6 17h-3.1v-7zm1.6 1.4v4.2h1.4c1.4 0 2.3-.9 2.3-2.1s-.8-2.1-2.3-2.1h-1.4z"/></svg>ORCID</a></li>
+          <li><a href="https://uk.linkedin.com/in/maheshya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3v-11zm6.5 0h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6v5.4h-4v-4.8c0-1.2 0-2.6-1.6-2.6s-1.9 1.2-1.9 2.5v4.9h-4v-11z"/></svg>LinkedIn</a></li>
+          <!-- To add a PDF download: upload cv.pdf to the repository and uncomment the next line. -->
+          <!-- <li><a href="cv.pdf">CV (PDF)</a></li> -->
+        </ul>
+      </div>
+    </div>
     <p class="hint3d only-3d">Scroll to fly into the mind and through the CV, or jump with <b>Sections</b>. Prefer a plain page? Choose <b>Classic view</b>.</p>
   </header>
 
   <section data-card data-label="Profile">
     <h2>Academic Profile</h2>
-    <p>Early-career XR/HCI researcher and educator with a joint PhD in Computer Science and research experience across Europe and Asia. My work spans immersive learning and cognition, social VR, browser-based XR systems, and human-AI/embodied interaction.</p>
+    <p>I work at the meeting point of people, computers, and the interactions between them. My research is about cognitive augmentation: designing technology that makes people smarter, rather than only making machines smarter. I build and study extended reality (AR/VR/MR) systems that use AI and biosensing to understand the person using them and adapt the guidance they give, with applications in vocabulary and skill learning, music improvisation, attention and distraction, and safety in social VR. I hold a joint PhD in Computer Science and have collaborated with research groups across Europe and Asia.</p>
     <ul class="areas">
+      <li>Cognitive Augmentation</li>
       <li>Extended Reality (AR/VR/MR)</li>
+      <li>AI and Biosensing in XR</li>
       <li>Human-Computer Interaction</li>
-      <li>Learning and Cognition</li>
+      <li>Learning and Skill Acquisition</li>
       <li>WebXR and Immersive Systems</li>
-      <li>Human-AI and Embodied Interaction</li>
     </ul>
   </section>
 
+  <!-- News: newest first. Add an <li> at the top for each new item; the first six show until "Show all" is clicked.
+       Tag classes: plain .tag (paper), .k-award, .k-role, .k-event (demos, workshops, service, outreach). -->
+  <section data-card data-label="News" class="news">
+    <h2>News</h2>
+    <ul class="news-list split" id="news-list">
+      <li><span class="nd">Oct 2026</span><span class="nt"><span class="tag k-event">MENTORING</span>Mentor at the <a href="https://www.ieeeismar.net/2026/speed-mentorship/">IEEE ISMAR 2026 Speed Mentorship</a> session for students in Bari, Italy.</span></li>
+      <li><span class="nd">2026</span><span class="nt"><span class="tag k-event">POSTER &amp; DEMO</span>Two piano-improvisation works accepted at ACM ISS 2026: the poster <a href="#publications"><i>Same Lessons, Different Pathways</i></a> and the demo <a href="#publications"><i>MetaMelodies</i></a>.</span></li>
+      <li><span class="nd">2026</span><span class="nt"><span class="tag">PAPER</span>Full paper <a href="#publications"><i>Moving the Bottleneck: Performance Trade-offs of WebAssembly and WebGPU in WebXR</i></a> accepted at ACM VRST 2026.</span></li>
+      <li><span class="nd">2026</span><span class="nt"><span class="tag k-event">DEMO</span>Poster <i>Personalised 3D Mnemonics for Vocabulary Learning in Context</i> and the <i>VocabulARy 2.0</i> research demo at IEEE ISMAR 2026.</span></li>
+      <li><span class="nd">2026</span><span class="nt"><span class="tag k-event">SERVICE</span>Program committee member for ACM VRST 2026, IEEE ISMAR 2026, IEEE VR 2026 and ICXR 2026.</span></li>
+      <li><span class="nd">2026</span><span class="nt"><span class="tag">PAPER</span><i>ARText</i>, on personalised and predefined keyword associations for vocabulary learning in AR, accepted in the <i>International Journal of Human-Computer Interaction</i>.</span></li>
+      <li><span class="nd">2026</span><span class="nt"><span class="tag">PAPER</span><i>Can Immersion Protect us From Distraction?</i> published online first in the <i>International Journal of Human-Computer Interaction</i>.</span></li>
+      <li><span class="nd">2026</span><span class="nt"><span class="tag k-event">WORKSHOP</span><i>Directing the Robot: Scaffolding Creative Human-AI-Robot Interaction</i> at the 3rd InterAI Workshop, ACM CHI 2026.</span></li>
+      <li><span class="nd">2025</span><span class="nt"><span class="tag k-award">AWARD</span>Best Paper Award at ACM IUI 2025 for <i>Text-to-Image Generation for Vocabulary Learning Using the Keyword Method</i>.</span></li>
+      <li><span class="nd">2025</span><span class="nt"><span class="tag">PAPER</span><i>Beyond Mute and Block</i>, on the adoption and effectiveness of safety tools in social VR, published in <i>IEEE TVCG</i>.</span></li>
+      <li><span class="nd">2025</span><span class="nt"><span class="tag">PAPER</span><i>ImproVisAR</i>, an augmented reality piano roll for teaching improvisation, published in <i>Virtual Reality</i>.</span></li>
+      <li><span class="nd">Sep 2024</span><span class="nt"><span class="tag k-role">ROLE</span>Joined FAMNIT, University of Primorska, as Assistant Professor.</span></li>
+      <li><span class="nd">2024</span><span class="nt"><span class="tag k-event">OUTREACH</span>Motion capture for the animated film <i>Jump into the Future</i>, selected for the 27th Festival of Slovenian Film.</span></li>
+      <li><span class="nd">Sep 2023</span><span class="nt"><span class="tag k-role">ROLE</span>Joined the SIRIUS Lab, University of Glasgow, as Research Associate.</span></li>
+      <li><span class="nd">2023</span><span class="nt"><span class="tag k-role">PHD</span>Completed my joint PhD in Computer Science at the University of St Andrews and the University of Primorska.</span></li>
+    </ul>
+    <button class="btn more only-classic" id="news-more" type="button" aria-controls="news-list" hidden>Show all news</button>
+  </section>
+
+</div>
+
+<!-- ================= EXPERIENCE ================= -->
+<div class="page" data-page="experience">
+
+  <header class="page-head only-classic">
+    <h1>Experience</h1>
+    <p>Academic appointments, education, and awards.</p>
+  </header>
 
   <section data-card data-label="Appointments">
     <h2>Academic Appointments</h2>
     <div class="split">
-      <div class="entry"><span class="org">University of Primorska, FAMNIT</span><span class="date">Sep 2024–Present</span><span class="title">Assistant Professor</span><span class="loc">Koper, Slovenia</span></div>
+      <div class="entry current"><span class="org">University of Primorska, FAMNIT</span><span class="date">Sep 2024–Present</span><span class="title">Assistant Professor</span><span class="loc">Koper, Slovenia</span></div>
       <div class="entry"><span class="org">SIRIUS Lab, University of Glasgow</span><span class="date">Sep 2023–May 2024</span><span class="title">Research Associate</span><span class="loc">Glasgow, United Kingdom</span></div>
       <div class="entry"><span class="org">IDM Lab, Nara Institute of Science and Technology</span><span class="date">Oct–Nov 2022</span><span class="title">Visiting Researcher</span><span class="loc">Nara, Japan</span></div>
       <div class="entry"><span class="org">Mixed Reality Lab, Coburg University of Applied Sciences</span><span class="date">Oct 2021–May 2022</span><span class="title">Research Collaborator</span><span class="loc">Coburg, Germany</span></div>
@@ -307,30 +580,73 @@
   </section>
 
   <section data-card data-label="Awards">
-    <h2>Selected Awards, Scholarships &amp; Recognition</h2>
-    <ul class="bullets split">
-      <li><b>Best Paper Award</b>, 30th ACM Conference on Intelligent User Interfaces (IUI), 2025.</li>
-      <li><b>IDEA Scholarship</b>, IEEE International Symposium on Mixed and Augmented Reality (ISMAR), 2022.</li>
-      <li><b>School Scholarship for PhD</b>, University of St Andrews, 2020.</li>
-      <li><b>Faculty Reward for Research Work</b>, FAMNIT, University of Primorska, 2019.</li>
-      <li><b>Local Winner and Global Nominee</b>, NASA Space Apps Challenge, 2019.</li>
-      <li><b>ACM Scholarship</b>, womENcourage, 2018.</li>
-      <li>National/regional ICT recognition in R&amp;D, e-health, education, and digital inclusion, including NBQSA, e-Swabhimani, Manthan, and APICTA recognition (2013–2018).</li>
-      <li><b>Gold Medal for Best Performance in Industrial Training</b>, University of Colombo, 2014.</li>
+    <h2>Awards, Scholarships &amp; Recognition</h2>
+    <h3>Academic &amp; Research Awards</h3>
+    <ul class="pubs awards split">
+      <li><span class="yr">2025</span> <b>Best Paper Award</b>, 30th ACM Conference on Intelligent User Interfaces (IUI).</li>
+      <li><span class="yr">2019</span> <b>Faculty Reward for Research Work</b>, FAMNIT, University of Primorska.</li>
+      <li><span class="yr">2019</span> <b>Local Winner and Global Nominee</b>, NASA Space Apps Challenge.</li>
+      <li><span class="yr">2014</span> <b>Gold Medal for Best Performance in Industrial Training</b>, University of Colombo.</li>
+    </ul>
+    <h3>Scholarships</h3>
+    <ul class="pubs awards split">
+      <li><span class="yr">2022</span> <b>IDEA Scholarship</b>, IEEE International Symposium on Mixed and Augmented Reality (ISMAR).</li>
+      <li><span class="yr">2020</span> <b>School Scholarship for PhD</b>, University of St Andrews.</li>
+      <li><span class="yr">2018</span> <b>ACM Scholarship</b>, womENcourage.</li>
+    </ul>
+    <h3>National &amp; International ICT Awards</h3>
+    <ul class="pubs awards split">
+      <li><span class="yr">2018</span> <b>Nominated</b> for the Asia Pacific ICT Alliance Awards (APICTA), China.</li>
+      <li><span class="yr">2018</span> <b>Silver Award</b>, R&amp;D category, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
+      <li><span class="yr">2016</span> <b>Gold Award</b>, e-Health (Health Care) category, e-Swabhimani National Best e-Content Award, Sri Lanka.</li>
+      <li><span class="yr">2015</span> <b>Gold Award</b>, e-Health (Health Care) category, Manthan Awards – South Asia &amp; Asia Pacific Digital Inclusion for Development, India.</li>
+      <li><span class="yr">2015</span> <b>Nominated</b> for the Asia Pacific ICT Alliance Awards (APICTA), Sri Lanka.</li>
+      <li><span class="yr">2015</span> <b>Overall Bronze Award</b>, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
+      <li><span class="yr">2015</span> <b>Gold Award</b>, e-Health (Health Care) category, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
+      <li><span class="yr">2015</span> <b>Bronze Award</b>, Education &amp; Training category, National Best Quality ICT Awards (NBQSA), Sri Lanka.</li>
+      <li><span class="yr">2014</span> <b>Gold Award</b>, e-Science &amp; Technology category, Manthan Awards – South Asia &amp; Asia Pacific Digital Inclusion for Development, India.</li>
+      <li><span class="yr">2014</span> <b>Gold Award</b>, e-Science &amp; Technology category, e-Swabhimani National Best e-Content Award, Sri Lanka.</li>
+      <li><span class="yr">2013</span> <b>Nominated</b> for the Asia Pacific ICT Alliance Awards (APICTA), Hong Kong.</li>
+      <li><span class="yr">2013</span> <b>Overall Gold Award</b>, National Best Quality Software Awards (NBQSA), Sri Lanka.</li>
+      <li><span class="yr">2013</span> <b>Gold Award</b>, R&amp;D category, National Best Quality Software Awards (NBQSA), Sri Lanka.</li>
     </ul>
   </section>
 
-  <section data-card data-label="Journal articles">
+</div>
+
+<!-- ================= PUBLICATIONS ================= -->
+<div class="page" data-page="publications">
+
+  <header class="page-head only-classic">
+    <h1>Publications</h1>
+    <p>Peer-reviewed articles, papers and chapters. Full record on <a href="https://scholar.google.com/citations?user=79gDe7oAAAAJ&amp;hl=en">Google Scholar</a>.</p>
+    <p class="legend"><span class="tag k-q1">Q1</span> Journal ranked in the top quartile of all its subject categories (<a href="https://www.scimagojr.com/">Scimago Journal Rank</a>, 2025).</p>
+  </header>
+
+  <div class="pub-tools only-classic" role="search">
+    <input type="search" id="pub-q" placeholder="Search title, author or venue" aria-label="Search publications" autocomplete="off">
+    <div class="chips" id="pub-types" role="group" aria-label="Publication type">
+      <button type="button" class="chip" data-type="all" aria-pressed="true">All<span class="n"></span></button>
+      <button type="button" class="chip" data-type="journal" aria-pressed="false">Journal<span class="n"></span></button>
+      <button type="button" class="chip" data-type="q1" aria-pressed="false">Q1 journals<span class="n"></span></button>
+      <button type="button" class="chip" data-type="conference" aria-pressed="false">Conference &amp; workshop<span class="n"></span></button>
+      <button type="button" class="chip" data-type="book" aria-pressed="false">Books<span class="n"></span></button>
+    </div>
+    <select id="pub-year" aria-label="Filter by year"><option value="">All years</option></select>
+    <p class="pub-count" id="pub-count" aria-live="polite"></p>
+  </div>
+
+  <section data-card data-label="Journal articles" data-pubtype="journal">
     <h2>Peer-Reviewed Journal Articles</h2>
     <ul class="pubs split">
-      <li><span class="yr">2026</span> <span class="me">M. Weerasinghe</span>, M. Kljun, N. T. Attygalle, A. Quigley, J. Grubert, V. Biener, J. Yoneyama, H. Kato, and K. Čopič Pucihar. <span class="ti">“ARText: Vocabulary Learning with Personalised and Predefined Keyword-Associations in Augmented Reality.”</span> <i>International Journal of Human-Computer Interaction</i>, in press. <a href="https://doi.org/10.21203/rs.3.rs-6399390/v2">Preprint</a> <span class="tag">IN PRESS</span></li>
-      <li><span class="yr">2026</span> K. Čopič Pucihar, K. Trajkovska, <span class="me">M. Weerasinghe</span>, A. Waqas, D. A. Parry, D. B. le Roux, and M. Kljun. <span class="ti">“Can Immersion Protect us From Distraction? The Impact of Real-World Distractions on Learning in Augmented Reality.”</span> <i>International Journal of Human-Computer Interaction</i>, online first. DOI: <a href="https://doi.org/10.1080/10447318.2026.2633224">10.1080/10447318.2026.2633224</a></li>
-      <li><span class="yr">2025</span> <span class="me">M. Weerasinghe</span>, S. Macdonald, C. Fiani, J. O'Hagan, M. Chollet, M. McGill, and M. Khamis. <span class="ti">“Beyond Mute and Block: Adoption and Effectiveness of Safety Tools in Social VR, from Ubiquitous Harassment to Social Sculpting.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 31(5), 3275–3284. DOI: <a href="https://doi.org/10.1109/TVCG.2025.3549860">10.1109/TVCG.2025.3549860</a></li>
-      <li><span class="yr">2025</span> J. A. Deja, S. Štor, I. Pucihar, <span class="me">M. Weerasinghe</span>, R. M. Balbin, K. Čopič Pucihar, and M. Kljun. <span class="ti">“ImproVisAR: Designing Augmented Reality Piano Roll for Teaching Improvisation.”</span> <i>Virtual Reality</i>, 29(3), Article 140. DOI: <a href="https://doi.org/10.1007/s10055-025-01215-z">10.1007/s10055-025-01215-z</a></li>
-      <li><span class="yr">2023</span> <span class="me">M. Weerasinghe</span>, K. Čopič Pucihar, J. Ducasse, A. Quigley, A. Toniolo, A. Miguel, N. Caluya, and M. Kljun. <span class="ti">“Exploring the Future Building: Representational Effects on Projecting Oneself into the Future Office Space.”</span> <i>Virtual Reality</i>, 27(1), 51–70. DOI: <a href="https://doi.org/10.1007/s10055-022-00673-z">10.1007/s10055-022-00673-z</a></li>
-      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, A. Quigley, K. Čopič Pucihar, A. Toniolo, A. Miguel, and M. Kljun. <span class="ti">“Arigatō: Effects of Adaptive Guidance on Engagement and Performance in Augmented Reality Learning Environments.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3737–3747. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203088">10.1109/TVCG.2022.3203088</a></li>
-      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, V. Biener, J. Grubert, A. Quigley, A. Toniolo, K. Čopič Pucihar, and M. Kljun. <span class="ti">“VocabulARy: Learning Vocabulary in AR Supported by Keyword Visualisations.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3748–3758. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203116">10.1109/TVCG.2022.3203116</a></li>
-      <li><span class="yr">2022</span> V. Biener, S. Kalamkar, N. Nouri, E. Ofek, M. Pahud, J. J. Dudley, J. Hu, P. O. Kristensson, <span class="me">M. Weerasinghe</span>, K. Čopič Pucihar, M. Kljun, S. Streuber, and J. Grubert. <span class="ti">“Quantifying the Effects of Working in VR for One Week.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3810–3820. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203103">10.1109/TVCG.2022.3203103</a></li>
+      <li><span class="yr">2026</span> <span class="me">M. Weerasinghe</span>, M. Kljun, N. T. Attygalle, A. Quigley, J. Grubert, V. Biener, J. Yoneyama, H. Kato, and K. Čopič Pucihar. <span class="ti">“ARText: Vocabulary Learning with Personalised and Predefined Keyword-Associations in Augmented Reality.”</span> <i>International Journal of Human-Computer Interaction</i>, in press. <a href="https://doi.org/10.21203/rs.3.rs-6399390/v2">Preprint</a> <span class="tag">IN PRESS</span> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
+      <li><span class="yr">2026</span> K. Čopič Pucihar, K. Trajkovska, <span class="me">M. Weerasinghe</span>, A. Waqas, D. A. Parry, D. B. le Roux, and M. Kljun. <span class="ti">“Can Immersion Protect us From Distraction? The Impact of Real-World Distractions on Learning in Augmented Reality.”</span> <i>International Journal of Human-Computer Interaction</i>, online first. DOI: <a href="https://doi.org/10.1080/10447318.2026.2633224">10.1080/10447318.2026.2633224</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
+      <li><span class="yr">2025</span> <span class="me">M. Weerasinghe</span>, S. Macdonald, C. Fiani, J. O'Hagan, M. Chollet, M. McGill, and M. Khamis. <span class="ti">“Beyond Mute and Block: Adoption and Effectiveness of Safety Tools in Social VR, from Ubiquitous Harassment to Social Sculpting.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 31(5), 3275–3284. DOI: <a href="https://doi.org/10.1109/TVCG.2025.3549860">10.1109/TVCG.2025.3549860</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
+      <li><span class="yr">2025</span> J. A. Deja, S. Štor, I. Pucihar, <span class="me">M. Weerasinghe</span>, R. M. Balbin, K. Čopič Pucihar, and M. Kljun. <span class="ti">“ImproVisAR: Designing Augmented Reality Piano Roll for Teaching Improvisation.”</span> <i>Virtual Reality</i>, 29(3), Article 140. DOI: <a href="https://doi.org/10.1007/s10055-025-01215-z">10.1007/s10055-025-01215-z</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
+      <li><span class="yr">2023</span> <span class="me">M. Weerasinghe</span>, K. Čopič Pucihar, J. Ducasse, A. Quigley, A. Toniolo, A. Miguel, N. Caluya, and M. Kljun. <span class="ti">“Exploring the Future Building: Representational Effects on Projecting Oneself into the Future Office Space.”</span> <i>Virtual Reality</i>, 27(1), 51–70. DOI: <a href="https://doi.org/10.1007/s10055-022-00673-z">10.1007/s10055-022-00673-z</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
+      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, A. Quigley, K. Čopič Pucihar, A. Toniolo, A. Miguel, and M. Kljun. <span class="ti">“Arigatō: Effects of Adaptive Guidance on Engagement and Performance in Augmented Reality Learning Environments.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3737–3747. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203088">10.1109/TVCG.2022.3203088</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
+      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, V. Biener, J. Grubert, A. Quigley, A. Toniolo, K. Čopič Pucihar, and M. Kljun. <span class="ti">“VocabulARy: Learning Vocabulary in AR Supported by Keyword Visualisations.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3748–3758. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203116">10.1109/TVCG.2022.3203116</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
+      <li><span class="yr">2022</span> V. Biener, S. Kalamkar, N. Nouri, E. Ofek, M. Pahud, J. J. Dudley, J. Hu, P. O. Kristensson, <span class="me">M. Weerasinghe</span>, K. Čopič Pucihar, M. Kljun, S. Streuber, and J. Grubert. <span class="ti">“Quantifying the Effects of Working in VR for One Week.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3810–3820. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203103">10.1109/TVCG.2022.3203103</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
       <li><span class="yr">2020</span> S. S. Vithanage, M. S. Ratnadiwakara, D. Sandaruwan, S. Arunathileka, <span class="me">M. Weerasinghe</span>, and C. Ranasinghe. <span class="ti">“Identifying Muscle Strength Imbalances in Athletes using Motion Analysis Incorporated with Sensory Inputs.”</span> <i>International Journal of Advanced Computer Science and Applications</i>, 11(4). DOI: <a href="https://doi.org/10.14569/IJACSA.2020.01104105">10.14569/IJACSA.2020.01104105</a></li>
       <li><span class="yr">2018</span> S. Vithanage, M. Ratnadiwakara, D. Sandaruwan, S. M. K. D. Arunathileka, <span class="me">M. Weerasinghe</span>, and C. Ranasinghe. <span class="ti">“A Novel Approach to Detect Muscle Strength Imbalances via Motion Analysis Using Sensory Inputs.”</span> <i>European Journal of Computer Science and Information Technology</i>, 6(5), 37–50.</li>
       <li><span class="yr">2018</span> H. Tennakoon, C. Paranamana, <span class="me">M. Weerasinghe</span>, D. Sandaruwan, and K. Mahindarathne. <span class="ti">“A Novel Musculoskeletal Imbalance Identification Mechanism for Lower Body Analyzing Gait Cycle by Motion Tracking.”</span> <i>International Journal of Information Technology and Computer Science</i>, 10(3), 27–34. DOI: <a href="https://doi.org/10.5815/ijitcs.2018.03.04">10.5815/ijitcs.2018.03.04</a></li>
@@ -343,13 +659,16 @@
     </ul>
   </section>
 
-  <section data-card data-label="Conference papers">
+  <section data-card data-label="Conference papers" data-pubtype="conference">
     <h2>Selected Conference, Workshop &amp; Demo Publications</h2>
     <ul class="pubs split">
+      <!-- Authors not yet listed for the next two papers: add them before the title in the same style as the entries below. -->
+      <li><span class="yr">2026</span> <span class="ti">“MetaMelodies as a Portable Piano Improvisation Learning Space.”</span> <i>ACM Interactive Surfaces and Spaces (ISS 2026)</i>, demo. <a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=79gDe7oAAAAJ&amp;citation_for_view=79gDe7oAAAAJ:dTyEYWd-f8wC">Google Scholar</a> <span class="tag">ACCEPTED</span></li>
+      <li><span class="yr">2026</span> <span class="ti">“Same Lessons, Different Pathways: Exploring HMD-Based Guidance for Jazz Piano Improvisation.”</span> <i>ACM Interactive Surfaces and Spaces (ISS 2026)</i>, poster. <a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=79gDe7oAAAAJ&amp;citation_for_view=79gDe7oAAAAJ:9vf0nzSNQJEC">Google Scholar</a> <span class="tag">ACCEPTED</span></li>
       <li><span class="yr">2026</span> R. Rodrigo, D. Sandaruwan, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Moving the Bottleneck: Performance Trade-offs of WebAssembly and WebGPU in WebXR.”</span> <i>ACM Symposium on Virtual Reality Software and Technology (VRST 2026)</i>. Full paper. <span class="tag">ACCEPTED</span></li>
       <li><span class="yr">2026</span> J. A. Deja, I. Butaslac III, N. R. Caluya, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Directing the Robot: Scaffolding Creative Human-AI-Robot Interaction.”</span> <i>3rd InterAI Workshop at ACM CHI 2026</i>.</li>
       <li><span class="yr">2026</span> K. Trajkovska, M. Kljun, <span class="me">M. Weerasinghe</span>, and K. Čopič Pucihar. <span class="ti">“Personalised 3D Mnemonics for Vocabulary Learning in Context.”</span> <i>IEEE ISMAR 2026</i>, poster; associated <i>VocabulARy 2.0</i> research demo.</li>
-      <li><span class="yr">2025</span> N. T. Attygalle, M. Kljun, A. Quigley, K. Čopič Pucihar, J. Grubert, V. Biener, L. A. Leiva, J. Yoneyama, A. Toniolo, A. Miguel, H. Kato, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Text-to-Image Generation for Vocabulary Learning Using the Keyword Method.”</span> <i>ACM IUI 2025</i>, 1381–1397. <span class="tag">BEST PAPER</span></li>
+      <li><span class="yr">2025</span> N. T. Attygalle, M. Kljun, A. Quigley, K. Čopič Pucihar, J. Grubert, V. Biener, L. A. Leiva, J. Yoneyama, A. Toniolo, A. Miguel, H. Kato, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Text-to-Image Generation for Vocabulary Learning Using the Keyword Method.”</span> <i>ACM IUI 2025</i>, 1381–1397. <span class="tag k-award">BEST PAPER</span></li>
       <li><span class="yr">2024</span> <span class="me">M. Weerasinghe</span>, M. Kljun, and K. Čopič Pucihar. <span class="ti">“A Cross-Device Interaction with the Smartphone and HMD for Vocabulary Learning.”</span> <i>EICS 2024 International Workshops</i>, LNCS 15518, 269–282.</li>
       <li><span class="yr">2024</span> <span class="me">M. Weerasinghe</span>, L. Ribič, M. Kljun, K. Čopič Pucihar, and I. Devetak. <span class="ti">“Augmented Reality Training System Fusing the Triple Nature of Chemical Concepts.”</span> <i>HCI Slovenia 2024</i>, 64–70.</li>
       <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, V. Biener, J. Grubert, J. A. Deja, N. T. Attygalle, K. Trajkovska, M. Kljun, and K. Čopič Pucihar. <span class="ti">“VocabulARy Replicated: Comparing Teenagers to Young Adults.”</span> <i>IEEE ISMAR 2022 Adjunct</i>, 283–285.</li>
@@ -365,7 +684,7 @@
     </ul>
   </section>
 
-  <section data-card data-label="Books">
+  <section data-card data-label="Books" data-pubtype="book">
     <h2>Books &amp; Chapters</h2>
     <ul class="pubs split">
       <li><span class="yr">2024</span> <span class="me">M. Weerasinghe</span>, A. Quigley, J. Ducasse, K. Čopič Pucihar, and M. Kljun. <span class="ti">“Educational Augmented Reality Games.”</span> In <i>Augmented Reality Games II: The Gamification of Education, Medicine and Art</i>, Springer, 3–38.</li>
@@ -373,16 +692,19 @@
     </ul>
   </section>
 
-  <section data-card data-label="Service">
-    <h2>Academic Service &amp; Peer Reviewing</h2>
-    <ul class="bullets split">
-      <li><b>International Program Committee (IPC) Member:</b> ACM Symposium on Virtual Reality Software and Technology (VRST 2026); IEEE International Symposium on Mixed and Augmented Reality (ISMAR 2023, 2024 and 2026); IEEE Conference on Virtual Reality and 3D User Interfaces (IEEE VR 2026); International Conference on Extended Reality (ICXR 2026).</li>
-      <li><b>Peer Reviewer:</b> ACM CHI Papers / Late-Breaking Work (2023–2026); ACM IUI Papers (2025–2026); ACM MobileHCI Papers / Late-Breaking Work (2024–2025); IEEE ISMAR Papers (2025); IEEE VR Papers (2023–2024); Mensch und Computer Short Papers (2024–2026); HCI-IS (2021); ICTer (2015–2016).</li>
-      <li><b>Journal Reviewing:</b> <i>IEEE Transactions on Visualization and Computer Graphics</i> (TVCG), 2024; <i>Computers &amp; Education Open</i>, 2025.</li>
-    </ul>
-  </section>
+  <p class="no-results only-classic is-hidden" id="pub-empty">No publications match these filters. <button type="button" class="linkbtn" id="pub-clear">Clear filters</button></p>
 
-  <section data-card data-label="Teaching">
+</div>
+
+<!-- ================= TEACHING ================= -->
+<div class="page" data-page="teaching">
+
+  <header class="page-head only-classic">
+    <h1>Teaching</h1>
+    <p>Courses, research supervision, and public engagement.</p>
+  </header>
+
+  <section data-card data-label="Teaching" class="solo">
     <h2>Teaching, Mentoring &amp; Knowledge Transfer</h2>
     <h3>University of Primorska, FAMNIT</h3>
     <ul class="bullets split">
@@ -406,6 +728,54 @@
     </ul>
   </section>
 
+</div>
+
+<!-- ================= SERVICE ================= -->
+<div class="page" data-page="service">
+
+  <header class="page-head only-classic">
+    <h1>Service</h1>
+    <p>Program committees, peer reviewing, mentoring, memberships, and technical expertise.</p>
+  </header>
+
+  <!-- Service: one line per venue, with each year as its own badge (newest first). -->
+  <section data-card data-label="Committees">
+    <h2>International Program Committees</h2>
+    <ul class="svc split">
+      <li><span class="sv"><b>ACM VRST</b><span class="sd">ACM Symposium on Virtual Reality Software and Technology</span></span><span class="sy"><span>2026</span></span></li>
+      <li><span class="sv"><b>IEEE ISMAR</b><span class="sd">IEEE International Symposium on Mixed and Augmented Reality</span></span><span class="sy"><span>2026</span><span>2024</span><span>2023</span></span></li>
+      <li><span class="sv"><b>IEEE VR</b><span class="sd">IEEE Conference on Virtual Reality and 3D User Interfaces</span></span><span class="sy"><span>2026</span></span></li>
+      <li><span class="sv"><b>ICXR</b><span class="sd">International Conference on Extended Reality</span></span><span class="sy"><span>2026</span></span></li>
+    </ul>
+  </section>
+
+  <section data-card data-label="Mentoring">
+    <h2>Mentoring</h2>
+    <ul class="svc split">
+      <li><span class="sv"><b>IEEE ISMAR 2026 Speed Mentorship</b><span class="sd">Mentor at the IEEE Computer Society speed-mentorship session for student attendees, Bari, Italy. <a href="https://www.ieeeismar.net/2026/speed-mentorship/">Event page</a></span></span><span class="sy"><span>2026</span></span></li>
+    </ul>
+  </section>
+
+  <section data-card data-label="Reviewing">
+    <h2>Peer Reviewing</h2>
+    <h3>Conferences</h3>
+    <ul class="svc split">
+      <li><span class="sv"><b>ACM CHI</b><span class="sd">Conference on Human Factors in Computing Systems · Papers, Late-Breaking Work</span></span><span class="sy"><span>2026</span><span>2025</span><span>2024</span><span>2023</span></span></li>
+      <li><span class="sv"><b>ACM IUI</b><span class="sd">Conference on Intelligent User Interfaces · Papers</span></span><span class="sy"><span>2026</span><span>2025</span></span></li>
+      <li><span class="sv"><b>Mensch und Computer</b><span class="sd">Short Papers</span></span><span class="sy"><span>2026</span><span>2025</span><span>2024</span></span></li>
+      <li><span class="sv"><b>ACM MobileHCI</b><span class="sd">Conference on Mobile Human-Computer Interaction · Papers, Late-Breaking Work</span></span><span class="sy"><span>2025</span><span>2024</span></span></li>
+      <li><span class="sv"><b>IEEE ISMAR</b><span class="sd">International Symposium on Mixed and Augmented Reality · Papers</span></span><span class="sy"><span>2025</span></span></li>
+      <li><span class="sv"><b>IEEE VR</b><span class="sd">Conference on Virtual Reality and 3D User Interfaces · Papers</span></span><span class="sy"><span>2024</span><span>2023</span></span></li>
+      <li><span class="sv"><b>HCI-IS</b><span class="sd">Human-Computer Interaction in Information Society</span></span><span class="sy"><span>2021</span></span></li>
+      <li><span class="sv"><b>ICTer</b><span class="sd">International Conference on Advances in ICT for Emerging Regions</span></span><span class="sy"><span>2016</span><span>2015</span></span></li>
+    </ul>
+    <h3>Journals</h3>
+    <ul class="svc split">
+      <li><span class="sv"><b><i>Computers &amp; Education Open</i></b></span><span class="sy"><span>2025</span></span></li>
+      <li><span class="sv"><b><i>IEEE Transactions on Visualization and Computer Graphics</i></b><span class="sd">TVCG</span></span><span class="sy"><span>2024</span></span></li>
+    </ul>
+  </section>
+
   <section data-card data-label="Expertise">
     <h2>Professional Memberships &amp; Technical Expertise</h2>
     <div class="rows">
@@ -416,6 +786,13 @@
     </div>
     <p class="foot">Full publication record: <a href="https://scholar.google.com/citations?user=79gDe7oAAAAJ&amp;hl=en">Google Scholar</a> · ORCID: <a href="https://orcid.org/0000-0003-2691-601X">0000-0003-2691-601X</a></p>
   </section>
+
+</div>
+
+  <footer class="site-foot only-classic">
+    <span>© 2026 Maheshya Weerasinghe · Last updated October 2026</span>
+    <button type="button" class="linkbtn" id="foot-3d">Fly through the 3D view →</button>
+  </footer>
 
 </main>
 
@@ -435,6 +812,11 @@
   var menu = document.getElementById('menu');
   var menuBtn = document.getElementById('menu-btn');
   var viewBtn = document.getElementById('view-btn');
+  var themeBtn = document.getElementById('theme-btn');
+  var tabsEl = document.getElementById('tabs');
+  var tabLinks = Array.prototype.slice.call(tabsEl.querySelectorAll('a'));
+  var pages = Array.prototype.slice.call(cv.querySelectorAll('.page'));
+  var BASE_TITLE = document.title;
 
   var FOV = 50 * Math.PI / 180;
   var SPACING = 1750;
@@ -458,6 +840,7 @@
   function trans(x, y, z) { var m = ident(); m[12] = x; m[13] = y; m[14] = z; return m; }
   function rotY(t) { var m = ident(), c = Math.cos(t), s = Math.sin(t); m[0] = c; m[2] = -s; m[8] = s; m[10] = c; return m; }
   var FLIP = [1,0,0,0, 0,-1,0,0, 0,0,1,0, 0,0,0,1];
+  function scaleM(k) { var m = ident(); m[0] = k; m[5] = k; m[10] = k; return m; }
   function add(a, b) { return [a[0]+b[0], a[1]+b[1], a[2]+b[2]]; }
   function sub(a, b) { return [a[0]-b[0], a[1]-b[1], a[2]-b[2]]; }
   function scl(a, k) { return [a[0]*k, a[1]*k, a[2]*k]; }
@@ -626,11 +1009,14 @@
     heroRight = [Math.cos(hb), 0, Math.sin(hb)]; heroD = D0;
     var d = [Math.sin(h), 0, -Math.cos(h)], r = [Math.cos(h), 0, Math.sin(h)];
     var look = add(C0, scl(d, focal));
-    var pos0 = mobile ? sub(look, [0, 0.16 * H, 0])
+    // shrink the start card if the screen is too short for it
+    var k0 = Math.min(1, (H - (mobile ? 170 : 140)) / c0.h), h0 = c0.h * k0;
+    // on phones the card sits below the brain, but never so low that it runs into the scroll cue
+    var pos0 = mobile ? sub(look, [0, Math.max(0, Math.min(0.16 * H, H / 2 - h0 / 2 - 100)), 0])
                       : sub(look, scl(r, Math.min(0.21 * W, W / 2 - c0.w / 2 - 24)));
     var th0 = -h;
     c0.pos = pos0; c0.look = look; c0.th = th0; c0.n = [Math.sin(th0), 0, Math.cos(th0)]; c0.cam = C0;
-    c0.B = mul(mul(trans(pos0[0], pos0[1], pos0[2]), rotY(th0)), FLIP);
+    c0.B = mul(mul(mul(trans(pos0[0], pos0[1], pos0[2]), rotY(th0)), FLIP), scaleM(k0));
 
     space.style.height = ((N - 1) * 95 + 100) + 'vh';
     sizeCanvas();
@@ -1118,7 +1504,7 @@
     requestAnimationFrame(frame);
   }
 
-  /* ---------------- navigation ---------------- */
+  /* ---------------- navigation (3D view) ---------------- */
   function scrollToCard(index) {
     var max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
     var N = Math.max(2, cards.length);
@@ -1126,27 +1512,18 @@
   }
   function buildNav() {
     menu.innerHTML = ''; dotsEl.innerHTML = '';
-    var is3d = root.classList.contains('is-3d');
-    var list = is3d ? sections : Array.prototype.map.call(cv.querySelectorAll('[data-card]'), function (el) {
-      return { label: el.getAttribute('data-label'), el: el };
-    });
-    list.forEach(function (sec) {
+    activeIdx = -1;
+    if (!root.classList.contains('is-3d')) return;   // the classic view uses the page tabs instead
+    sections.forEach(function (sec) {
       var li = document.createElement('li'), b = document.createElement('button');
       b.type = 'button'; b.textContent = sec.label; b.setAttribute('role', 'menuitem');
-      b.addEventListener('click', function () {
-        closeMenu();
-        if (root.classList.contains('is-3d')) scrollToCard(sec.index);
-        else sec.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
+      b.addEventListener('click', function () { closeMenu(); scrollToCard(sec.index); });
       li.appendChild(b); menu.appendChild(li);
-      if (is3d) {
-        var dl = document.createElement('li'), db = document.createElement('button'), sp = document.createElement('span');
-        db.type = 'button'; db.setAttribute('aria-label', sec.label); sp.textContent = sec.label; db.appendChild(sp);
-        db.addEventListener('click', function () { scrollToCard(sec.index); });
-        dl.appendChild(db); dotsEl.appendChild(dl);
-      }
+      var dl = document.createElement('li'), db = document.createElement('button'), sp = document.createElement('span');
+      db.type = 'button'; db.setAttribute('aria-label', sec.label); sp.textContent = sec.label; db.appendChild(sp);
+      db.addEventListener('click', function () { scrollToCard(sec.index); });
+      dl.appendChild(db); dotsEl.appendChild(dl);
     });
-    activeIdx = -1;
   }
   function markActive(k) {
     Array.prototype.forEach.call(menu.querySelectorAll('button'), function (b, i) { b.classList.toggle('active', i === k); });
@@ -1160,6 +1537,137 @@
   });
   document.addEventListener('click', function (e) { if (!menu.contains(e.target)) closeMenu(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+
+  /* ---------------- pages (classic view) ---------------- */
+  function pageEl(name) {
+    for (var i = 0; i < pages.length; i++) if (pages[i].getAttribute('data-page') === name) return pages[i];
+    return null;
+  }
+  function currentPage() {
+    var h = '';
+    try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
+    return pageEl(h) ? h : 'about';
+  }
+  function showPage(name, toTop) {
+    cv.classList.add('paged');
+    pages.forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-page') === name); });
+    var current = null;
+    tabLinks.forEach(function (a) {
+      if (a.getAttribute('href') === '#' + name) { a.setAttribute('aria-current', 'page'); current = a; }
+      else a.removeAttribute('aria-current');
+    });
+    if (current && tabsEl.scrollWidth > tabsEl.clientWidth) {
+      var r = current.getBoundingClientRect(), t = tabsEl.getBoundingClientRect();
+      tabsEl.scrollLeft += (r.left + r.width / 2) - (t.left + t.width / 2);
+    }
+    document.title = (name === 'about' || !current ? '' : current.textContent + ' | ') + BASE_TITLE;
+    if (toTop) window.scrollTo(0, 0);
+  }
+  addEventListener('hashchange', function () {
+    if (!root.classList.contains('is-3d')) showPage(currentPage(), true);
+  });
+  // In the 3D view, links to a page (#publications, the name in the top bar) fly to its first card instead.
+  document.addEventListener('click', function (e) {
+    if (!root.classList.contains('is-3d') || !e.target.closest) return;
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var name = a.getAttribute('href').slice(1);
+    if (!pageEl(name)) return;
+    e.preventDefault();
+    for (var k = 0; k < sections.length; k++) {
+      var pg = sections[k].el.closest('.page');
+      if (pg && pg.getAttribute('data-page') === name) { scrollToCard(sections[k].index); return; }
+    }
+  });
+
+  /* ---------------- news: show the latest few, expand on demand ---------------- */
+  var newsList = document.getElementById('news-list'), newsMore = document.getElementById('news-more'), NEWS_SHOWN = 6;
+  if (newsList && newsMore && newsList.children.length > NEWS_SHOWN) {
+    var newsTotal = newsList.children.length;
+    var setNews = function (collapsed) {
+      newsList.classList.toggle('collapsed', collapsed);
+      newsMore.textContent = collapsed ? 'Show all ' + newsTotal + ' news items' : 'Show fewer';
+      newsMore.setAttribute('aria-expanded', String(!collapsed));
+    };
+    setNews(true);
+    newsMore.hidden = false;
+    newsMore.addEventListener('click', function () { setNews(!newsList.classList.contains('collapsed')); });
+  }
+
+  /* ---------------- publications: search, type and year filters ---------------- */
+  var pubQ = document.getElementById('pub-q'), pubYear = document.getElementById('pub-year'),
+      pubCount = document.getElementById('pub-count'), pubEmpty = document.getElementById('pub-empty'),
+      pubClear = document.getElementById('pub-clear');
+  var chips = Array.prototype.slice.call(document.querySelectorAll('#pub-types .chip'));
+  var pubSecs = Array.prototype.slice.call(cv.querySelectorAll('[data-pubtype]'));
+  var pubs = [], pubType = 'all';
+  function fold(s) {
+    s = s.toLowerCase();
+    return s.normalize ? s.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : s;
+  }
+  pubSecs.forEach(function (sec) {
+    Array.prototype.forEach.call(sec.querySelectorAll('ul.pubs > li'), function (li) {
+      var y = li.querySelector('.yr');
+      pubs.push({ li: li, sec: sec, type: sec.getAttribute('data-pubtype'), q1: !!li.querySelector('.k-q1'),
+                  year: y ? y.textContent.trim() : '', text: fold(li.textContent) });
+    });
+  });
+  function matchType(p, t) { return t === 'all' || (t === 'q1' ? p.q1 : p.type === t); }
+  function filterPubs() {
+    var terms = fold(pubQ.value.trim()).split(/\s+/).filter(Boolean), y = pubYear.value, shown = 0, perSec = [];
+    pubs.forEach(function (p) {
+      var ok = matchType(p, pubType) && (!y || p.year === y) &&
+               terms.every(function (t) { return p.text.indexOf(t) >= 0; });
+      p.li.classList.toggle('is-hidden', !ok);
+      if (ok) { shown++; if (perSec.indexOf(p.sec) < 0) perSec.push(p.sec); }
+    });
+    pubSecs.forEach(function (sec) { sec.classList.toggle('is-hidden', perSec.indexOf(sec) < 0); });
+    pubCount.textContent = shown === pubs.length ? pubs.length + ' publications'
+                                                 : 'Showing ' + shown + ' of ' + pubs.length + ' publications';
+    pubEmpty.classList.toggle('is-hidden', shown > 0);
+  }
+  function setType(t) {
+    pubType = t;
+    chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c.getAttribute('data-type') === t)); });
+  }
+  if (pubs.length && pubQ) {
+    var years = [];
+    pubs.forEach(function (p) { if (p.year && years.indexOf(p.year) < 0) years.push(p.year); });
+    years.sort(function (a, b) { return b.localeCompare(a); });
+    years.forEach(function (y) { var o = document.createElement('option'); o.value = y; o.textContent = y; pubYear.appendChild(o); });
+    chips.forEach(function (ch) {
+      var t = ch.getAttribute('data-type');
+      ch.querySelector('.n').textContent = pubs.filter(function (p) { return matchType(p, t); }).length;
+      ch.addEventListener('click', function () { setType(t); filterPubs(); });
+    });
+    pubQ.addEventListener('input', filterPubs);
+    pubYear.addEventListener('change', filterPubs);
+    pubClear.addEventListener('click', function () { pubQ.value = ''; pubYear.value = ''; setType('all'); filterPubs(); pubQ.focus(); });
+    filterPubs();
+  }
+
+  /* ---------------- light / dark theme (classic view) ---------------- */
+  var MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.7 14.6A8.6 8.6 0 0 1 9.4 3.3a8.6 8.6 0 1 0 11.3 11.3z"/></svg>';
+  var SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M11 1.5h2v3h-2zM11 19.5h2v3h-2zM1.5 11h3v2h-3zM19.5 11h3v2h-3zM4.2 5.6l1.4-1.4 2.1 2.1-1.4 1.4zM16.3 17.7l1.4-1.4 2.1 2.1-1.4 1.4zM4.2 18.4l2.1-2.1 1.4 1.4-2.1 2.1zM16.3 6.3l2.1-2.1 1.4 1.4-2.1 2.1z"/></svg>';
+  function effectiveTheme() {
+    var t = root.getAttribute('data-theme');
+    if (t === 'light' || t === 'dark') return t;
+    return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function paintThemeBtn() {
+    var dark = effectiveTheme() === 'dark';
+    themeBtn.innerHTML = dark ? SUN : MOON;
+    themeBtn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    themeBtn.title = dark ? 'Light theme' : 'Dark theme';
+  }
+  themeBtn.addEventListener('click', function () {
+    var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('cv-theme', next); } catch (e) {}
+    paintThemeBtn();
+  });
+  try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintThemeBtn); } catch (e) {}
+  paintThemeBtn();
 
   /* ---------------- view modes ---------------- */
   function setMode(mode, save) {
@@ -1176,11 +1684,13 @@
     } else {
       running = false;
       buildNav();
+      showPage(currentPage(), false);
     }
   }
   viewBtn.addEventListener('click', function () {
     setMode(root.classList.contains('is-3d') ? 'classic' : '3d', true);
   });
+  document.getElementById('foot-3d').addEventListener('click', function () { setMode('3d', true); });
 
   addEventListener('pointermove', function (e) {
     if (e.pointerType === 'touch') return;
