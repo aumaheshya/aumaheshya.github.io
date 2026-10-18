@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dr. Maheshya Weerasinghe, PhD</title>
-<meta name="description" content="Dr. Maheshya Weerasinghe, Assistant Professor (Tenure) in Human-Computer Interaction: cognitive augmentation, XR (AR/VR/MR), and AI and biosensing in XR. Academic CV with publications, teaching and service.">
-<meta property="og:title" content="Dr. Maheshya Weerasinghe, PhD">
+<title>Maheshya Weerasinghe, PhD</title>
+<meta name="description" content="Maheshya Weerasinghe, Assistant Professor (Tenure) in Human-Computer Interaction: cognitive augmentation, XR (AR/VR/MR), and AI and biosensing in XR. Academic CV with publications, teaching and service.">
+<meta property="og:title" content="Maheshya Weerasinghe, PhD">
 <meta property="og:description" content="Assistant Professor (Tenure) | Cognitive Augmentation to Create “Smarter Humans” not “Smarter Machines”">
 <script>
   // Choose the view and theme before first paint: 3D by default, classic for reduced motion,
@@ -525,7 +525,7 @@
 </svg>
 
 <div class="topbar">
-  <a class="brand" href="#about"><span class="mono"><img src="photo.jpg" alt="" onerror="this.remove()">MW</span><span class="full">Dr. Maheshya Weerasinghe, PhD</span></a>
+  <a class="brand" href="#about"><span class="mono"><img src="photo.jpg" alt="" onerror="this.remove()">MW</span><span class="full">Maheshya Weerasinghe</span></a>
   <nav class="tabs only-classic" id="tabs" aria-label="Pages">
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
@@ -566,7 +566,7 @@
       </figure>
       <div class="hero-text">
         <p class="kicker only-3d">Academic CV</p>
-        <h1>Maheshya Weerasinghe</h1>
+        <h1>Dr. Maheshya Weerasinghe,&nbsp;PhD</h1>
         <p class="role">Assistant Professor (Tenure) <span class="place">· Koper, Slovenia</span></p>
         <p class="tagline">A Simple “Human” Attached to “Computers” and Its “Interactions”</p>
         <ul class="focus">
@@ -1055,6 +1055,16 @@
         }
       });
     });
+    // keep the name on the start card on one line, shrinking it only as much as needed
+    var heroName = cards.length && cards[0].el.querySelector('.hero h1');
+    if (heroName) {
+      heroName.style.whiteSpace = 'nowrap';
+      var fs = parseFloat(getComputedStyle(heroName).fontSize);
+      while (heroName.scrollWidth > heroName.clientWidth + 1 && fs > 14) {
+        fs -= 0.5;
+        heroName.style.fontSize = fs + 'px';
+      }
+    }
     cards.forEach(function (c, i) {
       c.w = c.el.offsetWidth; c.h = c.el.offsetHeight;
       c.el.setAttribute('data-i', i);
