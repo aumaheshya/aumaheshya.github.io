@@ -176,6 +176,10 @@
   }
   .tag.k-award { background: var(--award-bg); color: var(--award-fg); }
   .tag.k-role { background: var(--role-bg); color: var(--role-fg); }
+  .entry.proj .title .tag { margin-left: 8px; vertical-align: 2px; }
+  .entry.proj .thesis { font-style: italic; }
+  #cv .entry.pi .date { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .entry.pi .loc b { color: var(--accent); font-style: normal; }
   .tag.k-event { background: var(--event-bg); color: var(--event-fg); }
   .tag.k-q1 { background: var(--role-bg); color: var(--role-fg); cursor: help; }
   .page-head .legend { margin-top: 8px; font-size: 0.9rem; }
@@ -359,6 +363,8 @@
   .card3d .tag { color: var(--glow); }
   .card3d .tag.k-award { background: rgba(255, 190, 110, 0.16); color: #ffc983; }
   .card3d .tag.k-role { background: rgba(120, 220, 160, 0.14); color: #8fe3b4; }
+  .card3d .entry.pi .loc b { color: var(--glow); }
+  .card3d .entry.proj .title { font-style: normal; font-weight: 600; color: var(--ink); }
   .card3d .tag.k-event { background: rgba(169, 155, 255, 0.16); color: var(--glow2); }
   .card3d .tag.k-q1 { background: rgba(120, 220, 160, 0.14); color: #8fe3b4; }
   .card3d .lect-note { background: rgba(255, 190, 110, 0.1); border-left-color: #ffc983; color: var(--ink); }
@@ -575,7 +581,7 @@
 
   <section data-card data-label="Profile">
     <h2>Academic Profile</h2>
-    <p>I work at the meeting point of people, computers, and the interactions between them. My research explores <strong>Cognitive</strong> (mental processing, attention, and memory) and <strong>Affective</strong> (emotions, moods, and social presence) <strong>Incorporation as an XR Design Space</strong>: designing technology that helps people by adapting to them. I build and study extended reality (AR/VR/MR) systems that use AI and biosensing to understand the person using them and adapt to their needs, with applications in skill learning, attention and distraction, and neurocognitive impairments.</p>
+    <p>My research is guided by a simple ambition: that the support technology offers today can become a capability we carry tomorrow. At the intersection of people, computers, and human experience, I explore <strong>Cognitive and Affective Incorporation as an XR Design Space</strong>, examining how attention, memory, emotion, and social presence can inform technology that adapts to people. I build and study extended reality (AR/VR/MR) systems that use AI and biosensing to respond to individual needs, with applications in skill learning, attention and distraction, and support for people with neurocognitive impairments. Central to my work is understanding how assistance in the moment can strengthen capability over time, helping people learn, remember, and act with greater independence when technology steps back.</p>
     <ul class="areas">
       <li>Cognitive Augmentation</li>
       <li>Affective Engagement</li>
@@ -612,7 +618,7 @@
 
   <header class="page-head only-classic">
     <h1>Experience</h1>
-    <p>Academic appointments and education.</p>
+    <p>Academic appointments, research projects and proposals, and education.</p>
   </header>
 
   <section data-card data-label="Appointments">
@@ -625,6 +631,22 @@
       <div class="entry"><span class="org">LK Simulations Private Limited</span><span class="date">Aug 2015–Jun 2018</span><span class="title">Research Engineer</span><span class="loc">Sri Lanka</span></div>
       <div class="entry"><span class="org">Monash University</span><span class="date">Jul 2014–Jul 2015</span><span class="title">Research Engineer</span><span class="loc">Malaysia</span></div>
       <div class="entry"><span class="org">Modelling &amp; Simulation Group, University of Colombo</span><span class="date">Mar 2013–Jul 2015</span><span class="title">Research Assistant</span><span class="loc">Colombo, Sri Lanka</span></div>
+    </div>
+  </section>
+
+  <!-- Projects: class="pi" highlights the role when you lead the project or proposal. -->
+  <section data-card data-label="Projects">
+    <h2>Research Projects &amp; Proposal Development</h2>
+    <h3>Research Projects</h3>
+    <div class="split">
+      <div class="entry proj"><span class="org">ARIS, Slovenia</span><span class="date">2024–2026</span><span class="title">AR Chemistry Learning <span class="tag k-role">COMPLETED</span></span><span class="loc">Role: Researcher</span><span class="thesis">“Augmented Reality to Achieve Better Understanding of the Triple Nature of Chemical Concepts.”</span></div>
+      <div class="entry proj"><span class="org">REPHRAIN, United Kingdom</span><span class="date">2023–2024</span><span class="title">MetaSafe <span class="tag k-role">COMPLETED</span></span><span class="loc">Role: Researcher</span><span class="thesis">“Safety in the Metaverse and Developing Safety-Enhancing Technologies.”</span></div>
+    </div>
+    <h3>Submitted Proposals</h3>
+    <div class="split">
+      <div class="entry proj pi"><span class="org">ERC Starting Grant</span><span class="date">2027–2032</span><span class="title">ARMOUR-MIND <span class="tag k-event">SUBMITTED</span></span><span class="loc">Role: <b>Principal Investigator (PI)</b></span><span class="thesis">“Cognitive Autonomy in an XR-Everywhere Future.”</span></div>
+      <div class="entry proj pi"><span class="org">ARIS, Slovenia–Japan Bilateral Project</span><span class="date">2027–2029</span><span class="title">MOSAIC-XR <span class="tag k-event">SUBMITTED</span></span><span class="loc">Role: <b>Slovenian PI</b></span><span class="thesis">“Human–AI co-created semantic-spatial mnemonics for memory augmentation in XR.”</span></div>
+      <div class="entry proj"><span class="org">COST Action</span><span class="date">2027–2031</span><span class="title">TIPSS in Smart Environments with Connected Humans <span class="tag k-event">SUBMITTED</span></span><span class="loc">Role: Secondary Proposer</span><span class="thesis">“Human interaction with smart environments.”</span></div>
     </div>
   </section>
 
