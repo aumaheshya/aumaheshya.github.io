@@ -423,6 +423,59 @@
   @keyframes drip { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
   .scroll-hint.gone { opacity: 0; }
 
+  /* compact caption: phones and short screens */
+  .story.compact .st-where, .story.compact .st-step { display: none; }
+  .story.compact .st-more { display: inline-block; }
+  .story.compact .st-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .story.compact:not(.open) .st-xr { display: none; }
+  .story.compact.open .st-where { display: block; order: 6; flex-basis: 100%; font-size: 12.5px; }
+  .story.compact.open .st-text { display: block; }
+
+  /* act title card (3D view) */
+  .act-title {
+    position: fixed; inset: 0; z-index: 44; display: grid; place-items: center; pointer-events: none; opacity: 0; transition: opacity 0.7s;
+    background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(6, 10, 19, 0.94) 0%, rgba(6, 10, 19, 0.82) 45%, rgba(6, 10, 19, 0) 100%);
+  }
+  .act-title.on { opacity: 1; }
+  .act-in {
+    padding: 26px 32px; text-align: center; transform: scale(0.94); transition: transform 2.6s cubic-bezier(.2,.7,.2,1);
+  }
+  .act-title.on .act-in { transform: scale(1.04); }
+  .act-k { font-size: 13px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--glow); }
+  .act-s { margin-top: 10px; font-size: clamp(15px, 1.6vw, 19px); color: var(--ink-muted); }
+  .act-t { margin-top: 6px; font-size: clamp(28px, 4.4vw, 56px); font-weight: 750; letter-spacing: -0.01em; color: #fff; text-shadow: 0 0 34px rgba(92, 196, 205, 0.55); }
+
+  /* story caption (3D view) */
+  .story {
+    --st: rgb(92, 196, 205);
+    position: fixed; left: 50%; bottom: 14px; z-index: 45; width: min(780px, calc(100% - 24px));
+    padding: 11px 16px 12px; border-radius: 16px; color: var(--ink);
+    border: 1px solid rgba(92, 196, 205, 0.28); background: rgba(6, 10, 19, 0.78);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    opacity: 0; transform: translate(-50%, 10px); pointer-events: none; transition: opacity 0.45s, transform 0.45s, border-color 0.45s;
+  }
+  .story.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; border-color: color-mix(in srgb, var(--st) 45%, transparent); }
+  .st-top { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 9px; }
+  .st-dot { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--st); box-shadow: 0 0 12px var(--st); }
+  .st-step { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+  .st-title { font-size: 17px; color: #fff; }
+  .st-where { font-size: 13px; color: var(--st); }
+  .st-steps { display: flex; gap: 7px; margin: 0 0 0 auto; padding: 0; list-style: none; }
+  .st-steps button {
+    display: block; width: 10px; height: 10px; padding: 0; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid var(--c); background: transparent; opacity: 0.75;
+  }
+  .st-steps button.done { background: var(--c); opacity: 0.4; }
+  .st-steps li.gap { margin-left: 7px; }
+  .st-steps button.on { background: var(--c); opacity: 1; box-shadow: 0 0 10px var(--c); transform: scale(1.25); }
+  .st-steps button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .st-more { display: none; padding: 2px 10px; border-radius: 999px; border: 1px solid rgba(92, 196, 205, 0.4); background: transparent; color: var(--ink); font-size: 12px; cursor: pointer; }
+  .st-text { margin: 6px 0 0; font-size: 14px; line-height: 1.45; }
+  .st-xr { margin: 4px 0 0; font-size: 13px; line-height: 1.4; color: var(--ink-muted); }
+  .st-xr b { margin-right: 6px; color: var(--st); font-weight: 600; }
+  .st-title, .st-where, .st-step, .st-text, .st-xr { transition: opacity 0.16s; }
+  .story.swap .st-title, .story.swap .st-where, .story.swap .st-step, .story.swap .st-text, .story.swap .st-xr { opacity: 0; }
+
   /* ---------- responsive ---------- */
   @media (max-width: 900px) {
     .dots { display: none; }
@@ -463,6 +516,14 @@
     .card3d .links { margin-top: 12px; gap: 6px; }
     .card3d .links a { padding: 4px 10px; font-size: 13px; }
     .card3d .hint3d { display: none; }   /* the top bar and the scroll cue already say this on a phone */
+    .story { bottom: 10px; padding: 9px 12px 10px; }
+    .st-steps { flex-wrap: wrap; }
+    .st-steps li.gap { margin-left: 4px; }
+    .st-title { font-size: 15px; }
+    .st-steps { gap: 6px; }
+    .st-steps button { width: 9px; height: 9px; }
+    .st-text { font-size: 13px; line-height: 1.4; }
+    .st-xr { font-size: 12px; }
     .brand .full { display: none; }
     .tabs a { padding: 11px 6px; font-size: 13.5px; }
     .tabs a[aria-current="page"]::after { left: 5px; right: 5px; }
@@ -476,7 +537,7 @@
       --bg: #fff; --surface: #fff; --award-bg: #FFF2D4; --award-fg: #855400; --role-bg: #E3F4EA; --role-fg: #1B6A3E;
       --event-bg: #EEEAFB; --event-fg: #563FA3;
     }
-    .topbar, #bg, #stage, .dots, .progress, .scroll-hint, #scroll-space, .hint3d,
+    .topbar, #bg, #stage, .dots, .progress, .scroll-hint, #scroll-space, .hint3d, .story, .act-title,
     .page-head, .pub-tools, .more, .no-results, .site-foot { display: none !important; }
     .is-3d #cv { display: block; }
     #cv { padding: 0; max-width: none; }
@@ -545,6 +606,19 @@
 <ul class="dots only-3d" id="dots"></ul>
 <div class="progress only-3d" id="progress"></div>
 <div class="scroll-hint only-3d" id="scroll-hint">SCROLL TO ENTER THE MIND<i></i></div>
+<div class="act-title only-3d" id="act-title" aria-hidden="true"><div class="act-in"><div class="act-k"></div><div class="act-t"></div><div class="act-s"></div></div></div>
+<aside class="story only-3d" id="story" aria-live="polite" aria-label="The story behind the research">
+  <div class="st-top">
+    <span class="st-dot" aria-hidden="true"></span>
+    <span class="st-step" id="st-step"></span>
+    <b class="st-title" id="st-title"></b>
+    <span class="st-where" id="st-where"></span>
+    <ol class="st-steps" id="st-steps" aria-label="Chapters"></ol>
+    <button type="button" class="st-more" id="st-more" aria-expanded="false" aria-controls="story">More</button>
+  </div>
+  <p class="st-text" id="st-text"></p>
+  <p class="st-xr" id="st-xr"></p>
+</aside>
 <div id="measure" aria-hidden="true"></div>
 
 <main id="cv">
@@ -576,15 +650,16 @@
         </ul>
       </div>
     </div>
-    <p class="hint3d only-3d">Scroll to fly into the mind and through the CV, or jump with <b>Sections</b>. Prefer a plain page? Choose <b>Classic view</b>.</p>
+    <p class="hint3d only-3d">Scroll to fly into the mind. As you travel through the CV, brain networks for cognition, emotion and agency light up and tell the story behind my research. Jump with <b>Sections</b>, or choose <b>Classic view</b>.</p>
   </header>
 
   <section data-card data-label="Profile">
     <h2>Academic Profile</h2>
-    <p>My research is guided by a simple ambition: that the support technology offers today can become a capability we carry tomorrow. At the intersection of people, computers, and human experience, I explore <strong>Cognitive and Affective Incorporation as an XR Design Space</strong>, examining how attention, memory, emotion, and social presence can inform technology that adapts to people. I build and study extended reality (AR/VR/MR) systems that use AI and biosensing to respond to individual needs, with applications in skill learning, attention and distraction, and support for people with neurocognitive impairments. Central to my work is understanding how assistance in the moment can strengthen capability over time, helping people learn, remember, and act with greater independence when technology steps back.</p>
+    <p>My research is guided by a simple ambition: that the support technology offers today can become a capability we carry tomorrow. At the intersection of people, computers, and human experience, I explore <strong>Cognitive, Affective and Agentic Incorporation as an XR Design Space</strong>: how what people perceive and remember (cognition), what they feel (emotion), and what they can choose and control (agency) can inform technology that adapts to them. I build and study extended reality (AR/VR/MR) systems that use AI and biosensing to respond to individual needs, with applications in skill learning, attention and distraction, and support for people with neurocognitive impairments. Central to my work is one question: how can adaptive XR enhance human agency rather than replace it, so that assistance in the moment strengthens capability over time and people learn, remember, and act with greater independence when technology steps back.</p>
     <ul class="areas">
       <li>Cognitive Augmentation</li>
       <li>Affective Engagement</li>
+      <li>Human Agency</li>
       <li>Extended Reality (AR/VR/MR)</li>
       <li>AI and Biosensing in XR</li>
       <li>Human-Computer Interaction</li>
@@ -644,9 +719,9 @@
     </div>
     <h3>Submitted Proposals</h3>
     <div class="split">
-      <!-- <div class="entry proj pi"><span class="org">ERC Starting Grant</span><span class="date">2027–2032</span><span class="title">ARMOUR-MIND <span class="tag k-event">SUBMITTED</span></span><span class="loc">Role: <b>Principal Investigator (PI)</b></span><span class="thesis">“Cognitive Autonomy in an XR-Everywhere Future.”</span></div> -->
+      <div class="entry proj pi"><span class="org">ERC Starting Grant</span><span class="date">2027–2032</span><span class="title">ARMOUR-MIND <span class="tag k-event">SUBMITTED</span></span><span class="loc">Role: <b>Principal Investigator (PI)</b></span><span class="thesis">“Cognitive Autonomy in an XR-Everywhere Future.”</span></div>
       <div class="entry proj pi"><span class="org">ARIS, Slovenia–Japan Bilateral Project</span><span class="date">2027–2029</span><span class="title">MOSAIC-XR <span class="tag k-event">SUBMITTED</span></span><span class="loc">Role: <b>Slovenian PI</b></span><span class="thesis">“Human–AI co-created semantic-spatial mnemonics for memory augmentation in XR.”</span></div>
-      <!-- <div class="entry proj"><span class="org">COST Action</span><span class="date">2027–2031</span><span class="title">TIPSS in Smart Environments with Connected Humans <span class="tag k-event">SUBMITTED</span></span><span class="loc">Role: Secondary Proposer</span><span class="thesis">“Human interaction with smart environments.”</span></div> -->
+      <div class="entry proj"><span class="org">COST Action</span><span class="date">2027–2031</span><span class="title">TIPSS in Smart Environments with Connected Humans <span class="tag k-event">SUBMITTED</span></span><span class="loc">Role: Secondary Proposer</span><span class="thesis">“Human interaction with smart environments.”</span></div>
     </div>
   </section>
 
@@ -1004,7 +1079,7 @@
     stage.innerHTML = '';
     cards = []; sections = [];
     var width = Math.min(660, innerWidth - 28);
-    var maxH = Math.max(320, Math.min(innerHeight - 150, 720));
+    var maxH = Math.max(320, Math.min(innerHeight - (innerWidth < 760 ? 240 : 205), 720));
     cv.querySelectorAll('[data-card]').forEach(function (sec) {
       var label = sec.getAttribute('data-label');
       var heading = sec.querySelector('h2');
@@ -1102,6 +1177,9 @@
     stage.style.perspective = focal.toFixed(2) + 'px';
     var N = cards.length;
     var amp = Math.min(560, W * 0.45);
+    var compactCap = mobile || H < 820;                          // phones and short screens get a compact caption
+    var capRes = compactCap ? 140 : 172, lift = compactCap ? 35 : 51;   // room for the story caption at the bottom
+    document.getElementById('story').classList.toggle('compact', compactCap);
     var inner = Math.max(1, N - 2);
     var rz = inner * SPACING / 2 + 5200;
     brain = { c: [0, -250, -inner * SPACING / 2], rx: rz * 0.78, ry: rz * 0.74, rz: rz };
@@ -1110,8 +1188,9 @@
       var c = cards[i];
       var x = Math.sin(i * 0.82) * amp, y = Math.cos(i * 0.57) * 200 - 60, z = -(i - 1) * SPACING;
       var th = -Math.sin(i * 0.82) * 0.36;
-      var scale = Math.min(1, (H - 140) / c.h, (W - 24) / c.w);
+      var scale = Math.min(1, (H - 70 - capRes) / c.h, (W - 24) / c.w);
       setStop(c, [x, y, z], th, focal / scale);
+      c.look = [x, y - lift / scale, z];
     }
 
     // hero: outside the brain, three-quarter view, brain beside (desktop) or above (phone) the card
@@ -1175,6 +1254,12 @@
 
   // node sets: {p:[[x,y,z]], col:[], size:[], adj:[[]], edges:[[a,b]]}
   var shell, inner, stars, routes, engrams, lattice, panels, pulses, sulci = [];
+  // the three dimensions of the design space, highlighted on the brain on the start page
+  var DIMS = [null,
+    { name: 'COGNITION', sub: 'perceive · think · remember', col: '110,170,240' },
+    { name: 'EMOTION', sub: 'feel · value · connect', col: '240,130,165' },
+    { name: 'AGENCY', sub: 'choose · act · control', col: '64,214,170' }];
+  var dimAnchors = [], dimHalos = [];
 
   function nodeSet() { return { p: [], col: [], size: [], edges: [], adj: [] }; }
   function link(set, maxNeighbours, maxDist) {
@@ -1303,6 +1388,29 @@
       }
     }
 
+    // which part of the cortex belongs to which dimension (simplified):
+    // cognition = prefrontal and parietal cortex, emotion = temporal lobe and insula, agency = motor and premotor strip
+    shell.reg = new Uint8Array(shell.p.length);
+    var acc = [null, [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], accR = [null, [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+    for (var ri = 0; ri < shell.p.length; ri++) {
+      var q0 = shell.p[ri], nx = (q0[0] - b.c[0]) / b.rx, ny = (q0[1] - b.c[1]) / b.ry, nz = (q0[2] - b.c[2]) / b.rz, rg = 0;
+      if (ny < -0.35 && nz < -0.4) rg = 0;                                                       // cerebellum and stem
+      else if (nz > -0.04 && nz < 0.3 && ny > 0.32) rg = 3;                                      // motor strip: agency
+      else if (Math.abs(nx) > 0.5 && ny < 0.12 && ny > -0.8 && nz > -0.38 && nz < 0.5) rg = 2;   // temporal lobe, insula: emotion
+      else if ((nz > 0.42 && ny > -0.25) || (nz < -0.12 && nz > -0.62 && ny > 0.35)) rg = 1;   // prefrontal, parietal: cognition
+      shell.reg[ri] = rg;
+      if (!rg || (rg === 1 && nz < 0.42)) continue;                                             // label cognition at the prefrontal cortex
+      var tgt = nx < 0 ? acc : accR;
+      tgt[rg][0] += q0[0]; tgt[rg][1] += q0[1]; tgt[rg][2] += q0[2]; tgt[rg][3]++;
+    }
+    dimAnchors = [null]; dimHalos = [null];
+    for (var rk = 1; rk <= 3; rk++) {
+      var A0 = acc[rk], A1 = accR[rk];
+      var cl = A0[3] ? [A0[0] / A0[3], A0[1] / A0[3], A0[2] / A0[3]] : b.c, cr = A1[3] ? [A1[0] / A1[3], A1[1] / A1[3], A1[2] / A1[3]] : b.c;
+      dimAnchors.push(add(b.c, scl(sub(cl, b.c), 1.12)));       // just outside the left hemisphere, which faces the camera
+      dimHalos.push([cl, cr]);
+    }
+
     // neurons along the flight path, connected by synapses
     inner = nodeSet();
     var z0 = (N > 1 ? cards[1].pos[2] : 0) + 2600, z1 = (N > 1 ? cards[N - 1].pos[2] : 0) - 2600;
@@ -1378,6 +1486,7 @@
       var su = Math.random() * 2 - 1, sp = Math.random() * Math.PI * 2, ss = Math.sqrt(1 - su * su), R = rnd(2.2, 5) * b.rz;
       stars.push({ p: [b.c[0] + ss * Math.cos(sp) * R, b.c[1] + su * R * 0.6, b.c[2] + ss * Math.sin(sp) * R], s: rnd(200, 600), ph: rnd(0, 6.3) });
     }
+    buildStory();
     pulses = [];
     projShell = new Float32Array(shell.p.length * 4);
     projInner = new Float32Array(inner.p.length * 4);
@@ -1446,7 +1555,7 @@
   }
 
   var lastT = 0;
-  function drawScene(time, support, capability, interior) {
+  function drawScene(time, support, capability, interior, s) {
     var dt = Math.min(0.05, time - lastT); lastT = time;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1470,11 +1579,17 @@
     // cortex
     for (i = 0; i < shell.p.length; i++) project(shell.p[i], projShell, i * 4);
     var shellLine = 0.5;
+    var heroW = 1 - smooth(0.05, 0.75, s), dimI = [0, 0, 0, 0];
+    if (heroW > 0.01) {
+      var dc = (time / 2.6) % 3, da = Math.floor(dc), dp = dc - da;
+      for (var dk = 1; dk <= 3; dk++) dimI[dk] = heroW * (0.5 + 0.5 * (dk - 1 === da ? Math.sin(Math.PI * dp) : 0));
+    }
     for (i = 0; i < shell.edges.length; i++) {
-      var ea = shell.edges[i][0] * 4, eb = shell.edges[i][1] * 4;
+      var e0 = shell.edges[i][0], ea = e0 * 4, eb = shell.edges[i][1] * 4, rg0 = shell.reg[e0];
       if (projShell[ea + 3] < 0 || projShell[eb + 3] < 0) continue;
-      seg(shell.col[shell.edges[i][0]], shellLine * fog(Math.max(projShell[ea + 3], projShell[eb + 3])),
-          projShell[ea], projShell[ea + 1], projShell[eb], projShell[eb + 1]);
+      var fd = fog(Math.max(projShell[ea + 3], projShell[eb + 3]));
+      if (rg0 && dimI[rg0] > 0.01) seg(DIMS[rg0].col, Math.min(1, shellLine + 0.5 * dimI[rg0]) * fd, projShell[ea], projShell[ea + 1], projShell[eb], projShell[eb + 1]);
+      else seg(shell.col[e0], shellLine * fd, projShell[ea], projShell[ea + 1], projShell[eb], projShell[eb + 1]);
     }
     // synapses near the path (brighten with capability)
     for (i = 0; i < inner.p.length; i++) project(inner.p[i], projInner, i * 4);
@@ -1486,10 +1601,13 @@
           projInner[ia], projInner[ia + 1], projInner[ib], projInner[ib + 1]);
     }
     flush(lw);
-    // routes: semantic (teal) and spatial (violet), dimmed when perturbed
+    // routes: semantic (teal) and spatial (violet), dimmed when perturbed and while a story chapter is in focus
+    var focusW = 0;
+    for (i = 0; i < storyItems.length; i++) focusW = Math.max(focusW, storyWeight(storyItems[i].k, s));
+    var quiet = 1 - 0.6 * focusW;
     for (i = 0; i < routes.length; i++) {
       var rt = routes[i];
-      drawPolyline(rt.pts, rt.col, (0.45 + 0.5 * capability) * routeStrength(rt, time) * interior);
+      drawPolyline(rt.pts, rt.col, (0.45 + 0.5 * capability) * routeStrength(rt, time) * interior * quiet);
     }
     flush(lw * 2.2);
     for (i = 0; i < sulci.length; i++) drawPolyline(sulci[i], TEAL, 0.85);
@@ -1498,7 +1616,14 @@
     // neurons
     for (i = 0; i < shell.p.length; i++) {
       o = i * 4; if (projShell[o + 3] < 0 || !shell.size[i]) continue;
-      dot2(shell.col[i], projShell[o], projShell[o + 1], clamp(shell.size[i] * projShell[o + 2], 1.5, 14) * dpr, 0.8 * fog(projShell[o + 3]));
+      var rg1 = shell.reg[i], di = rg1 ? dimI[rg1] : 0;
+      dot2(di > 0.01 ? DIMS[rg1].col : shell.col[i], projShell[o], projShell[o + 1],
+           clamp(shell.size[i] * projShell[o + 2] * (1 + 0.8 * di), 1.5, 18) * dpr, Math.min(1, 0.8 + 0.2 * di) * fog(projShell[o + 3]));
+    }
+    // a soft glow over each highlighted region
+    if (heroW > 0.01) for (var dh = 1; dh <= 3; dh++) for (var hs = 0; hs < 2; hs++) {
+      if (!project(dimHalos[dh][hs], tmpA, 0)) continue;
+      dot2(DIMS[dh].col, tmpA[0], tmpA[1], clamp(brain.rz * 0.75 * tmpA[2], 30, 520) * dpr, (0.06 + 0.22 * dimI[dh]) * (hs ? 0.6 : 1));
     }
     for (i = 0; i < inner.p.length; i++) {
       o = i * 4; if (projInner[o + 3] < 0) continue;
@@ -1542,7 +1667,7 @@
         var f = ((time * 0.35 + q / 3 + (r.kind === 'spatial' ? 0.17 : 0)) % 1), seg2 = f * (r.pts.length - 1), si = Math.floor(seg2);
         var pt = lerp3(r.pts[si], r.pts[Math.min(si + 1, r.pts.length - 1)], seg2 - si);
         if (!project(pt, tmpA, 0)) continue;
-        dot2(r.col, tmpA[0], tmpA[1], clamp(140 * tmpA[2], 3, 34) * dpr, str * interior * fog(tmpA[3]));
+        dot2(r.col, tmpA[0], tmpA[1], clamp(140 * tmpA[2], 3, 34) * dpr, str * interior * quiet * fog(tmpA[3]));
       }
     }
     for (i = 0; i < engrams.length; i++) {
@@ -1550,12 +1675,15 @@
       if (!project(e.p, tmpA, 0)) continue;
       var on = Math.max(routeStrength(e.semantic, time), routeStrength(e.spatial, time));
       var beat = 0.75 + 0.25 * Math.sin(time * 3 + e.phase);
-      dot2(AMBER, tmpA[0], tmpA[1], clamp(520 * tmpA[2], 6, 90) * dpr, (0.55 + 0.45 * capability) * on * beat * interior * fog(tmpA[3]));
-      dot2(WHITE, tmpA[0], tmpA[1], clamp(120 * tmpA[2], 2, 20) * dpr, on * interior * fog(tmpA[3]));
+      dot2(AMBER, tmpA[0], tmpA[1], clamp(520 * tmpA[2], 6, 90) * dpr, (0.55 + 0.45 * capability) * on * beat * interior * quiet * fog(tmpA[3]));
+      dot2(WHITE, tmpA[0], tmpA[1], clamp(120 * tmpA[2], 2, 20) * dpr, on * interior * quiet * fog(tmpA[3]));
     }
 
+    drawStory(time, s, lw);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
+    drawStoryLabels();
+    drawDimLabels(heroW, dimI);
   }
 
   // perturbation cycle: the two routes are disrupted in turn; the memory stays reachable through the other one
@@ -1564,6 +1692,667 @@
     var c = (time + r.eng.phase) % 8;
     if (r.kind === 'semantic') return c > 1 && c < 2.6 ? 0.15 : 1;
     return c > 5 && c < 6.6 ? 0.15 : 1;
+  }
+
+  /* ---------------- story: brain networks that light up along the journey ----------------
+     A simplified, illustrative map (not to anatomical scale), told in three acts: how the mind works,
+     what can go wrong, and how XR, AI and biosensing can help without taking over.
+     Act 1 follows three dimensions of human experience: cognition, emotion and agency. */
+  var GOLD = '255,200,90', GREEN = '110,232,150', SAL = '214,240,120', ROSE = '255,112,160', LTMC = '165,140,255',
+      RED = '255,92,72', BRIGHT = '236,244,255', SENS = '110,170,255', HEAR = '255,170,90', TOUCH = '120,235,200',
+      CORAL = '255,140,105', AIC = '235,120,255', ADAPT = '180,240,255', AGC = '64,214,170';
+  var PARTS = ['How the mind works', 'What can go wrong', 'How XR can help'];
+  var PART_SUB = ['What we feel, think and choose', 'When networks weaken, or fall out of practice', 'Sense, adapt, share control, then step back'];
+  var STORY = [
+    { part: 0, col: SENS, short: 'Senses', title: 'Your senses build your world', where: 'Cognition · visual, auditory and touch networks',
+      text: 'The brain merges sight, sound and touch into one picture of the world, and acts on that picture.',
+      lab: 'XR angle', xr: 'XR speaks to these same senses, so it can place help right where you look and listen.' },
+    { part: 0, col: GOLD, short: 'Short-term memory', title: 'You can juggle only a few thoughts at once', where: 'Cognition · prefrontal cortex, working memory',
+      text: 'Short-term memory holds just a few items for a few seconds. Overload it and details slip away.',
+      lab: 'XR angle', xr: 'AR can hold information out in the world, so your mind does not have to.' },
+    { part: 0, col: GREEN, short: 'Attention', title: 'Attention decides what gets in', where: 'Cognition · salience and dorsal attention networks',
+      text: 'The salience network flags what matters; the attention network locks on and filters out the rest.',
+      lab: 'XR angle', xr: 'My research tests whether immersion in AR protects learners from real-world distractions.' },
+    { part: 0, col: LTMC, short: 'Long-term memory', title: 'Memory turns moments into knowledge', where: 'Cognition · hippocampus and memory network',
+      text: 'The hippocampus binds each new experience to what you already know, so it can last.',
+      lab: 'XR angle', xr: 'Mnemonic AR links new words to vivid, personal images in the places they are learned.' },
+    { part: 0, col: ROSE, short: 'Emotion', title: 'Feelings decide what sticks', where: 'Emotion · amygdala and limbic system',
+      text: 'The amygdala tags experiences with emotion, and the presence of others shapes what we notice and remember.',
+      lab: 'XR angle', xr: 'Affective XR responds to how people feel, and safety tools help keep social VR safe.' },
+    { part: 0, col: CORAL, short: 'Body signals', title: 'Your body is always talking', where: 'Emotion · insula and central autonomic network',
+      text: 'Heart rate, breathing and skin conductance shift with stress and effort. The insula reads them from within.',
+      lab: 'Biosensing', xr: 'Wearable sensors (EEG, ECG, skin conductance, eye tracking) can read these signals too.' },
+    { part: 0, col: AGC, short: 'Agency', title: 'You decide what happens next', where: 'Agency · motor planning and parietal networks',
+      text: 'The brain predicts the outcome of every action. When the result matches, we feel “I did that”: the sense of agency.',
+      lab: 'XR angle', xr: 'In XR, agency can be designed: who starts, approves and controls each action.' },
+    { part: 1, col: RED, short: 'Cognitive decline', title: 'When connections fade, memories slip', where: 'Cognitive decline · a weakened pathway',
+      text: 'With ageing and dementia, links between memory regions weaken and signals stop getting through.',
+      lab: 'Why it matters', xr: 'More than 55 million people live with dementia, with nearly 10 million new cases a year (WHO).' },
+    { part: 1, col: AIC, short: 'Agency at risk', title: 'When machines decide for us, we practise less', where: 'Cognitive autonomy · agency at risk',
+      text: 'As AI and XR remember, navigate and decide for us, we practise less and can feel less in control. Heavy GPS use is linked to weaker spatial memory.',
+      lab: 'The frontier', xr: 'Keeping people in charge of their own minds in an XR-everywhere future is an open problem, and the focus of my ERC proposal ARMOUR-MIND.' },
+    { part: 2, col: TEAL, short: 'Sensing the person', title: 'Technology that senses you', where: 'Biosensing → AI → XR, a closed loop',
+      text: 'Biosensing reads attention, effort and emotion; AI interprets them over time; XR responds in space.',
+      lab: 'AI-time · XR-space', xr: 'AI remembers the past, adapts now and anticipates next; XR places help on the body, on objects and in the room.' },
+    { part: 2, col: ADAPT, short: 'Adaptive interfaces', title: 'Interfaces that adapt to you', where: 'Adaptive interfaces and systems',
+      text: 'When your load rises, the interface simplifies; when you are ready, it offers more.',
+      lab: 'XR angle', xr: 'My work on adaptive guidance in AR (Arigatō) keeps learners engaged without overwhelming them.' },
+    { part: 2, col: AGC, short: 'Shared control', title: 'You stay in control', where: 'Shared agency · human, shared, AI',
+      text: 'AI suggests, XR shows the options in place, and the person decides. Control is shared, never taken.',
+      lab: 'Design question', xr: 'Who initiates, who approves, who controls? Human agency becomes something to measure and design.' },
+    { part: 2, col: SUPPORT, short: 'Support in the moment', title: 'Help exactly when it is needed', where: 'XR scaffold · AI + biosensing',
+      text: 'Where a pathway is weak, XR bridges the gap with timely, personal cues, so the signal still gets through.',
+      lab: 'XR angle', xr: 'The cues fade as soon as they are no longer needed.' },
+    { part: 2, col: BRIGHT, short: 'Stronger', title: 'Help that makes you stronger', where: 'Emotion · cognition · agency, strengthened',
+      text: 'Support in the moment strengthens capability and agency over time, until the scaffold can disappear.',
+      lab: 'The goal', xr: '“The support technology offers today can become a capability we carry tomorrow.”' }
+  ];
+  var STORY_S0 = 1.6, storyItems = [];
+  function storyLen() { return Math.max(0.6, (cards.length - 1 - STORY_S0) / STORY.length); }
+  function storySeg(k) { var L = storyLen(); return [STORY_S0 + k * L, STORY_S0 + (k + 1) * L]; }
+  function storyWeight(k, s) {
+    var g = storySeg(k), up = smooth(g[0] - 0.7, g[0] + 0.25, s);
+    return k === STORY.length - 1 ? up : up * (1 - smooth(g[1] - 0.15, g[1] + 0.65, s));
+  }
+  function storyChapter(s) {
+    if (s < STORY_S0 - 0.15) return s < 0.45 ? -2 : -1;     // -2: outside the brain, -1: intro
+    return clamp(Math.floor((s - STORY_S0) / storyLen()), 0, STORY.length - 1);
+  }
+
+  /* geometry helpers */
+  function bez(a, c, b, n) {
+    var pts = [];
+    for (var i = 0; i <= n; i++) { var t = i / n; pts.push(lerp3(lerp3(a, c, t), lerp3(c, b, t), t)); }
+    return pts;
+  }
+  function along(pts, f) {
+    var x = clamp(f, 0, 1) * (pts.length - 1), i = Math.min(Math.floor(x), pts.length - 2);
+    return lerp3(pts[i], pts[i + 1], x - i);
+  }
+  function storyItem(k, col) { return { k: k, col: col, nodes: [], ncol: [], ndim: [], sizes: [], edges: [], links: [], halos: [], labels: [], draw: null, w: 0 }; }
+  function blob(it, c, r, n, col, stretch) {
+    stretch = stretch || [1, 1, 1]; col = col || it.col;
+    var start = it.nodes.length, a, b2, q;
+    for (var i = 0; i < n; i++) {
+      var u = norm([rnd(-1, 1), rnd(-1, 1), rnd(-1, 1)]), k = Math.pow(Math.random(), 0.6) * r;
+      it.nodes.push([c[0] + u[0] * k * stretch[0], c[1] + u[1] * k * stretch[1], c[2] + u[2] * k * stretch[2]]);
+      it.ncol.push(col); it.ndim.push(1); it.sizes.push(rnd(40, 95));
+    }
+    for (a = start; a < it.nodes.length; a++) {
+      var best = [];
+      for (b2 = start; b2 < it.nodes.length; b2++) if (b2 !== a) best.push([len(sub(it.nodes[a], it.nodes[b2])), b2]);
+      best.sort(function (x, y) { return x[0] - y[0]; });
+      for (q = 0; q < 2 && q < best.length; q++) if (a < best[q][1]) it.edges.push([a, best[q][1]]);
+    }
+    it.halos.push([c, r, col]);
+    return start;
+  }
+  function chain(it, pts, r, per, col) {   // a tube of nodes along a curve (e.g. the hippocampus)
+    var prev = -1;
+    for (var i = 0; i < pts.length; i++) for (var j = 0; j < per; j++) {
+      var u = norm([rnd(-1, 1), rnd(-1, 1), rnd(-1, 1)]), k = Math.random() * r, idx = it.nodes.length;
+      it.nodes.push(add(pts[i], scl(u, k))); it.ncol.push(col || it.col); it.ndim.push(1); it.sizes.push(rnd(40, 85));
+      if (prev >= 0) it.edges.push([prev, idx]);
+      prev = idx;
+    }
+    it.halos.push([along(pts, 0.5), r * 3, col || it.col]);
+  }
+  function linkCurve(it, a, b, lift, col, n, speed) {
+    var m = scl(add(a, b), 0.5);
+    it.links.push({ pts: bez(a, add(m, lift), b, 26), col: col || it.col, n: n || 3, speed: speed || 0.32 });
+  }
+  function label(it, at, a, b, col, small) { it.labels.push({ at: at, lines: [a, b || ''], col: col || it.col, small: !!small }); }
+  // camera-aligned frame for chapter k: where the camera is, and looks, in the middle of the chapter
+  function storyFrame(k) {
+    var g = storySeg(k), last = k === STORY.length - 1, N = cards.length;
+    var sm = last ? g[0] + 0.75 * (g[1] - g[0]) : (g[0] + g[1]) / 2;
+    var cam = camAt(clamp(sm / (N - 1), 0, 1)), d = norm(sub(cam.target, cam.eye));
+    var back = scl(d, -1), right = norm(cross([0, 1, 0], back)), up = cross(back, right);
+    return { c: add(cam.eye, scl(d, 4200)), r: right, u: up, b: back };
+  }
+  function P(fr, x, y, z) { return add(add(add(fr.c, scl(fr.r, x)), scl(fr.u, y)), scl(fr.b, z)); }
+  function onPlane(fr, c, x, y) { return add(add(c, scl(fr.r, x)), scl(fr.u, y)); }
+  function ringPts(fr, c, rx, ry, n, a0) {
+    var pts = [];
+    for (var i = 0; i <= n; i++) { var a = (a0 || 0) - i / n * Math.PI * 2; pts.push(onPlane(fr, c, Math.cos(a) * rx, Math.sin(a) * ry)); }
+    return pts;
+  }
+  function rectPts(fr, c, w, h) {
+    return [onPlane(fr, c, -w, h), onPlane(fr, c, w, h), onPlane(fr, c, w, -h), onPlane(fr, c, -w, -h), onPlane(fr, c, -w, h)];
+  }
+  function octa(fr, c, r, rot) {          // a slowly turning wireframe diamond, used for "AI"
+    var v = [add(c, scl(fr.u, r)), add(c, scl(fr.u, -r))], e = [], k;
+    for (k = 0; k < 4; k++) { var a = rot + k * Math.PI / 2; v.push(add(add(c, scl(fr.r, Math.cos(a) * r * 0.72)), scl(fr.b, Math.sin(a) * r * 0.72))); }
+    for (k = 2; k < 6; k++) { e.push([v[0], v[k]], [v[1], v[k]], [v[k], v[k === 5 ? 2 : k + 1]]); }
+    return e;
+  }
+  function drawSegs(list, col, alpha) {
+    for (var i = 0; i < list.length; i++) {
+      if (!project(list[i][0], tmpA, 0) || !project(list[i][1], tmpB, 0)) continue;
+      seg(col, alpha * fog(tmpA[3]), tmpA[0], tmpA[1], tmpB[0], tmpB[1]);
+    }
+  }
+  function pulseDot(pt, col, w, big) {
+    if (!project(pt, tmpA, 0)) return;
+    dot2(col, tmpA[0], tmpA[1], clamp((big || 170) * tmpA[2], 4, 44) * dpr, w * fog(tmpA[3]));
+    dot2(WHITE, tmpA[0], tmpA[1], clamp(55 * tmpA[2], 2, 13) * dpr, w * fog(tmpA[3]));
+  }
+  function ecg(u) {                       // one heartbeat, u in [0, 1)
+    var kf = [[0, 0], [0.1, 0], [0.13, 0.15], [0.16, 0], [0.2, 0], [0.215, -0.2], [0.235, 1], [0.255, -0.35], [0.27, 0], [0.4, 0], [0.46, 0.3], [0.52, 0], [1, 0]];
+    for (var i = 1; i < kf.length; i++) if (u <= kf[i][0]) return lerp(kf[i - 1][1], kf[i][1], (u - kf[i - 1][0]) / (kf[i][0] - kf[i - 1][0]));
+    return 0;
+  }
+
+  /* the memory pathway in three states: weakened, bridged by an XR scaffold, strengthened */
+  function pathDemo(k, sd, mode, X, YU, YD, lab) {
+    var fr = storyFrame(k), it = storyItem(k, LTMC);
+    var A = P(fr, sd * X * 0.92, YD, 700), B = P(fr, sd * X * 0.88, YU, -700);
+    it.kind = 'path'; it.mode = mode;
+    it.main = bez(A, P(fr, sd * X * 1.12, (YU + YD) / 2, 0), B, 30);
+    blob(it, A, 380, 16, LTMC); blob(it, B, 420, 18, CORTEX);
+    it.B = B;
+    var p0 = along(it.main, 0.3), p1 = along(it.main, 0.7), pm = scl(add(p0, p1), 0.5);
+    it.scaffold = bez(p0, add(add(pm, scl(fr.r, -sd * 850)), scl(fr.b, 350)), p1, 24);
+    it.route = it.main.slice(0, 10).concat(it.scaffold, it.main.slice(21));
+    var apex = along(it.scaffold, 0.5), c = add(add(apex, scl(fr.r, -sd * 420)), scl(fr.u, 120));
+    var r1 = rectPts(fr, c, 280, 160);
+    it.panel = [r1, [lerp3(r1[0], r1[3], 0.32), lerp3(r1[1], r1[2], 0.32)], [lerp3(r1[0], r1[3], 0.6), lerp3(lerp3(r1[0], r1[3], 0.6), lerp3(r1[1], r1[2], 0.6), 0.55)]];
+    label(it, mode === 'bridged' ? apex : along(it.main, 0.5), lab[0], lab[1], STORY[k].col);
+    return it;
+  }
+
+  function buildStory() {
+    storyItems = [];
+    if (cards.length < 4) return;
+    // regions sit beside the CV card and above the caption, at a typical viewing distance
+    var Dref = 4200, cardHalf = Math.min(330, cards[1].w / 2);
+    var offX = mobile ? Math.min(cardHalf * 0.75, W / 2 - 40) : Math.min(cardHalf + 170, W / 2 - 70);
+    var X = offX * Dref / focal, YU = 0.25 * H * Dref / focal, YD = -0.15 * H * Dref / focal, SPAN = YU - YD;
+    var fr, it, L, R, F, i, j;
+
+    // 1. the senses: vision, hearing and touch converge on a multisensory hub
+    fr = storyFrame(0); it = storyItem(0, SENS);
+    var vis = P(fr, -X, YU * 0.7, -500), aud = P(fr, -X * 0.9, YD, 300), tou = P(fr, X * 0.85, YU, 100), hub = P(fr, X, YD * 0.35, -700);
+    blob(it, vis, 520, 24, SENS); blob(it, aud, 480, 22, HEAR); blob(it, tou, 480, 22, TOUCH); blob(it, hub, 560, 28, BRIGHT);
+    linkCurve(it, vis, hub, scl(fr.u, 500), SENS, 3, 0.45);
+    linkCurve(it, aud, hub, scl(fr.u, -420), HEAR, 3, 0.45);
+    linkCurve(it, tou, hub, scl(fr.r, 520), TOUCH, 3, 0.45);
+    label(it, hub, 'MULTISENSORY INTEGRATION', 'sight · sound · touch become one', BRIGHT);
+    label(it, vis, 'VISION', '', SENS, true); label(it, aud, 'HEARING', '', HEAR, true); label(it, tou, 'TOUCH', '', TOUCH, true);
+    storyItems.push(it);
+
+    // 2. prefrontal cortex: only a few items fit; a fifth one keeps dropping out
+    fr = storyFrame(1); it = storyItem(1, GOLD);
+    L = P(fr, -X, YU, 300); R = P(fr, X * 0.8, YU * 0.55, 300);
+    blob(it, L, 600, 30); blob(it, R, 480, 22);
+    linkCurve(it, L, R, scl(fr.u, 750), GOLD, 3, 0.25);
+    label(it, L, 'PREFRONTAL CORTEX', 'short-term & working memory', GOLD);
+    label(it, R, 'ROOM FOR ONLY A FEW ITEMS', '', GOLD, true);
+    (function (Rc, frm) {
+      it.draw = function (time, w) {
+        if (w < 0.03) return;
+        var cyc = (time * 0.22) % 1;
+        for (var q = 0; q < 5; q++) {
+          var ang = time * 0.55 + q * Math.PI * 2 / 5, pt = onPlane(frm, Rc, Math.cos(ang) * 640, Math.sin(ang) * 440);
+          var extra = q === 4, a = extra ? (cyc < 0.45 ? cyc / 0.45 : Math.max(0, 1 - (cyc - 0.45) / 0.25)) : 1;
+          pulseDot(pt, extra && cyc > 0.45 ? RED : GOLD, w * a, 230);
+        }
+      };
+    })(R, fr);
+    storyItems.push(it);
+
+    // 3. attention: the salience network flags, the dorsal attention network locks on
+    fr = storyFrame(2); it = storyItem(2, GREEN);
+    var insL, insR;
+    [-1, 1].forEach(function (sd) {
+      var fef = P(fr, sd * X * 0.85, YU + 40, 900), ips = P(fr, sd * X * 1.05, YU - 220, -900), ins = P(fr, sd * X * 0.72, YD * 0.7, 700);
+      blob(it, fef, 420, 20); blob(it, ips, 460, 22); blob(it, ins, 380, 18, SAL);
+      linkCurve(it, fef, ips, add(scl(fr.r, sd * 300), scl(fr.u, 480)), GREEN, 3, 0.4);
+      linkCurve(it, ins, fef, scl(fr.r, sd * 420), SAL, 2, 0.5);
+      if (sd > 0) { F = fef; insR = ins; } else { L = fef; insL = ins; }
+    });
+    linkCurve(it, L, F, scl(fr.u, 600), GREEN, 2, 0.3);
+    label(it, F, 'ATTENTION NETWORKS', 'lock on, filter out the rest', GREEN);
+    label(it, insL, 'SALIENCE NETWORK', 'flags what matters', SAL, true);
+    storyItems.push(it);
+
+    // 4. hippocampus: long-term memory (a curved, seahorse-like chain on each side)
+    fr = storyFrame(3); it = storyItem(3, LTMC);
+    [-1, 1].forEach(function (sd) {
+      var h0 = P(fr, sd * X * 0.78, YD + 120, 1100), h2 = P(fr, sd * X * 1.02, YD - 120, -1000);
+      var hp = bez(h0, add(scl(add(h0, h2), 0.5), add(scl(fr.r, sd * 420), scl(fr.u, -320))), h2, 14);
+      hp.push(add(add(h2, scl(fr.r, -sd * 240)), scl(fr.u, 400)));
+      chain(it, hp, 220, 3);
+      var cx2 = P(fr, sd * X * 1.1, YU, -1400);
+      blob(it, cx2, 380, 16, CORTEX);
+      linkCurve(it, hp[hp.length - 1], cx2, add(scl(fr.r, sd * 380), scl(fr.u, 200)), LTMC, 3, 0.35);
+      if (sd > 0) R = hp[7]; else L = cx2;
+    });
+    label(it, R, 'HIPPOCAMPUS', 'turns moments into lasting memories', LTMC);
+    label(it, L, 'CORTEX', 'where memories are stored', CORTEX, true);
+    storyItems.push(it);
+
+    // 5. emotion: amygdala and limbic system
+    fr = storyFrame(4); it = storyItem(4, ROSE);
+    L = P(fr, -X * 0.8, YD, 200); R = P(fr, X * 0.8, YD, 200);
+    var vm = P(fr, 0, YD - 250, 1400);
+    blob(it, L, 420, 24); blob(it, R, 420, 24); blob(it, vm, 360, 16);
+    linkCurve(it, L, vm, scl(fr.u, -300), ROSE, 2, 0.35); linkCurve(it, R, vm, scl(fr.u, -300), ROSE, 2, 0.35);
+    linkCurve(it, L, R, scl(fr.u, -600), ROSE, 2, 0.28);
+    label(it, L, 'AMYGDALA · LIMBIC SYSTEM', 'tags moments with feeling', ROSE);
+    storyItems.push(it);
+
+    // 6. the body's signals: insula and autonomic network, with live heart, breath and skin traces
+    fr = storyFrame(5); it = storyItem(5, CORAL);
+    var ins = P(fr, -X * 0.85, YU * 0.35, 0), aut = P(fr, -X * 0.6, YD, 500);
+    blob(it, ins, 520, 26, CORAL); blob(it, aut, 420, 18, CORAL);
+    linkCurve(it, aut, ins, scl(fr.r, -420), CORAL, 3, 0.4);
+    label(it, ins, 'INSULA · AUTONOMIC NETWORK', 'senses the body from within', CORAL);
+    var traceX0 = X * 0.42, traceX1 = X * 1.18, amp = SPAN * 0.1, rows = [YU * 0.62, YU * 0.62 - SPAN * 0.3, YU * 0.62 - SPAN * 0.6];
+    var traces = [['HEART RATE', CORAL, function (u, t) { return ecg(((u * 3 - t * 1.1) % 1 + 1) % 1); }],
+                  ['BREATHING', TOUCH, function (u, t) { return 0.55 * Math.sin(2 * Math.PI * (u * 1.1 - t * 0.22)); }],
+                  ['SKIN CONDUCTANCE', GOLD, function (u, t) { var r = Math.max(0, Math.sin(2 * Math.PI * (u * 1.6 - t * 0.35))); return 0.3 * Math.sin(2 * Math.PI * (u * 0.5 - t * 0.08)) + 0.55 * Math.pow(r, 6); }]];
+    traces.forEach(function (tr, ti) { label(it, P(fr, traceX0, rows[ti], 0), tr[0], '', tr[1], true); });
+    (function (frm) {
+      it.draw = function (time, w) {
+        if (w < 0.03) return;
+        for (var ti = 0; ti < traces.length; ti++) {
+          var pts = [];
+          for (var q = 0; q <= 70; q++) {
+            var u = q / 70;
+            pts.push(P(frm, lerp(traceX0, traceX1, u), rows[ti] + amp * traces[ti][2](u, time), 0));
+          }
+          drawPolyline(pts, traces[ti][1], 0.15 + 0.85 * w);
+          pulseDot(pts[70], traces[ti][1], w, 160);
+        }
+        flush(Math.max(1, dpr * 0.9) * 2);
+      };
+    })(fr);
+    storyItems.push(it);
+
+    // 7. sense of agency: intention → action → outcome, and the brain checks that they match
+    fr = storyFrame(6); it = storyItem(6, AGC);
+    var sma = P(fr, -X * 0.8, YU + 40, 500), par = P(fr, X * 0.95, YU * 0.5, -500);
+    blob(it, sma, 520, 26, AGC); blob(it, par, 460, 22, AGC);
+    linkCurve(it, sma, par, scl(fr.u, 700), AGC, 2, 0.3);
+    var cy = [P(fr, -X * 1.2, YD * 0.1, 0), P(fr, -X * 0.95, YD * 1.05, 300), P(fr, -X * 0.7, YD * 0.1, 0)];
+    var cycle = bez(cy[0], P(fr, -X * 1.25, YD * 0.75, 150), cy[1], 14).concat(bez(cy[1], P(fr, -X * 0.65, YD * 0.75, 150), cy[2], 14).slice(1),
+                bez(cy[2], P(fr, -X * 0.95, YD * -0.35, 0), cy[0], 14).slice(1));
+    blob(it, cy[0], 200, 8, AGC); blob(it, cy[1], 200, 8, BRIGHT); blob(it, cy[2], 200, 8, GOLD);
+    label(it, sma, 'SENSE OF AGENCY', '“I did that”', AGC);
+    label(it, cy[0], 'INTENTION', '', AGC, true); label(it, cy[1], 'ACTION', '', BRIGHT, true); label(it, cy[2], 'OUTCOME', '', GOLD, true);
+    label(it, par, 'PARIETAL CORTEX', 'did it go as predicted?', AGC, true);
+    (function (Sc) {
+      it.draw = function (time, w) {
+        if (w < 0.02) return;
+        drawPolyline(cycle, AGC, 0.12 + 0.6 * w); flush(Math.max(1, dpr * 0.9) * 2);
+        var f = (time * 0.3) % 1;
+        pulseDot(along(cycle, f), f < 0.33 ? AGC : f < 0.66 ? BRIGHT : GOLD, w, 200);
+        if (f > 0.9 && project(Sc, tmpA, 0)) dot2(AGC, tmpA[0], tmpA[1], clamp(1800 * tmpA[2], 20, 300) * dpr, w * 0.6 * (f - 0.9) / 0.1);   // a match: "I did that"
+      };
+    })(sma);
+    storyItems.push(it);
+
+    // 8. cognitive decline: the pathway weakens and signals die at the gap
+    storyItems.push(pathDemo(7, -1, 'broken', X, YU, YD, ['WEAKENED PATHWAY', 'signals fail to cross']));
+
+    // 9. agency at risk: an AI assistant does the work, the brain's own network falls quiet
+    fr = storyFrame(8); it = storyItem(8, AIC);
+    var aiC = P(fr, X * 0.95, YU * 0.15, -200), memA = P(fr, -X * 0.85, YU * 0.6, 200), navB = P(fr, -X * 0.7, YD, -300);
+    var s0 = blob(it, memA, 460, 22, LTMC); blob(it, navB, 420, 20, CORTEX);
+    for (i = s0; i < it.nodes.length; i++) it.ndim[i] = 0.4;
+    linkCurve(it, memA, aiC, scl(fr.u, 700), AIC, 3, 0.45);
+    linkCurve(it, navB, aiC, scl(fr.u, -500), AIC, 3, 0.45);
+    var quietLink = bez(memA, add(scl(add(memA, navB), 0.5), scl(fr.r, -500)), navB, 22);
+    label(it, aiC, 'AI ASSISTANT', 'deciding for us', AIC);
+    label(it, memA, 'UNDER-USED NETWORK', 'skills fade without practice', LTMC, true);
+    (function (frm) {
+      it.draw = function (time, w) {
+        drawSegs(octa(frm, aiC, 620, time * 0.5), AIC, 0.1 + 0.9 * w);
+        for (var q = 0; q < quietLink.length - 1; q += 2) drawSegs([[quietLink[q], quietLink[q + 1]]], LTMC, (0.05 + 0.25 * w) * (0.6 + 0.4 * Math.sin(time * 1.5)));
+        flush(Math.max(1, dpr * 0.9) * 2);
+        if (project(aiC, tmpA, 0)) dot2(AIC, tmpA[0], tmpA[1], clamp(2600 * tmpA[2], 30, 420) * dpr, 0.08 + 0.3 * w);
+      };
+    })(fr);
+    storyItems.push(it);
+
+    // 10. sensing the person: person → biosensing → AI → XR → senses, a closed loop
+    fr = storyFrame(9); it = storyItem(9, TEAL);
+    var lc = P(fr, X * 0.7, (YU + YD) * 0.2, 0), lrx = X * 0.28, lry = SPAN * 0.36;
+    var loop = ringPts(fr, lc, lrx, lry, 64, Math.PI);
+    var stP = onPlane(fr, lc, -lrx, 0), stS = onPlane(fr, lc, 0, lry), stA = onPlane(fr, lc, lrx, 0), stX = onPlane(fr, lc, 0, -lry);
+    blob(it, stP, 380, 20, LTMC);
+    var sensorRing = ringPts(fr, stS, 170, 170, 24, 0), xrRect = rectPts(fr, stX, 260, 150);
+    label(it, stS, 'CLOSED LOOP', 'biosensing → AI → XR', TEAL);
+    label(it, stP, 'PERSON', '', LTMC, true);
+    label(it, stA, 'AI · TIME', 'remembers · adapts · anticipates', AIC, true);
+    label(it, stX, 'XR · SPACE', 'body · objects · room', ADAPT, true);
+    (function (frm) {
+      it.draw = function (time, w) {
+        if (w < 0.02) return;
+        drawPolyline(loop, TEAL, 0.12 + 0.6 * w);
+        drawPolyline(sensorRing, TEAL, 0.2 + 0.8 * w);
+        drawPolyline(xrRect, ADAPT, 0.2 + 0.8 * w);
+        drawSegs(octa(frm, stA, 300, time * 0.7), AIC, 0.15 + 0.85 * w);
+        for (var rr = 0; rr < 3; rr++) {                  // XR-space: body, objects, room
+          var ring = ringPts(frm, stX, 330 + rr * 150, 210 + rr * 105, 40, 0);
+          for (var q2 = 0; q2 < ring.length - 1; q2 += 2) drawSegs([[ring[q2], ring[q2 + 1]]], ADAPT, (0.06 + 0.3 * w) * (1 - rr * 0.25));
+        }
+        flush(Math.max(1, dpr * 0.9) * 2);
+        [0.42, 0.5, 0.58].forEach(function (f, ti) {        // AI-time: past, now, next
+          if (project(along(loop, f), tmpA, 0)) dot2(AIC, tmpA[0], tmpA[1], clamp((ti === 1 ? 260 : 150) * tmpA[2], 3, 40) * dpr, w * (ti === 1 ? 1 : 0.45));
+        });
+        for (var q = 0; q < 4; q++) pulseDot(along(loop, (time * 0.2 + q / 4) % 1), q % 2 ? TEAL : BRIGHT, w, 190);
+      };
+    })(fr);
+    storyItems.push(it);
+
+    // 11. adaptive interfaces: as sensed load rises the XR panel simplifies, as it falls it offers more
+    fr = storyFrame(10); it = storyItem(10, ADAPT);
+    var gauge = P(fr, -X * 0.9, (YU + YD) * 0.2, 0), panel = P(fr, X * 0.7, (YU + YD) * 0.25, 0), gH = SPAN * 0.62, pw = X * 0.28, ph = SPAN * 0.27;
+    var gTop = onPlane(fr, gauge, 0, gH / 2), gBot = onPlane(fr, gauge, 0, -gH / 2);
+    linkCurve(it, onPlane(fr, gauge, 0, 0), onPlane(fr, panel, -pw, 0), scl(fr.u, 520), ADAPT, 2, 0.35);
+    label(it, panel, 'ADAPTIVE INTERFACE', 'simplifies under load', ADAPT);
+    label(it, gTop, 'COGNITIVE LOAD', 'sensed in real time', CORAL, true);
+    (function (frm) {
+      it.draw = function (time, w) {
+        if (w < 0.02) return;
+        var load = 0.5 + 0.45 * Math.sin(time * 0.55), segs = 10, q;
+        for (q = 0; q < segs; q++) {           // the load gauge: green → amber → red
+          var y0 = -gH / 2 + q / segs * gH, lit = q / segs < load, c = q < 4 ? GREEN : q < 7 ? GOLD : RED;
+          drawSegs([[onPlane(frm, gauge, -160, y0), onPlane(frm, gauge, 160, y0)]], lit ? c : CORTEX, lit ? 0.3 + 0.7 * w : 0.12 * w);
+        }
+        flush(Math.max(1, dpr * 0.9) * 5);
+        drawPolyline(rectPts(frm, panel, pw, ph), ADAPT, 0.2 + 0.8 * w);
+        var lines = clamp(Math.round(5 - load * 4.4), 1, 5);   // more load, fewer elements
+        for (q = 0; q < lines; q++) {
+          var yy = ph * 0.62 - q * (ph * 1.24 / 5), wide = lines === 1 ? 0.75 : (q === 0 ? 0.6 : 0.85 - (q % 2) * 0.25);
+          drawSegs([[onPlane(frm, panel, -pw * 0.78, yy), onPlane(frm, panel, -pw * 0.78 + pw * 1.56 * wide, yy)]], lines === 1 ? GREEN : ADAPT, 0.25 + 0.7 * w);
+        }
+        flush(Math.max(1, dpr * 0.9) * (lines === 1 ? 6 : 2.4));
+        pulseDot(onPlane(frm, gauge, 0, -gH / 2 + load * gH), load > 0.7 ? RED : load > 0.4 ? GOLD : GREEN, w, 260);
+      };
+    })(fr);
+    storyItems.push(it);
+
+    // 12. shared agency: AI suggests, XR shows the options, the person decides
+    fr = storyFrame(11); it = storyItem(11, AGC);
+    var person = P(fr, X * 0.92, YU * 0.9, 0), aiS = P(fr, -X * 0.95, YU * 0.35, -300);
+    var opts = [P(fr, X * 0.62, YD * 0.9, 200), P(fr, X * 0.92, YD * 1.05, 0), P(fr, X * 1.2, YD * 0.9, -200)];
+    blob(it, person, 440, 22, LTMC);
+    opts.forEach(function (o) { blob(it, o, 220, 9, ADAPT); });
+    var choose = opts.map(function (o) { return bez(person, add(scl(add(person, o), 0.5), scl(fr.r, 140)), o, 18); });
+    var hint = opts.map(function (o) { return bez(aiS, add(scl(add(aiS, o), 0.5), scl(fr.u, -520)), o, 30); });
+    label(it, person, 'YOU DECIDE', 'AI suggests, you choose', AGC);
+    label(it, aiS, 'AI SUGGESTS', 'it does not decide', AIC, true);
+    label(it, opts[0], 'OPTIONS IN XR', '', ADAPT, true);
+    (function (frm) {
+      it.draw = function (time, w) {
+        if (w < 0.02) return;
+        var n = Math.floor(time / 4), ph = (time % 4) / 4, sug = n % 3, pick = (n * 2 + 1) % 3, q;
+        drawSegs(octa(frm, aiS, 380, time * 0.5), AIC, 0.12 + 0.6 * w);
+        for (q = 0; q < hint[sug].length - 1; q += 2) drawSegs([[hint[sug][q], hint[sug][q + 1]]], AIC, (0.1 + 0.5 * w) * (ph < 0.6 ? 1 : 1 - (ph - 0.6) / 0.4));
+        for (q = 0; q < 3; q++) drawPolyline(choose[q], AGC, 0.05 * w);
+        flush(Math.max(1, dpr * 0.9) * 1.6);
+        var grow = clamp((ph - 0.3) / 0.35, 0, 1);
+        if (grow > 0) { drawPolyline(choose[pick].slice(0, 1 + Math.round(grow * (choose[pick].length - 1))), AGC, 0.2 + 0.8 * w); flush(Math.max(1, dpr * 0.9) * 3); }
+        if (ph > 0.3 && ph < 0.65) pulseDot(along(choose[pick], grow), AGC, w, 200);
+        if (ph > 0.65 && project(opts[pick], tmpA, 0)) dot2(AGC, tmpA[0], tmpA[1], clamp(1400 * tmpA[2], 16, 220) * dpr, w * 0.7 * (1 - (ph - 0.65) / 0.35));
+      };
+    })(fr);
+    storyItems.push(it);
+
+    // 13. support in the moment: an XR scaffold bridges the weakened pathway
+    storyItems.push(pathDemo(12, 1, 'bridged', X * 0.82, YU, YD, ['XR SCAFFOLD', 'timely, personal cues']));
+
+    // 14. stronger: the pathway is strong again, all networks connect, AI steps back
+    storyItems.push(pathDemo(13, -1, 'healed', X, YU, YD, ['STRONGER PATHWAY', 'the scaffold fades']));
+    fr = storyFrame(13); it = storyItem(13, BRIGHT);
+    var hubs = [[GOLD, P(fr, -X * 0.35, YU + 250, -500)], [GREEN, P(fr, X, YU, -200)], [ROSE, P(fr, X * 0.85, YD, 300)],
+                [LTMC, P(fr, X * 0.15, YD - 300, -800)], [SENS, P(fr, X * 0.45, YU + 380, -1100)], [CORAL, P(fr, X * 1.25, (YU + YD) / 2, -900)], [AGC, P(fr, -X * 0.9, YD * 0.6, -400)]];
+    hubs.forEach(function (h) { blob(it, h[1], 380, 16, h[0]); });
+    for (i = 0; i < hubs.length; i++) for (j = i + 1; j < hubs.length; j++)
+      linkCurve(it, hubs[i][1], hubs[j][1], add(scl(fr.u, 240), scl(fr.b, 260)), BRIGHT, 1, 0.3);
+    var aiBack = P(fr, -X * 1.05, YU * 0.95, -2400);
+    label(it, hubs[1][1], 'FEEL · THINK · ACT', 'networks working together', BRIGHT);
+    label(it, aiBack, 'AI · IN THE BACKGROUND', '', AIC, true);
+    (function (frm) {
+      it.draw = function (time, w) { drawSegs(octa(frm, aiBack, 260, time * 0.4), AIC, 0.05 + 0.3 * w); flush(Math.max(1, dpr * 0.9) * 1.4); };
+    })(fr);
+    storyItems.push(it);
+  }
+
+  function drawStory(time, s, lw) {
+    var i, j, q, it, w;
+    for (i = 0; i < storyItems.length; i++) storyItems[i].w = storyWeight(storyItems[i].k, s);
+    // halos
+    for (i = 0; i < storyItems.length; i++) {
+      it = storyItems[i]; w = it.w;
+      for (j = 0; j < it.halos.length; j++) {
+        if (!project(it.halos[j][0], tmpA, 0)) continue;
+        dot2(it.halos[j][2], tmpA[0], tmpA[1], clamp(it.halos[j][1] * 3.4 * tmpA[2], 6, 640) * dpr,
+             (0.04 + 0.26 * w) * (0.85 + 0.15 * Math.sin(time * 2.2 + j)));
+      }
+    }
+    // internal connections of each region
+    for (i = 0; i < storyItems.length; i++) {
+      it = storyItems[i]; w = it.w;
+      for (j = 0; j < it.edges.length; j++) {
+        var ea = it.edges[j][0], na = it.nodes[ea], nb = it.nodes[it.edges[j][1]];
+        if (!project(na, tmpA, 0) || !project(nb, tmpB, 0)) continue;
+        seg(it.ncol[ea], (0.08 + 0.6 * w) * it.ndim[ea] * fog(tmpA[3]), tmpA[0], tmpA[1], tmpB[0], tmpB[1]);
+      }
+    }
+    flush(lw * 1.2);
+    // network links between regions
+    for (i = 0; i < storyItems.length; i++) {
+      it = storyItems[i]; w = it.w;
+      for (j = 0; j < it.links.length; j++) drawPolyline(it.links[j].pts, it.links[j].col, 0.06 + 0.6 * w);
+    }
+    flush(lw * 2);
+    // the memory pathway in its three states
+    for (i = 0; i < storyItems.length; i++) {
+      it = storyItems[i]; if (it.kind !== 'path') continue; w = it.w;
+      var n = it.main.length - 1;
+      for (j = 0; j < n; j++) {
+        var t = j / n, healthy = it.mode === 'healed' || t < 0.36 || t >= 0.62;
+        if (!project(it.main[j], tmpA, 0) || !project(it.main[j + 1], tmpB, 0)) continue;
+        if (healthy) seg(LTMC, (0.08 + (it.mode === 'healed' ? 0.85 : 0.5) * w) * fog(tmpA[3]), tmpA[0], tmpA[1], tmpB[0], tmpB[1]);
+        else if (t < 0.42 || t >= 0.56) seg(RED, (0.1 + 0.9 * w) * (0.55 + 0.45 * Math.sin(time * 11 + j)), tmpA[0], tmpA[1], tmpB[0], tmpB[1]);
+      }
+      flush(lw * (it.mode === 'healed' ? 3.2 : 2.8));
+      if (it.mode !== 'healed') {          // the frayed ends of the broken connection
+        for (q = 0; q < 2; q++) {
+          if (!project(along(it.main, q ? 0.56 : 0.42), tmpA, 0)) continue;
+          var fl = 0.6 + 0.4 * Math.sin(time * 9 + q * 2);
+          dot2(RED, tmpA[0], tmpA[1], clamp(700 * tmpA[2], 10, 140) * dpr, (0.15 + 0.7 * w) * fl * (it.mode === 'bridged' ? 0.5 : 1));
+        }
+      }
+      if (it.mode !== 'broken') {
+        var sa = it.mode === 'bridged' ? 0.12 + 0.8 * w : 0.18 * w;   // the scaffold fades once capability returns
+        for (j = 0; j < it.scaffold.length - 1; j += 2) {
+          if (!project(it.scaffold[j], tmpA, 0) || !project(it.scaffold[j + 1], tmpB, 0)) continue;
+          seg(SUPPORT, sa, tmpA[0], tmpA[1], tmpB[0], tmpB[1]);
+        }
+        for (j = 0; j < it.panel.length; j++) drawPolyline(it.panel[j], SUPPORT, sa);
+        flush(lw * 2);
+      }
+    }
+    // animated details (memory slots, body signals, AI, closed loop, adaptive interface)
+    for (i = 0; i < storyItems.length; i++) if (storyItems[i].draw) storyItems[i].draw(time, storyItems[i].w, lw);
+    // neurons of every region
+    for (i = 0; i < storyItems.length; i++) {
+      it = storyItems[i]; w = it.w;
+      for (j = 0; j < it.nodes.length; j++) {
+        if (!project(it.nodes[j], tmpA, 0)) continue;
+        var dim = it.kind === 'path' && it.mode === 'broken' && j >= 16 ? 0.35 : it.ndim[j];
+        dot2(it.ncol[j], tmpA[0], tmpA[1], clamp(it.sizes[j] * tmpA[2] * (0.75 + 0.6 * w), 1.5, 30) * dpr, (0.08 + 0.9 * w) * dim * fog(tmpA[3]));
+      }
+    }
+    // signals travelling along the networks
+    for (i = 0; i < storyItems.length; i++) {
+      it = storyItems[i]; w = it.w; if (w < 0.05) continue;
+      for (j = 0; j < it.links.length; j++) {
+        var lk = it.links[j];
+        for (q = 0; q < lk.n; q++) pulseDot(along(lk.pts, (time * lk.speed + q / lk.n + j * 0.17) % 1), lk.col, w, 150);
+      }
+      if (it.kind !== 'path') continue;
+      for (q = 0; q < 3; q++) {
+        var ph = (time * 0.28 + q / 3) % 1, pt, col = LTMC, alpha = w;
+        if (it.mode === 'broken') {
+          var u = ph * 0.55;
+          if (u < 0.4) pt = along(it.main, u);
+          else { pt = along(it.main, 0.4); col = RED; alpha = w * (1 - (u - 0.4) / 0.15); }   // the signal dies at the gap
+        } else if (it.mode === 'bridged') {
+          pt = along(it.route, ph);
+          if (ph > 0.3 && ph < 0.72) col = SUPPORT;
+        } else pt = along(it.main, ph);
+        pulseDot(pt, col, alpha, 190);
+        // a memory reached: the target region flashes
+        if (it.mode !== 'broken' && ph > 0.94 && project(it.B, tmpB, 0))
+          dot2(BRIGHT, tmpB[0], tmpB[1], clamp(1500 * tmpB[2], 20, 260) * dpr, w * 0.6 * (1 - (ph - 0.94) / 0.06));
+      }
+    }
+  }
+
+  /* the caption that tells the story, and a title card at the start of each act */
+  var storyEl = document.getElementById('story'), stStep = document.getElementById('st-step'), stTitle = document.getElementById('st-title'),
+      stWhere = document.getElementById('st-where'), stText = document.getElementById('st-text'), stXr = document.getElementById('st-xr'),
+      stSteps = document.getElementById('st-steps'), actEl = document.getElementById('act-title'),
+      storyShown = null, storyTimer = null, actTimer = null, lastPart = null;
+  STORY.forEach(function (ch, k) {
+    var li = document.createElement('li'), b = document.createElement('button');
+    if (k > 0 && STORY[k - 1].part !== ch.part) li.className = 'gap';
+    b.type = 'button'; b.title = ch.short; b.setAttribute('aria-label', 'Chapter ' + (k + 1) + ': ' + ch.short);
+    b.style.setProperty('--c', 'rgb(' + ch.col + ')');
+    b.addEventListener('click', function () {
+      var max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      window.scrollTo({ top: max * clamp((storySeg(k)[0] + 0.45) / Math.max(1, cards.length - 1), 0, 1), behavior: 'smooth' });
+    });
+    li.appendChild(b); stSteps.appendChild(li);
+  });
+  var stMore = document.getElementById('st-more');
+  stMore.addEventListener('click', function () {
+    var open = !storyEl.classList.contains('open');
+    storyEl.classList.toggle('open', open); stMore.setAttribute('aria-expanded', String(open)); stMore.textContent = open ? 'Less' : 'More';
+  });
+  function setXr(lab, text) {
+    stXr.textContent = '';
+    var b = document.createElement('b'); b.textContent = lab;
+    stXr.appendChild(b); stXr.appendChild(document.createTextNode(text));
+  }
+  function showAct(p) {
+    actEl.querySelector('.act-k').textContent = 'Act ' + (p + 1);
+    actEl.querySelector('.act-t').textContent = PARTS[p];
+    actEl.querySelector('.act-s').textContent = PART_SUB[p];
+    actEl.classList.remove('on'); void actEl.offsetWidth; actEl.classList.add('on');
+    clearTimeout(actTimer);
+    actTimer = setTimeout(function () { actEl.classList.remove('on'); }, 2600);
+  }
+  function updateStory(s) {
+    var k = storyChapter(s);
+    if (k === storyShown) return;
+    var part = k >= 0 ? STORY[k].part : -1;
+    if (part >= 0 && lastPart !== null && part !== lastPart) showAct(part);
+    lastPart = part;
+    storyShown = k;
+    storyEl.classList.toggle('show', k > -2);
+    if (k === -2) return;
+    storyEl.classList.add('swap');
+    clearTimeout(storyTimer);
+    storyTimer = setTimeout(function () {
+      if (k === -1) {
+        stStep.textContent = 'Inside the mind'; stTitle.textContent = 'A journey through the mind';
+        stWhere.textContent = 'Three acts · a simplified map of brain networks';
+        stText.textContent = 'Fly through my CV in three acts: how we think, feel and act; what can go wrong; and how XR, AI and biosensing can help.';
+        setXr('The goal', 'Technology that strengthens human agency, rather than replacing it.');
+        storyEl.style.setProperty('--st', 'rgb(' + SUPPORT + ')');
+      } else {
+        var ch = STORY[k];
+        stStep.textContent = (k + 1) + ' / ' + STORY.length + ' · Act ' + (ch.part + 1);
+        stTitle.textContent = ch.title; stWhere.textContent = ch.where;
+        stText.textContent = ch.text; setXr(ch.lab, ch.xr);
+        storyEl.style.setProperty('--st', 'rgb(' + ch.col + ')');
+      }
+      Array.prototype.forEach.call(stSteps.querySelectorAll('button'), function (b, i) {
+        b.classList.toggle('on', i === k); b.classList.toggle('done', i < k);
+      });
+      storyEl.classList.remove('swap');
+    }, 170);
+  }
+
+  function drawDimLabels(heroW, dimI) {
+    if (heroW < 0.05 || !dimAnchors.length) return;
+    var fam = 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif', pad = 14 * dpr, edge = 12 * dpr;
+    ctx.save();
+    ctx.globalCompositeOperation = 'source-over'; ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+    ctx.shadowColor = 'rgba(0,0,0,0.85)'; ctx.shadowBlur = 8 * dpr;
+    var big = Math.round((mobile ? 12 : 14) * dpr), small = Math.round((mobile ? 11 : 12.5) * dpr);
+    for (var k = 1; k <= 3; k++) {
+      if (!project(dimAnchors[k], tmpA, 0)) continue;
+      var d = DIMS[k], a = heroW * (0.55 + 0.45 * (dimI[k] / Math.max(heroW, 0.01) - 0.5) * 2);
+      ctx.font = '800 ' + big + fam; var w1 = ctx.measureText(d.name).width;
+      ctx.font = '400 ' + small + fam; var w2 = ctx.measureText(d.sub).width, tw = Math.max(w1, w2);
+      var left = tmpA[0] < canvas.width * (mobile ? 0.5 : 0.62), rEdge = (mobile ? 12 : 52) * dpr;
+      var x = clamp(left ? tmpA[0] - pad - tw : tmpA[0] + pad, edge + 8 * dpr, canvas.width - rEdge - tw), y = tmpA[1];
+      ctx.globalAlpha = heroW * clamp(a / Math.max(heroW, 0.01), 0.6, 1);
+      // dark pill so the label reads over the bright cortex
+      var px = 9 * dpr, py = 7 * dpr, bx = x - px - 6 * dpr, by = y - 9 * dpr - big / 2 - py, bw = tw + px * 2 + 6 * dpr, bh = 19 * dpr + big / 2 + small / 2 + py * 2;
+      ctx.save(); ctx.shadowBlur = 0; ctx.fillStyle = 'rgba(6,10,18,0.78)'; ctx.strokeStyle = 'rgba(' + d.col + ',0.55)'; ctx.lineWidth = 1 * dpr;
+      ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 9 * dpr); else ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke(); ctx.restore();
+      ctx.fillStyle = 'rgb(' + d.col + ')';
+      ctx.beginPath(); ctx.arc(x - 6 * dpr, y - 9 * dpr, 3.2 * dpr, 0, Math.PI * 2); ctx.fill();
+      ctx.font = '800 ' + big + fam; ctx.fillText(d.name, x + 2 * dpr, y - 9 * dpr);
+      ctx.fillStyle = 'rgba(231,238,248,0.95)'; ctx.font = '400 ' + small + fam; ctx.fillText(d.sub, x + 2 * dpr, y + 10 * dpr);
+    }
+    // title above the brain (desktop and tablet)
+    if (!mobile && project(add(brain.c, [0, brain.ry * 1.2, 0]), tmpA, 0)) {
+      ctx.textAlign = 'center'; ctx.globalAlpha = heroW;
+      ctx.fillStyle = 'rgba(163,179,201,0.95)'; ctx.font = '600 ' + Math.round(11 * dpr) + fam;
+      if ('letterSpacing' in ctx) ctx.letterSpacing = (2.5 * dpr) + 'px';
+      ctx.fillText('MY XR DESIGN SPACE', tmpA[0], tmpA[1] - 14 * dpr);
+      if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+      ctx.font = '700 ' + Math.round(17 * dpr) + fam; ctx.fillStyle = '#fff';
+      var parts = [['Cognitive', DIMS[1].col], [' · ', '163,179,201'], ['Affective', DIMS[2].col], [' · ', '163,179,201'], ['Agentic', DIMS[3].col], [' Incorporation', '231,238,248']];
+      var total = 0; parts.forEach(function (pt) { total += ctx.measureText(pt[0]).width; });
+      var x0 = tmpA[0] - total / 2; ctx.textAlign = 'left';
+      parts.forEach(function (pt) { ctx.fillStyle = 'rgb(' + pt[1] + ')'; ctx.fillText(pt[0], x0, tmpA[1] + 8 * dpr); x0 += ctx.measureText(pt[0]).width; });
+    }
+    ctx.restore();
+  }
+
+  function drawStoryLabels() {
+    var pad = 14 * dpr, edge = 12 * dpr, fam = 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif';
+    ctx.save();
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 6 * dpr;
+    for (var i = 0; i < storyItems.length; i++) {
+      var it = storyItems[i];
+      if (it.w < 0.25) continue;
+      for (var j = 0; j < it.labels.length; j++) {
+        var lb = it.labels[j];
+        if (!project(lb.at, tmpA, 0)) continue;
+        var a = clamp((it.w - 0.25) / 0.45, 0, 1) * clamp((tmpA[3] - 700) / 1200, 0, 1) * (lb.small ? 0.85 : 1);
+        if (a < 0.02) continue;
+        var f1 = (lb.small ? '700 ' + Math.round(10.5 * dpr) : '700 ' + Math.round(12.5 * dpr)) + fam;
+        var f2 = (lb.small ? '400 ' + Math.round(11 * dpr) : '400 ' + Math.round(13 * dpr)) + fam;
+        ctx.font = f1; var w1 = ctx.measureText(lb.lines[0]).width;
+        ctx.font = f2; var w2 = lb.lines[1] ? ctx.measureText(lb.lines[1]).width : 0, tw = Math.max(w1, w2);
+        var left = tmpA[0] < canvas.width / 2;
+        var x = clamp(left ? tmpA[0] - pad - tw : tmpA[0] + pad, edge, canvas.width - edge - tw);   // text on the outer side
+        var y = tmpA[1], y1 = lb.lines[1] ? y - 8 * dpr : y;
+        ctx.globalAlpha = a;
+        ctx.fillStyle = 'rgb(' + lb.col + ')';
+        ctx.beginPath(); ctx.arc(left ? x + tw + pad * 0.45 : x - pad * 0.45, y1, (lb.small ? 2.4 : 3) * dpr, 0, Math.PI * 2); ctx.fill();
+        ctx.font = f1; ctx.fillText(lb.lines[0], x, y1);
+        if (lb.lines[1]) {
+          ctx.fillStyle = 'rgba(231,238,248,0.92)'; ctx.font = f2;
+          ctx.fillText(lb.lines[1], x, y + 9 * dpr);
+        }
+      }
+    }
+    ctx.restore();
   }
 
   /* ---------------- per frame ---------------- */
@@ -1612,7 +2401,8 @@
     }
     var support = 1 - smooth(0, 0.85, prog);
     var capability = 0.2 + 0.8 * smooth(0.02, 0.95, prog);
-    drawScene(time, support, capability, 0.1 + 0.9 * smooth(0.25, 0.85, s));
+    drawScene(time, support, capability, 0.1 + 0.9 * smooth(0.25, 0.85, s), s);
+    updateStory(s);
 
     progressEl.style.width = (prog * 100).toFixed(2) + '%';
     if (window.scrollY > 40) hintEl.classList.add('gone'); else hintEl.classList.remove('gone');
@@ -1826,6 +2616,7 @@
       layout();
       buildNav();
       prog = progTarget = 0;
+      storyShown = null;
       if (!running) { running = true; requestAnimationFrame(frame); }
     } else {
       running = false;
