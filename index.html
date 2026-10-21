@@ -37,6 +37,7 @@
     --award-bg: #FFF2D4; --award-fg: #855400;
     --role-bg: #E3F4EA; --role-fg: #1B6A3E;
     --event-bg: #EEEAFB; --event-fg: #563FA3;
+    --core-bg: #1C4C85; --core-fg: #ffffff; --core-line: #1C4C85;
     --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Liberation Sans", Arial, sans-serif;
     /* 3D theme */
     --space: #060a13;
@@ -52,14 +53,14 @@
       color-scheme: dark;
       --accent: #7fb6e0; --accent2: #6fc0d6; --text: #e6ebf2; --muted: #a7b2c2; --rule: #2b3442;
       --tag: #1c2a38; --bg: #10151d; --surface: #161d27;
-      --award-bg: #3a2e14; --award-fg: #f2c56b; --role-bg: #173226; --role-fg: #86d6a8; --event-bg: #272140; --event-fg: #bcadff;
+      --award-bg: #3a2e14; --award-fg: #f2c56b; --role-bg: #173226; --role-fg: #86d6a8; --event-bg: #272140; --event-fg: #bcadff; --core-bg: #93c2f5; --core-fg: #0d1a2b; --core-line: #93c2f5;
     }
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
     --accent: #7fb6e0; --accent2: #6fc0d6; --text: #e6ebf2; --muted: #a7b2c2; --rule: #2b3442;
     --tag: #1c2a38; --bg: #10151d; --surface: #161d27;
-    --award-bg: #3a2e14; --award-fg: #f2c56b; --role-bg: #173226; --role-fg: #86d6a8; --event-bg: #272140; --event-fg: #bcadff;
+    --award-bg: #3a2e14; --award-fg: #f2c56b; --role-bg: #173226; --role-fg: #86d6a8; --event-bg: #272140; --event-fg: #bcadff; --core-bg: #93c2f5; --core-fg: #0d1a2b; --core-line: #93c2f5;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -182,6 +183,8 @@
   .entry.pi .loc b { color: var(--accent); font-style: normal; }
   .tag.k-event { background: var(--event-bg); color: var(--event-fg); }
   .tag.k-q1 { background: var(--role-bg); color: var(--role-fg); cursor: help; }
+  .tag.k-core { background: var(--core-bg); color: var(--core-fg); cursor: help; }
+  .tag.k-core.adj { background: transparent; color: var(--core-line); box-shadow: inset 0 0 0 1.5px var(--core-line); }   /* adjunct / companion proceedings */
   .page-head .legend { margin-top: 8px; font-size: 0.9rem; }
   .page-head .legend .tag { margin: 0 4px 0 0; cursor: default; }
   ul.svc { list-style: none; margin: 0; padding: 0; }
@@ -367,6 +370,8 @@
   .card3d .entry.proj .title { font-style: normal; font-weight: 600; color: var(--ink); }
   .card3d .tag.k-event { background: rgba(169, 155, 255, 0.16); color: var(--glow2); }
   .card3d .tag.k-q1 { background: rgba(120, 220, 160, 0.14); color: #8fe3b4; }
+  .card3d .tag.k-core { background: #8fbfff; color: #0b1322; }
+  .card3d .tag.k-core.adj { background: transparent; color: #a3c9ff; box-shadow: inset 0 0 0 1.5px #a3c9ff; }
   .card3d .lect-note { background: rgba(255, 190, 110, 0.1); border-left-color: #ffc983; color: var(--ink); }
   .card3d { --gold: #F2C14E; --silver: #C9D1DA; --bronze: #DB9461; --rb: #5cc4cd; --rb2: #7d6fe0; }
   .card3d ul.awards li { grid-template-columns: 3.3em 22px minmax(0, 1fr); column-gap: 8px; }
@@ -624,7 +629,7 @@
     :root, :root[data-theme] {
       --accent: #174A73; --accent2: #2F6F8F; --text: #000; --muted: #444; --rule: #ccc; --tag: #EAF2F8;
       --bg: #fff; --surface: #fff; --award-bg: #FFF2D4; --award-fg: #855400; --role-bg: #E3F4EA; --role-fg: #1B6A3E;
-      --event-bg: #EEEAFB; --event-fg: #563FA3;
+      --event-bg: #EEEAFB; --event-fg: #563FA3; --core-bg: #1C4C85; --core-fg: #ffffff; --core-line: #1C4C85;
     }
     .topbar, #bg, #stage, .dots, .progress, .scroll-hint, #scroll-space, .hint3d, .story, .act-title,
     .page-head, .pub-tools, .more, .no-results, .site-foot { display: none !important; }
@@ -905,6 +910,7 @@
     <h1>Publications</h1>
     <p>Peer-reviewed articles, papers and chapters. Full record on <a href="https://scholar.google.com/citations?user=79gDe7oAAAAJ&amp;hl=en">Google Scholar</a>.</p>
     <p class="legend"><span class="tag k-q1">Q1</span> Journal ranked in the top quartile of all its subject categories (<a href="https://www.scimagojr.com/">Scimago Journal Rank</a>, 2025).</p>
+    <p class="legend"><span class="tag k-core">CORE A*</span> Venue ranked A*, A or B in the <a href="https://portal.core.edu.au/conf-ranks/">CORE conference ranking</a> (CORE2023). <span class="tag k-core adj">ADJUNCT</span> or <span class="tag k-core adj">COMPANION</span> marks posters, demos and doctoral-consortium papers in that conference's adjunct or companion proceedings.</p>
   </header>
 
   <div class="pub-tools only-classic" role="search">
@@ -913,6 +919,7 @@
       <button type="button" class="chip" data-type="all" aria-pressed="true">All<span class="n"></span></button>
       <button type="button" class="chip" data-type="journal" aria-pressed="false">Journal<span class="n"></span></button>
       <button type="button" class="chip" data-type="q1" aria-pressed="false">Q1 journals<span class="n"></span></button>
+      <button type="button" class="chip" data-type="core" aria-pressed="false">CORE A*/A/B venues<span class="n"></span></button>
       <button type="button" class="chip" data-type="conference" aria-pressed="false">Conference &amp; workshop<span class="n"></span></button>
       <button type="button" class="chip" data-type="book" aria-pressed="false">Books<span class="n"></span></button>
     </div>
@@ -925,12 +932,12 @@
     <ul class="pubs split">
       <li><span class="yr">2026</span> <span class="me">M. Weerasinghe</span>, M. Kljun, N. T. Attygalle, A. Quigley, J. Grubert, V. Biener, J. Yoneyama, H. Kato, and K. Čopič Pucihar. <span class="ti">“ARText: Vocabulary Learning with Personalised and Predefined Keyword-Associations in Augmented Reality.”</span> <i>International Journal of Human-Computer Interaction</i>, in press. <a href="https://doi.org/10.21203/rs.3.rs-6399390/v2">Preprint</a> <span class="tag">IN PRESS</span> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
       <li><span class="yr">2026</span> K. Čopič Pucihar, K. Trajkovska, <span class="me">M. Weerasinghe</span>, A. Waqas, D. A. Parry, D. B. le Roux, and M. Kljun. <span class="ti">“Can Immersion Protect us From Distraction? The Impact of Real-World Distractions on Learning in Augmented Reality.”</span> <i>International Journal of Human-Computer Interaction</i>, online first. DOI: <a href="https://doi.org/10.1080/10447318.2026.2633224">10.1080/10447318.2026.2633224</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
-      <li><span class="yr">2025</span> <span class="me">M. Weerasinghe</span>, S. Macdonald, C. Fiani, J. O'Hagan, M. Chollet, M. McGill, and M. Khamis. <span class="ti">“Beyond Mute and Block: Adoption and Effectiveness of Safety Tools in Social VR, from Ubiquitous Harassment to Social Sculpting.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 31(5), 3275–3284. DOI: <a href="https://doi.org/10.1109/TVCG.2025.3549860">10.1109/TVCG.2025.3549860</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
+      <li><span class="yr">2025</span> <span class="me">M. Weerasinghe</span>, S. Macdonald, C. Fiani, J. O'Hagan, M. Chollet, M. McGill, and M. Khamis. <span class="ti">“Beyond Mute and Block: Adoption and Effectiveness of Safety Tools in Social VR, from Ubiquitous Harassment to Social Sculpting.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 31(5), 3275–3284. DOI: <a href="https://doi.org/10.1109/TVCG.2025.3549860">10.1109/TVCG.2025.3549860</a>. Presented at IEEE VR 2025 (journal track). <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span> <span class="tag k-core" title="IEEE VR is ranked A* in CORE2023. Presented at IEEE VR 2025 in the TVCG journal track.">CORE A*</span></li>
       <li><span class="yr">2025</span> J. A. Deja, S. Štor, I. Pucihar, <span class="me">M. Weerasinghe</span>, R. M. Balbin, K. Čopič Pucihar, and M. Kljun. <span class="ti">“ImproVisAR: Designing Augmented Reality Piano Roll for Teaching Improvisation.”</span> <i>Virtual Reality</i>, 29(3), Article 140. DOI: <a href="https://doi.org/10.1007/s10055-025-01215-z">10.1007/s10055-025-01215-z</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
       <li><span class="yr">2023</span> <span class="me">M. Weerasinghe</span>, K. Čopič Pucihar, J. Ducasse, A. Quigley, A. Toniolo, A. Miguel, N. Caluya, and M. Kljun. <span class="ti">“Exploring the Future Building: Representational Effects on Projecting Oneself into the Future Office Space.”</span> <i>Virtual Reality</i>, 27(1), 51–70. DOI: <a href="https://doi.org/10.1007/s10055-022-00673-z">10.1007/s10055-022-00673-z</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
-      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, A. Quigley, K. Čopič Pucihar, A. Toniolo, A. Miguel, and M. Kljun. <span class="ti">“Arigatō: Effects of Adaptive Guidance on Engagement and Performance in Augmented Reality Learning Environments.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3737–3747. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203088">10.1109/TVCG.2022.3203088</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
-      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, V. Biener, J. Grubert, A. Quigley, A. Toniolo, K. Čopič Pucihar, and M. Kljun. <span class="ti">“VocabulARy: Learning Vocabulary in AR Supported by Keyword Visualisations.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3748–3758. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203116">10.1109/TVCG.2022.3203116</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
-      <li><span class="yr">2022</span> V. Biener, S. Kalamkar, N. Nouri, E. Ofek, M. Pahud, J. J. Dudley, J. Hu, P. O. Kristensson, <span class="me">M. Weerasinghe</span>, K. Čopič Pucihar, M. Kljun, S. Streuber, and J. Grubert. <span class="ti">“Quantifying the Effects of Working in VR for One Week.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3810–3820. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203103">10.1109/TVCG.2022.3203103</a> <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span></li>
+      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, A. Quigley, K. Čopič Pucihar, A. Toniolo, A. Miguel, and M. Kljun. <span class="ti">“Arigatō: Effects of Adaptive Guidance on Engagement and Performance in Augmented Reality Learning Environments.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3737–3747. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203088">10.1109/TVCG.2022.3203088</a>. Presented at IEEE ISMAR 2022 (journal track). <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span> <span class="tag k-core" title="ISMAR is ranked A* in CORE2023. Presented at IEEE ISMAR 2022 in the TVCG journal track.">CORE A*</span></li>
+      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, V. Biener, J. Grubert, A. Quigley, A. Toniolo, K. Čopič Pucihar, and M. Kljun. <span class="ti">“VocabulARy: Learning Vocabulary in AR Supported by Keyword Visualisations.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3748–3758. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203116">10.1109/TVCG.2022.3203116</a>. Presented at IEEE ISMAR 2022 (journal track). <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span> <span class="tag k-core" title="ISMAR is ranked A* in CORE2023. Presented at IEEE ISMAR 2022 in the TVCG journal track.">CORE A*</span></li>
+      <li><span class="yr">2022</span> V. Biener, S. Kalamkar, N. Nouri, E. Ofek, M. Pahud, J. J. Dudley, J. Hu, P. O. Kristensson, <span class="me">M. Weerasinghe</span>, K. Čopič Pucihar, M. Kljun, S. Streuber, and J. Grubert. <span class="ti">“Quantifying the Effects of Working in VR for One Week.”</span> <i>IEEE Transactions on Visualization and Computer Graphics</i>, 28(11), 3810–3820. DOI: <a href="https://doi.org/10.1109/TVCG.2022.3203103">10.1109/TVCG.2022.3203103</a>. Presented at IEEE ISMAR 2022 (journal track). <span class="tag k-q1" title="Top-quartile (Q1) journal in all its subject categories, Scimago Journal Rank 2025">Q1</span> <span class="tag k-core" title="ISMAR is ranked A* in CORE2023. Presented at IEEE ISMAR 2022 in the TVCG journal track.">CORE A*</span></li>
       <li><span class="yr">2020</span> S. S. Vithanage, M. S. Ratnadiwakara, D. Sandaruwan, S. Arunathileka, <span class="me">M. Weerasinghe</span>, and C. Ranasinghe. <span class="ti">“Identifying Muscle Strength Imbalances in Athletes using Motion Analysis Incorporated with Sensory Inputs.”</span> <i>International Journal of Advanced Computer Science and Applications</i>, 11(4). DOI: <a href="https://doi.org/10.14569/IJACSA.2020.01104105">10.14569/IJACSA.2020.01104105</a></li>
       <li><span class="yr">2018</span> S. Vithanage, M. Ratnadiwakara, D. Sandaruwan, S. M. K. D. Arunathileka, <span class="me">M. Weerasinghe</span>, and C. Ranasinghe. <span class="ti">“A Novel Approach to Detect Muscle Strength Imbalances via Motion Analysis Using Sensory Inputs.”</span> <i>European Journal of Computer Science and Information Technology</i>, 6(5), 37–50.</li>
       <li><span class="yr">2018</span> H. Tennakoon, C. Paranamana, <span class="me">M. Weerasinghe</span>, D. Sandaruwan, and K. Mahindarathne. <span class="ti">“A Novel Musculoskeletal Imbalance Identification Mechanism for Lower Body Analyzing Gait Cycle by Motion Tracking.”</span> <i>International Journal of Information Technology and Computer Science</i>, 10(3), 27–34. DOI: <a href="https://doi.org/10.5815/ijitcs.2018.03.04">10.5815/ijitcs.2018.03.04</a></li>
@@ -948,22 +955,24 @@
     <ul class="pubs split">
       <li><span class="yr">2026</span> J. A. Deja, F. J. Hidalgo, R. M. Sarmiento, J. L. Miranda, E. Ducut, M. D. Gamboa, S. Štor, I. Butaslac III, N. R. Caluya, and <span class="me">M. Weerasinghe</span>. <span class="ti">“MetaMelodies as a Portable Piano Improvisation Learning Space.”</span> <i>ACM Interactive Surfaces and Spaces (ISS 2026)</i>, demo. <span class="tag">ACCEPTED</span></li>
       <li><span class="yr">2026</span> R. M. Sarmiento, J. L. Miranda, E. Ducut, F. J. Hidalgo, S. Štor, <span class="me">M. Weerasinghe</span>, and J. A. Deja. <span class="ti">“Same Lessons, Different Pathways: Exploring HMD-Based Guidance for Jazz Piano Improvisation.”</span> <i>ACM Interactive Surfaces and Spaces (ISS 2026)</i>, poster. <span class="tag">ACCEPTED</span></li>
-      <li><span class="yr">2026</span> R. Rodrigo, D. Sandaruwan, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Moving the Bottleneck: Performance Trade-offs of WebAssembly and WebGPU in WebXR.”</span> <i>ACM Symposium on Virtual Reality Software and Technology (VRST 2026)</i>. Full paper. <span class="tag">ACCEPTED</span></li>
+      <li><span class="yr">2026</span> R. Rodrigo, D. Sandaruwan, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Moving the Bottleneck: Performance Trade-offs of WebAssembly and WebGPU in WebXR.”</span> <i>ACM Symposium on Virtual Reality Software and Technology (VRST 2026)</i>. Full paper. <span class="tag">ACCEPTED</span> <span class="tag k-core" title="VRST is ranked A in CORE2023.">CORE A</span></li>
       <li><span class="yr">2026</span> J. A. Deja, I. Butaslac III, N. R. Caluya, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Directing the Robot: Scaffolding Creative Human-AI-Robot Interaction.”</span> <i>3rd InterAI Workshop at ACM CHI 2026</i>.</li>
-      <li><span class="yr">2026</span> K. Trajkovska, M. Kljun, <span class="me">M. Weerasinghe</span>, and K. Čopič Pucihar. <span class="ti">“Personalised 3D Mnemonics for Vocabulary Learning in Context.”</span> <i>IEEE International Symposium on Mixed and Augmented Reality (ISMAR 2026)</i>, poster.</li>
-      <li><span class="yr">2026</span> K. Trajkovska, M. Kljun, <span class="me">M. Weerasinghe</span>, and K. Čopič Pucihar. <span class="ti">“VocabulARy 2.0.”</span> <i>IEEE International Symposium on Mixed and Augmented Reality (ISMAR 2026)</i>, demo.</li>
-      <li><span class="yr">2025</span> N. T. Attygalle, M. Kljun, A. Quigley, K. Čopič Pucihar, J. Grubert, V. Biener, L. A. Leiva, J. Yoneyama, A. Toniolo, A. Miguel, H. Kato, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Text-to-Image Generation for Vocabulary Learning Using the Keyword Method.”</span> <i>ACM IUI 2025</i>, 1381–1397. <span class="tag k-award">BEST PAPER</span></li>
+      <li><span class="yr">2026</span> K. Trajkovska, M. Kljun, <span class="me">M. Weerasinghe</span>, and K. Čopič Pucihar. <span class="ti">“Personalised 3D Mnemonics for Vocabulary Learning in Context.”</span> <i>IEEE International Symposium on Mixed and Augmented Reality (ISMAR 2026)</i>, poster. <span class="tag k-core adj" title="ISMAR is ranked A* in CORE2023. This paper appeared in its adjunct proceedings, not the main track.">CORE A* · ADJUNCT</span></li>
+      <li><span class="yr">2026</span> K. Trajkovska, M. Kljun, <span class="me">M. Weerasinghe</span>, and K. Čopič Pucihar. <span class="ti">“VocabulARy 2.0.”</span> <i>IEEE International Symposium on Mixed and Augmented Reality (ISMAR 2026)</i>, demo. <span class="tag k-core adj" title="ISMAR is ranked A* in CORE2023. This paper appeared in its adjunct proceedings, not the main track.">CORE A* · ADJUNCT</span></li>
+      <li><span class="yr">2025</span> N. T. Attygalle, M. Kljun, A. Quigley, K. Čopič Pucihar, J. Grubert, V. Biener, L. A. Leiva, J. Yoneyama, A. Toniolo, A. Miguel, H. Kato, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Text-to-Image Generation for Vocabulary Learning Using the Keyword Method.”</span> <i>ACM IUI 2025</i>, 1381–1397. <span class="tag k-award">BEST PAPER</span> <span class="tag k-core" title="IUI is ranked A in CORE2023.">CORE A</span></li>
       <li><span class="yr">2024</span> <span class="me">M. Weerasinghe</span>, M. Kljun, and K. Čopič Pucihar. <span class="ti">“A Cross-Device Interaction with the Smartphone and HMD for Vocabulary Learning.”</span> <i>EICS 2024 International Workshops</i>, LNCS 15518, 269–282.</li>
       <li><span class="yr">2024</span> <span class="me">M. Weerasinghe</span>, L. Ribič, M. Kljun, K. Čopič Pucihar, and I. Devetak. <span class="ti">“Augmented Reality Training System Fusing the Triple Nature of Chemical Concepts.”</span> <i>HCI Slovenia 2024</i>, 64–70.</li>
-      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, V. Biener, J. Grubert, J. A. Deja, N. T. Attygalle, K. Trajkovska, M. Kljun, and K. Čopič Pucihar. <span class="ti">“VocabulARy Replicated: Comparing Teenagers to Young Adults.”</span> <i>IEEE ISMAR 2022 Adjunct</i>, 283–285.</li>
-      <li><span class="yr">2021</span> <span class="me">M. Weerasinghe</span>. <span class="ti">“Instructional Guidance in Extended Reality for Learning.”</span> <i>ACM MobileHCI 2021 Adjunct</i>.</li>
+      <li><span class="yr">2022</span> <span class="me">M. Weerasinghe</span>, V. Biener, J. Grubert, J. A. Deja, N. T. Attygalle, K. Trajkovska, M. Kljun, and K. Čopič Pucihar. <span class="ti">“VocabulARy Replicated: Comparing Teenagers to Young Adults.”</span> <i>IEEE ISMAR 2022 Adjunct</i>, 283–285. <span class="tag k-core adj" title="ISMAR is ranked A* in CORE2023. This paper appeared in its adjunct proceedings, not the main track.">CORE A* · ADJUNCT</span></li>
+      <li><span class="yr">2022</span> N. Kovačević, <span class="me">M. Weerasinghe</span>, and J. A. Deja. <span class="ti">“Retzzles: Engaging Users towards Retention through Touchscreen Puzzles.”</span> <i>ACM ISS 2022 Companion</i>, poster, 14–17. DOI: <a href="https://doi.org/10.1145/3532104.3571531">10.1145/3532104.3571531</a></li>
+      <li><span class="yr">2021</span> <span class="me">M. Weerasinghe</span>. <span class="ti">“Instructional Guidance in Extended Reality for Learning.”</span> <i>ACM MobileHCI 2021 Adjunct</i>. <span class="tag k-core adj" title="MobileHCI is ranked B in CORE2023. This paper appeared in its adjunct proceedings, not the main track.">CORE B · ADJUNCT</span></li>
       <li><span class="yr">2021</span> <span class="me">M. Weerasinghe</span>, M. Kljun, K. Čopič Pucihar, and P. Coulton. <span class="ti">“Playing with the Artworks: A Personalised Artwork Experience.”</span> <i>HCI Slovenia 2021</i>, 74–79.</li>
-      <li><span class="yr">2019</span> M. Kljun, K. Čopič Pucihar, J. M. Alexander, <span class="me">M. Weerasinghe</span>, C. Campos, J. Ducasse, B. Kopačin, J. Grubert, P. Coulton, and M. Čelar. <span class="ti">“Augmentation not Duplication: Considerations for the Design of Digitally-Augmented Comic Books.”</span> <i>ACM CHI 2019</i>, 1–12.</li>
+      <li><span class="yr">2019</span> M. Kljun, K. Čopič Pucihar, J. M. Alexander, <span class="me">M. Weerasinghe</span>, C. Campos, J. Ducasse, B. Kopačin, J. Grubert, P. Coulton, and M. Čelar. <span class="ti">“Augmentation not Duplication: Considerations for the Design of Digitally-Augmented Comic Books.”</span> <i>ACM CHI 2019</i>, 1–12. <span class="tag k-core" title="CHI is ranked A* in CORE2023.">CORE A*</span></li>
       <li><span class="yr">2019</span> <span class="me">M. Weerasinghe</span>, N. T. Attygalle, and J. Ducasse. <span class="ti">“Virtual Reality and Neurocognitive Intervention: Rehabilitation Approaches towards Assisting Autistic Children with Cognitive Deficit.”</span> <i>HCI-IS 2019</i>.</li>
       <li><span class="yr">2018</span> <span class="me">M. Weerasinghe</span>, M. Kljun, K. Čopič Pucihar, and A. Quigley. <span class="ti">“Novel Technologies in Teaching and Learning towards Enhanced Knowledge Retention.”</span> <i>ACM womENcourage 2018</i>.</li>
       <li><span class="yr">2018</span> <span class="me">M. Weerasinghe</span>, et al. <span class="ti">“An Active Video Game Based Lower-Limb Rehabilitation Approach to Assist Children with Cerebral Palsy.”</span> <i>ACM womENcourage 2018</i>.</li>
       <li><span class="yr">2016</span> <span class="me">M. Weerasinghe</span>, G. K. A. Dias, A. Dharmaratne, D. Sandaruwan, A. Nisansala, C. Keppitiyagama, and N. Kodikara. <span class="ti">“Computer Aid Assessment of Muscular Imbalance for Preventing Overuse Injuries in Athletes.”</span> <i>ACM ICCIP 2016</i>, 244–248.</li>
-      <li><span class="yr">2016</span> <span class="me">M. Weerasinghe</span>, A. Nisansala, D. Sandaruwan, N. Kodikara, C. Keppitiyagama, K. Dias, et al. <span class="ti">“Virtual Eye: A Smarter Mode of Interaction to Virtual Tours.”</span> <i>ACM MobiSys 2016 Companion</i>, poster.</li>
+      <li><span class="yr">2016</span> <span class="me">M. Weerasinghe</span>, A. Nisansala, D. Sandaruwan, N. Kodikara, C. Keppitiyagama, K. Dias, et al. <span class="ti">“Virtual Eye: A Smarter Mode of Interaction to Virtual Tours.”</span> <i>ACM MobiSys 2016 Companion</i>, poster. <span class="tag k-core adj" title="MobiSys is ranked A in CORE2023. This paper appeared in its companion proceedings, not the main track.">CORE A · COMPANION</span></li>
+      <li><span class="yr">2015</span> N. Harischandra, N. Kodikara, D. Sandaruwan, G. K. A. Dias, and <span class="me">M. Weerasinghe</span>. <span class="ti">“Real-Time Simulation of Aero-optical Distortions Due to Air Density Fluctuations at Supersonic Speed.”</span> <i>ICONIP 2015 (Neural Information Processing)</i>, LNCS, 653–662. DOI: <a href="https://doi.org/10.1007/978-3-319-26555-1_74">10.1007/978-3-319-26555-1_74</a> <span class="tag k-core" title="ICONIP is ranked B in CORE2023.">CORE B</span></li>
       <li><span class="yr">2013</span> <span class="me">M. Weerasinghe</span>, D. Sandaruwan, C. Keppitiyagama, and N. Kodikara. <span class="ti">“A Novel Approach to Simulate Wind-Driven Ocean Waves in the Deep Ocean.”</span> <i>IEEE ICTer 2013</i>.</li>
     </ul>
   </section>
@@ -999,7 +1008,7 @@
       <div class="entry"><span class="org">University of Primorska, FAMNIT</span><span class="date">2018,2023</span><span class="title">Teaching Assistant — Computer Practicum II (Web Development)</span><span class="loc">BSc Computer Science</span></div>
       <div class="entry"><span class="org">University of Primorska, FAMNIT</span><span class="date">2019–2020</span><span class="title">Teaching Assistant — Computer Practicum I (Bash and C)</span><span class="loc">BSc Computer Science</span></div>
       <div class="entry"><span class="org">University of Colombo School of Computing</span><span class="date">2015</span><span class="title">Teaching Assistant — Virtual Reality and Simulations</span><span class="loc">Master of IT</span></div>
-      <div class="entry lect"><span class="org">Department of History and Archaeology, University of Colombo</span><span class="date">2014</span><span class="title">Visiting Lecturer — Modelling and Simulation Workshop</span><span class="loc">Colombo, Sri Lanka</span></div>
+      <!-- <div class="entry lect"><span class="org">Department of History and Archaeology, University of Colombo</span><span class="date">2014</span><span class="title">Visiting Lecturer — Modelling and Simulation Workshop</span><span class="loc">Colombo, Sri Lanka</span></div> -->
     </div>
   </section>
 
@@ -2701,11 +2710,11 @@
   pubSecs.forEach(function (sec) {
     Array.prototype.forEach.call(sec.querySelectorAll('ul.pubs > li'), function (li) {
       var y = li.querySelector('.yr');
-      pubs.push({ li: li, sec: sec, type: sec.getAttribute('data-pubtype'), q1: !!li.querySelector('.k-q1'),
+      pubs.push({ li: li, sec: sec, type: sec.getAttribute('data-pubtype'), q1: !!li.querySelector('.k-q1'), core: !!li.querySelector('.k-core'),
                   year: y ? y.textContent.trim() : '', text: fold(li.textContent) });
     });
   });
-  function matchType(p, t) { return t === 'all' || (t === 'q1' ? p.q1 : p.type === t); }
+  function matchType(p, t) { return t === 'all' || (t === 'q1' ? p.q1 : t === 'core' ? p.core : p.type === t); }
   function filterPubs() {
     var terms = fold(pubQ.value.trim()).split(/\s+/).filter(Boolean), y = pubYear.value, shown = 0, perSec = [];
     pubs.forEach(function (p) {
