@@ -779,7 +779,9 @@
 
   <section data-card data-label="Profile">
     <h2>Academic Profile</h2>
-    <p>I believe systems should not think for us, but with us. My research is guided by a simple ambition: that the support technology offers us today can become a capability we carry with us tomorrow. At the intersection of people, computers and human experience, I explore <strong>Cognitive, Affective and Agentic Incorporation as an XR Design Space</strong>: designing around how we perceive and remember (cognition), how we feel (emotion), and what we can choose and control (agency). Extended reality can <strong>reach the mind through many routes at once</strong>: sight, sound, movement, touch, emotion, place, and the blend of real and virtual. I combine it with AI, psychology and biosensing to create adaptive systems that respond to each person’s needs. When something is learned through several routes, it does not have to rest on a single path; if one weakens, through ageing, a neurocognitive condition, stress or distraction, another can still lead the way back. Across skill learning, attention and neurocognitive support, I keep returning to one question: how can adaptive XR strengthen human capabilities rather than replace them?</p>
+    <p>I believe intelligent systems should not think for us, but with us. My research is guided by a simple ambition: that the support technology offers us today can become a capability we carry with us tomorrow.</p>
+    <p>At the intersection of humans, computers and their interactions, I explore <strong>Cognitive, Affective and Agentic</strong> Incorporation as an <strong>XR Design Space</strong>: designing around how we perceive and remember (cognition), how we feel (emotion), and what we can choose and control (agency). Because XR blends the real and the virtual, it can <strong>engage several routes into memory at once</strong>: what we imagine, what we see, hear and touch, how we move, what we feel, and where we are. When something is learned through several of these routes, it does not have to depend on a single path; if one route weakens, through ageing, a neurocognitive condition, stress or distraction, another can still lead the way back.</p>
+    <p>To build these routes around each person, I combine XR with AI and biosensing, grounded in psychology and theories of human memory, creating adaptive systems that respond to individual needs. Across skill learning, attention and neurocognitive support, I keep returning to one question: how can adaptive XR strengthen human capabilities rather than replace them?</p>
     <ul class="areas">
       <li>Cognitive Augmentation</li>
       <li>Affective Engagement</li>
@@ -1149,6 +1151,7 @@
   var prog = 0, progTarget = 0, mouse = { x: 0, y: 0, tx: 0, ty: 0 };
   var lastBuildW = 0, lastBuildH = 0;
   var brain = null, heroRight = [1, 0, 0], heroD = 1;
+  var outro = null, outroW = 0;   // the closing view: back outside, the whole brain, with nothing in front of it
 
   /* ---------------- 4x4 matrix helpers (column-major) ---------------- */
   function ident() { return [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1]; }
@@ -1354,25 +1357,32 @@
     c0.pos = pos0; c0.look = look; c0.th = th0; c0.n = [Math.sin(th0), 0, Math.cos(th0)]; c0.cam = C0;
     c0.B = mul(mul(mul(trans(pos0[0], pos0[1], pos0[2]), rotY(th0)), FLIP), scaleM(k0));
 
-    space.style.height = ((N - 1) * 95 + 100) + 'vh';
+    // the closing view: outside again, the whole brain from the side, centred, with room for labels around it
+    var dirO = norm([-1, 0.16, 0.06]);
+    var DO = Math.max(focal * 2.05 * brain.rz / ((mobile ? 0.88 : 0.5) * W), focal * 2.2 * brain.ry / ((mobile ? 0.42 : 0.6) * H));
+    outro = N > 2 ? { cam: add(brain.c, scl(dirO, DO)), look: brain.c.slice() } : null;
+    space.style.height = ((stopCount() - 1) * 95 + 100) + 'vh';
     sizeCanvas();
     buildScene();
   }
 
+  // camera stops: one per card, then the closing view
+  function stopCount() { return cards.length + (outro ? 1 : 0); }
+  function stopLook(k) { return k < cards.length ? cards[k].look : outro.look; }
   function camAt(p) {
-    var N = cards.length;
+    var N = stopCount();
     if (N < 2) return { eye: cards[0].cam, target: cards[0].look, s: 0 };
     var s = clamp(p, 0, 1) * (N - 1);
     var i = Math.min(Math.floor(s), N - 2);
     var t = smooth(0.24, 0.76, s - i);
-    var C = function (k) { return cards[k].cam; };
+    var C = function (k) { return k < cards.length ? cards[k].cam : outro.cam; };
     var p1 = C(i), p2 = C(i + 1);
     var p0 = i > 0 ? C(i - 1) : [2 * p1[0] - p2[0], 2 * p1[1] - p2[1], 2 * p1[2] - p2[2]];
     var p3 = i + 2 < N ? C(i + 2) : [2 * p2[0] - p1[0], 2 * p2[1] - p1[1], 2 * p2[2] - p1[2]];
     if (i === 0) p0 = p1; // the dive from outside: no overshoot
     var eye = catmull(p0, p1, p2, p3, t);
     if (i > 0) eye[1] += Math.sin(t * Math.PI) * 120;
-    var target = lerp3(cards[i].look, cards[i + 1].look, t);
+    var target = lerp3(stopLook(i), stopLook(i + 1), t);
     return { eye: eye, target: target, s: i + t };
   }
 
@@ -1399,6 +1409,15 @@
     { name: 'EMOTION', sub: 'feel · value · connect', col: '240,130,165' },
     { name: 'AGENCY', sub: 'choose · act · control', col: '64,214,170' }];
   var dimAnchors = [], dimHalos = [];
+  // routes into memory (chapter 13 and the closing view), in the order the story uses
+  var CONCEPTS = [
+    { name: 'SEE · HEAR · TOUCH', area: 'sensory cortex', why: 'several senses at once improve memory', col: '110,170,255' },
+    { name: 'MOVE', area: 'motor cortex', why: 'doing it yourself helps you remember', col: '120,235,200' },
+    { name: 'FEEL', area: 'amygdala', why: 'emotion strengthens what gets stored', col: '255,112,160' },
+    { name: 'PLACE', area: 'parietal cortex', why: 'context acts as a reminder when you recall', col: '255,200,90' },
+    { name: 'IMAGINE', area: 'prefrontal cortex', why: 'vivid mental images help memories stick', col: '214,240,120' }];
+  var RT_CONCEPT = [-1, 0, 0, 0, 1, 3, 4];   // cortex region -> route: visual, auditory, touch -> senses; motor; parietal -> place; prefrontal -> imagine
+  var outRoutes = [], routeStarts = [], hipPts = null, hubPt = null, amyPt = null;
 
   function nodeSet() { return { p: [], col: [], size: [], edges: [], adj: [] }; }
   function link(set, maxNeighbours, maxDist) {
@@ -1549,6 +1568,36 @@
       dimAnchors.push(add(b.c, scl(sub(cl, b.c), 1.12)));       // just outside the left hemisphere, which faces the camera
       dimHalos.push([cl, cr]);
     }
+
+    // routes into memory (simplified anatomy, on the hemisphere that faces the closing camera):
+    // visual, auditory and touch cortex = senses; motor cortex = move; parietal cortex = place; prefrontal cortex = imagine;
+    // amygdala = feel and hippocampus = memory, deep in the temporal lobe
+    shell.rte = new Uint8Array(shell.p.length);
+    var racc = [];
+    for (var ra = 0; ra <= 6; ra++) racc.push([0, 0, 0, 0]);
+    for (var rj = 0; rj < shell.p.length; rj++) {
+      var qq = shell.p[rj], mx = (qq[0] - b.c[0]) / b.rx, my = (qq[1] - b.c[1]) / b.ry, mz = (qq[2] - b.c[2]) / b.rz, rt = 0;
+      var zc = 0.02 + 0.3 * (0.98 - my) / 0.85;                                                   // the central sulcus
+      if (my < -0.35 && mz < -0.4) rt = 0;                                                          // cerebellum and stem
+      else if (mz < -0.64 && my > -0.3 && my < 0.5) rt = 1;                                         // occipital lobe: visual cortex
+      else if (Math.abs(mx) > 0.55 && my > -0.42 && my < -0.04 && mz > -0.34 && mz < 0.2) rt = 2;  // superior temporal: auditory cortex
+      else if (my > 0.12 && mz > zc - 0.2 && mz <= zc) rt = 3;                                      // postcentral gyrus: touch
+      else if (my > 0.12 && mz > zc && mz < zc + 0.22) rt = 4;                                      // precentral gyrus: movement
+      else if (my > 0.35 && mz > -0.64 && mz <= zc - 0.2) rt = 5;                                   // parietal lobe: place
+      else if (mz > 0.5 && my > -0.25) rt = 6;                                                      // prefrontal cortex: imagination
+      shell.rte[rj] = rt;
+      if (rt && mx < 0) { racc[rt][0] += qq[0]; racc[rt][1] += qq[1]; racc[rt][2] += qq[2]; racc[rt][3]++; }
+    }
+    var A3 = function (x, y, z) { return [b.c[0] + x * b.rx, b.c[1] + y * b.ry, b.c[2] + z * b.rz]; };
+    var rcen = function (k) { var a = racc[k]; return a[3] ? [a[0] / a[3], a[1] / a[3], a[2] / a[3]] : b.c; };
+    hipPts = bez(A3(-0.36, -0.38, 0.14), A3(-0.42, -0.32, -0.14), A3(-0.22, -0.1, -0.42), 24);   // hippocampus: head to tail
+    hubPt = along(hipPts, 0.35);
+    amyPt = A3(-0.35, -0.42, 0.27);                                                               // amygdala, just in front of it
+    var toHub = function (S) { var m = scl(add(S, hubPt), 0.5); return bez(S, add(b.c, scl(sub(m, b.c), 0.75)), hubPt, 28); };
+    routeStarts = [[rcen(1), rcen(2), rcen(3)], [rcen(4)], [amyPt], [rcen(5)], [rcen(6)]];
+    outRoutes = routeStarts.map(function (list, ci) {
+      return list.map(function (S) { return ci === 2 ? bez(S, add(scl(add(S, hubPt), 0.5), [0, 0.14 * b.ry, 0]), hubPt, 16) : toHub(S); });
+    });
 
     // neurons along the flight path, connected by synapses
     inner = nodeSet();
@@ -1718,6 +1767,7 @@
     // cortex
     for (i = 0; i < shell.p.length; i++) project(shell.p[i], projShell, i * 4);
     var shellLine = 0.5;
+    var w13 = ROUTE_K >= 0 ? storyWeight(ROUTE_K, s) * (1 - outroW) : 0, tintR = Math.max(outroW, 0.8 * w13), failC = Math.floor(time / 3.4) % 5;
     var heroW = 1 - smooth(0.05, 0.75, s), dimI = [0, 0, 0, 0];
     if (heroW > 0.01) {
       var dc = (time / 2.6) % 3, da = Math.floor(dc), dp = dc - da;
@@ -1727,7 +1777,13 @@
       var e0 = shell.edges[i][0], ea = e0 * 4, eb = shell.edges[i][1] * 4, rg0 = shell.reg[e0];
       if (projShell[ea + 3] < 0 || projShell[eb + 3] < 0) continue;
       var fd = fog(Math.max(projShell[ea + 3], projShell[eb + 3]));
-      if (rg0 && dimI[rg0] > 0.01) seg(DIMS[rg0].col, Math.min(1, shellLine + 0.5 * dimI[rg0]) * fd, projShell[ea], projShell[ea + 1], projShell[eb], projShell[eb + 1]);
+      var rt0 = tintR > 0.15 ? shell.rte[e0] : 0;
+      if (rt0) {
+        var cc0 = RT_CONCEPT[rt0], fl0 = cc0 === failC;
+        seg(fl0 ? RED : CONCEPTS[cc0].col, Math.min(1, shellLine + (fl0 ? 0.05 : 0.5) * tintR) * fd * (fl0 ? 0.5 + 0.3 * Math.sin(time * 9 + i) : 1),
+            projShell[ea], projShell[ea + 1], projShell[eb], projShell[eb + 1]);
+      }
+      else if (rg0 && dimI[rg0] > 0.01) seg(DIMS[rg0].col, Math.min(1, shellLine + 0.5 * dimI[rg0]) * fd, projShell[ea], projShell[ea + 1], projShell[eb], projShell[eb + 1]);
       else seg(shell.col[e0], shellLine * fd, projShell[ea], projShell[ea + 1], projShell[eb], projShell[eb + 1]);
     }
     // synapses near the path (brighten with capability)
@@ -1755,7 +1811,13 @@
     // neurons
     for (i = 0; i < shell.p.length; i++) {
       o = i * 4; if (projShell[o + 3] < 0 || !shell.size[i]) continue;
-      var rg1 = shell.reg[i], di = rg1 ? dimI[rg1] : 0;
+      var rg1 = shell.reg[i], di = rg1 ? dimI[rg1] : 0, rt1 = tintR > 0.15 ? shell.rte[i] : 0;
+      if (rt1) {
+        var cc1 = RT_CONCEPT[rt1], fl1 = cc1 === failC;
+        dot2(fl1 ? RED : CONCEPTS[cc1].col, projShell[o], projShell[o + 1],
+             clamp(shell.size[i] * projShell[o + 2] * (1 + 0.7 * tintR), 1.5, 20) * dpr, (fl1 ? 0.55 : 1) * fog(projShell[o + 3]));
+        continue;
+      }
       dot2(di > 0.01 ? DIMS[rg1].col : shell.col[i], projShell[o], projShell[o + 1],
            clamp(shell.size[i] * projShell[o + 2] * (1 + 0.8 * di), 1.5, 18) * dpr, Math.min(1, 0.8 + 0.2 * di) * fog(projShell[o + 3]));
     }
@@ -1763,6 +1825,10 @@
     if (heroW > 0.01) for (var dh = 1; dh <= 3; dh++) for (var hs = 0; hs < 2; hs++) {
       if (!project(dimHalos[dh][hs], tmpA, 0)) continue;
       dot2(DIMS[dh].col, tmpA[0], tmpA[1], clamp(brain.rz * 0.75 * tmpA[2], 30, 520) * dpr, (0.06 + 0.22 * dimI[dh]) * (hs ? 0.6 : 1));
+    }
+    if (tintR > 0.05) for (var gc = 0; gc < routeStarts.length; gc++) for (var gs = 0; gs < routeStarts[gc].length; gs++) {
+      if (!project(routeStarts[gc][gs], tmpA, 0)) continue;     // a soft glow over each route region
+      dot2(gc === failC ? RED : CONCEPTS[gc].col, tmpA[0], tmpA[1], clamp(brain.rz * 0.42 * tmpA[2], 20, 300) * dpr, (0.05 + 0.2 * tintR) * (gc === failC ? 0.5 : 1));
     }
     for (i = 0; i < inner.p.length; i++) {
       o = i * 4; if (projInner[o + 3] < 0) continue;
@@ -1818,11 +1884,13 @@
       dot2(WHITE, tmpA[0], tmpA[1], clamp(120 * tmpA[2], 2, 20) * dpr, on * interior * quiet * fog(tmpA[3]));
     }
 
+    drawOutro(time, lw);
     drawStory(time, s, lw);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
     drawStoryLabels();
     drawDimLabels(heroW, dimI);
+    drawOutroLabels(time);
   }
 
   // perturbation cycle: the two routes are disrupted in turn; the memory stays reachable through the other one
@@ -1879,8 +1947,8 @@
     { part: 2, col: AGC, short: 'Shared control', title: 'You stay in control', where: 'Shared agency · human, shared, AI',
       text: 'AI suggests, XR shows the options in place, and the person decides. Control is shared, never taken.',
       lab: 'Design question', xr: 'Who initiates, who approves, who controls? Human agency becomes something to measure and design.' },
-    { part: 2, col: TOUCH, short: 'Many routes', title: 'One memory, many ways back', where: 'Multisensory encoding · sight, sound, movement, touch, emotion, place',
-      text: 'XR reaches the mind through many routes at once, blending the real and the virtual. If one route weakens, through ageing, stress or distraction, another can still lead back.',
+    { part: 2, col: TOUCH, short: 'Many routes', title: 'One memory, many ways back', where: 'Encoding through the senses, movement, emotion, imagination and place',
+      text: 'Blending the real and the virtual, XR can engage several routes into memory at once. If one route weakens, through ageing, stress or distraction, another can still lead back.',
       lab: 'My approach', xr: 'Build several routes from the start, so recall does not depend on just one.' },
     { part: 2, col: SUPPORT, short: 'Support in the moment', title: 'Help exactly when it is needed', where: 'XR scaffold · AI + biosensing',
       text: 'Where a pathway is weak, XR bridges the gap with timely, personal cues, so the signal still gets through.',
@@ -1889,6 +1957,7 @@
       text: 'The aim: support in the moment that builds skills and agency over time, until the scaffold can fade. For progressive conditions, it means staying independent for longer.',
       lab: 'The goal', xr: '“The support technology offers us today can become a capability we carry with us tomorrow.”' }
   ];
+  var ROUTE_K = (function () { for (var k = 0; k < STORY.length; k++) if (STORY[k].short === 'Many routes') return k; return -1; })();
   var STORY_S0 = 1.6, storyItems = [];
   function storyLen() { return Math.max(0.6, (cards.length - 1 - STORY_S0) / STORY.length); }
   function storySeg(k) { var L = storyLen(); return [STORY_S0 + k * L, STORY_S0 + (k + 1) * L]; }
@@ -1897,6 +1966,7 @@
     return k === STORY.length - 1 ? up : up * (1 - smooth(g[1] - 0.15, g[1] + 0.65, s));
   }
   function storyChapter(s) {
+    if (outro && s > cards.length - 1 + 0.3) return -3;      // -3: the closing view, no caption
     if (s < STORY_S0 - 0.15) return s < 0.45 ? -2 : -1;     // -2: outside the brain, -1: intro
     return clamp(Math.floor((s - STORY_S0) / storyLen()), 0, STORY.length - 1);
   }
@@ -1948,7 +2018,7 @@
   function storyFrame(k) {
     var g = storySeg(k), last = k === STORY.length - 1, N = cards.length;
     var sm = last ? g[0] + 0.75 * (g[1] - g[0]) : (g[0] + g[1]) / 2;
-    var cam = camAt(clamp(sm / (N - 1), 0, 1)), d = norm(sub(cam.target, cam.eye));
+    var cam = camAt(clamp(sm / (stopCount() - 1), 0, 1)), d = norm(sub(cam.target, cam.eye));
     var back = scl(d, -1), right = norm(cross([0, 1, 0], back)), up = cross(back, right);
     return { c: add(cam.eye, scl(d, 4200)), r: right, u: up, b: back };
   }
@@ -2247,9 +2317,9 @@
     // 13. many routes to one memory: XR encodes through several senses at once; when one route fails, the others still get through
     fr = storyFrame(12); it = storyItem(12, TOUCH);
     var mrMem = P(fr, X * 0.8, YD * 0.9, 0);
-    var mrSrc = [[SENS, 'SIGHT', P(fr, X * 0.72, YU * 1.0, 200)], [HEAR, 'SOUND', P(fr, X * 1.02, YU * 1.06, -200)],
-                 [TOUCH, 'MOVEMENT · TOUCH', P(fr, X * 1.2, YU * 0.55, -300)], [ROSE, 'EMOTION', P(fr, X * 1.24, (YU + YD) * 0.05, -100)],
-                 [GOLD, 'PLACE', P(fr, X * 1.15, YD * 0.55, 200), 'real + virtual']];
+    var mrSrc = [[SENS, 'SEE · HEAR · TOUCH', P(fr, X * 0.75, YU * 1.08, 200)], [TOUCH, 'MOVE', P(fr, X * 1.1, YU * 0.78, -200)],
+                 [ROSE, 'FEEL', P(fr, X * 1.26, YU * 0.34, -300)], [GOLD, 'PLACE', P(fr, X * 1.26, YD * 0.12, -100), 'real + virtual'],
+                 [SAL, 'IMAGINE', P(fr, X * 1.12, YD * 0.62, 200)]];
     blob(it, mrMem, 430, 20, LTMC);
     var mrRoutes = mrSrc.map(function (sr, ri) {
       blob(it, sr[2], 210, 8, sr[0]);
@@ -2306,7 +2376,7 @@
 
   function drawStory(time, s, lw) {
     var i, j, q, it, w;
-    for (i = 0; i < storyItems.length; i++) storyItems[i].w = storyWeight(storyItems[i].k, s);
+    for (i = 0; i < storyItems.length; i++) storyItems[i].w = storyWeight(storyItems[i].k, s) * (1 - outroW);
     // halos
     for (i = 0; i < storyItems.length; i++) {
       it = storyItems[i]; w = it.w;
@@ -2409,7 +2479,7 @@
     b.style.setProperty('--c', 'rgb(' + ch.col + ')');
     b.addEventListener('click', function () {
       var max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-      window.scrollTo({ top: max * clamp((storySeg(k)[0] + 0.45) / Math.max(1, cards.length - 1), 0, 1), behavior: 'smooth' });
+      window.scrollTo({ top: max * clamp((storySeg(k)[0] + 0.45) / Math.max(1, stopCount() - 1), 0, 1), behavior: 'smooth' });
     });
     li.appendChild(b); stSteps.appendChild(li);
   });
@@ -2462,6 +2532,7 @@
   function updateStory(s) {
     var k = storyChapter(s);
     if (k === storyShown) return;
+    if (k === -3) { storyShown = k; storyEl.classList.remove('show'); return; }
     if (k > -2) setGuide(k);
     var part = k >= 0 ? STORY[k].part : -1;
     if (part >= 0 && lastPart !== null && part !== lastPart) showAct(part);
@@ -2490,6 +2561,133 @@
       });
       storyEl.classList.remove('swap');
     }, 170);
+  }
+
+  // the closing view: every route into memory, on the brain regions that carry it
+  function drawOutro(time, lw) {
+    var w = outroW;
+    if (w < 0.02 || !hipPts) return;
+    var failC = Math.floor(time / 3.4) % 5, c, r, q;
+    for (c = 0; c < outRoutes.length; c++) for (r = 0; r < outRoutes[c].length; r++) {
+      var R = outRoutes[c][r], fl = c === failC;
+      for (q = 0; q < R.length - 1; q++) {
+        var t = q / (R.length - 1);
+        if (fl && t > 0.42 && t < 0.6) continue;               // the weakened route is broken in the middle
+        if (!project(R[q], tmpA, 0) || !project(R[q + 1], tmpB, 0)) continue;
+        seg(fl ? RED : CONCEPTS[c].col, (fl ? 0.35 + 0.2 * Math.sin(time * 9 + q) : 0.85) * w, tmpA[0], tmpA[1], tmpB[0], tmpB[1]);
+      }
+    }
+    flush(lw * 2.4);
+    drawPolyline(hipPts, LTMC, 0.95 * w);
+    flush(lw * 7);
+    for (q = 0; q < hipPts.length; q += 2) pulseDot(hipPts[q], LTMC, w * 0.55, 150);
+    pulseDot(amyPt, ROSE, w, 380);
+    for (c = 0; c < outRoutes.length; c++) for (r = 0; r < outRoutes[c].length; r++) {
+      var f = (time * 0.32 + c * 0.2 + r * 0.13) % 1, RR = outRoutes[c][r];
+      if (c === failC) { if (f < 0.42) pulseDot(along(RR, f), RED, w * (1 - f / 0.42), 150); }
+      else pulseDot(along(RR, f), CONCEPTS[c].col, w, 170);
+    }
+    [0.42, 0.6].forEach(function (fq) {
+      outRoutes[failC].forEach(function (RR) {
+        if (project(along(RR, fq), tmpA, 0)) dot2(RED, tmpA[0], tmpA[1], clamp(500 * tmpA[2], 6, 90) * dpr, w * (0.5 + 0.3 * Math.sin(time * 9)));
+      });
+    });
+    if (project(hubPt, tmpA, 0)) dot2(LTMC, tmpA[0], tmpA[1], clamp(2600 * tmpA[2], 30, 420) * dpr, w * (0.3 + 0.15 * Math.sin(time * 3)));
+  }
+
+  function pillLabel(x, y, align, l1, l1b, l2, col, alpha, warn) {     // align: -1 text ends at x, 0 centred on x, 1 starts at x
+    var fam = 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif';
+    var big = Math.round((mobile ? 11 : 13) * dpr), small = Math.round((mobile ? 10.5 : 12) * dpr), muted = Math.round((mobile ? 10 : 11.5) * dpr);
+    ctx.font = '800 ' + big + fam; var wa = ctx.measureText(l1).width;
+    ctx.font = '500 ' + muted + fam; var wb = l1b ? ctx.measureText(l1b).width : 0;
+    ctx.font = '400 ' + small + fam; var wc = l2 ? ctx.measureText(l2).width : 0;
+    var tw = Math.max(wa + wb, wc), px = 9 * dpr, py = 6 * dpr, lh = l2 ? big + small + 6 * dpr : big;
+    var bw = tw + px * 2, bh = lh + py * 2;
+    var bx = align < 0 ? x - bw : align > 0 ? x : x - bw / 2, by = y - bh / 2;
+    bx = clamp(bx, 8 * dpr, canvas.width - 8 * dpr - bw);
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = 'rgba(6,10,18,0.84)'; ctx.strokeStyle = warn ? 'rgba(255,92,72,0.95)' : 'rgba(' + col + ',0.6)'; ctx.lineWidth = dpr;
+    ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 9 * dpr); else ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
+    var tx = bx + px, ty = by + py + big / 2;
+    ctx.fillStyle = 'rgb(' + col + ')'; ctx.font = '800 ' + big + fam; ctx.fillText(l1, tx, ty);
+    if (l1b) { ctx.fillStyle = 'rgba(163,179,201,0.95)'; ctx.font = '500 ' + muted + fam; ctx.fillText(l1b, tx + wa, ty); }
+    if (l2) { ctx.fillStyle = 'rgba(231,238,248,0.95)'; ctx.font = '400 ' + small + fam; ctx.fillText(l2, tx, ty + big / 2 + 6 * dpr + small / 2); }
+    return [bx, by, bw, bh];
+  }
+
+  function drawOutroLabels(time) {
+    var w = outroW;
+    if (w < 0.05 || !hipPts) return;
+    var b = brain, P3 = function (x, y, z) { return [b.c[0] + x * b.rx, b.c[1] + y * b.ry, b.c[2] + z * b.rz]; };
+    var sc = new Float32Array(4), scr = function (pt) { return project(pt, sc, 0) ? [sc[0], sc[1]] : null; };
+    var front = scr(P3(0, 0.1, 1)), back = scr(P3(0, 0.1, -1)), top = scr(P3(0, 1.02, 0)), bot = scr(P3(0, -0.95, 0));
+    if (!front || !back || !top || !bot) return;
+    var frontRight = front[0] > back[0], frontX = front[0], backX = back[0], topY = top[1], botY = bot[1], h = botY - topY;
+    var failC = Math.floor(time / 3.4) % 5, gap = 22 * dpr;
+    var fam = 'px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif';
+    ctx.save();
+    ctx.globalCompositeOperation = 'source-over'; ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+    // title above the brain
+    var cx = (frontX + backX) / 2;
+    ctx.globalAlpha = w; ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(163,179,201,0.95)'; ctx.font = '600 ' + Math.round((mobile ? 10 : 11) * dpr) + fam;
+    if ('letterSpacing' in ctx) ctx.letterSpacing = (2.5 * dpr) + 'px';
+    ctx.fillText('MANY ROUTES INTO MEMORY', cx, topY - (mobile ? 58 : 84) * dpr);
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+    var tsize = mobile ? 15 : 19;
+    ctx.font = '700 ' + Math.round(tsize * dpr) + fam;
+    var title = 'If one route weakens, another can still lead back';
+    while (ctx.measureText(title).width > canvas.width - 32 * dpr && tsize > 11) { tsize -= 1; ctx.font = '700 ' + Math.round(tsize * dpr) + fam; }
+    ctx.fillStyle = '#fff'; ctx.fillText(title, cx, topY - (mobile ? 36 : 58) * dpr);
+    ctx.textAlign = 'left';
+    var anchorOf = function (c) { return scr(routeStarts[c][0]); };
+    var lead = function (a, x, y, col) {
+      ctx.globalAlpha = 0.7 * w; ctx.strokeStyle = 'rgb(' + col + ')'; ctx.lineWidth = 1.2 * dpr;
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(x, y); ctx.stroke();
+      ctx.fillStyle = 'rgb(' + col + ')'; ctx.beginPath(); ctx.arc(a[0], a[1], 3 * dpr, 0, Math.PI * 2); ctx.fill();
+    };
+    if (mobile) {          // phones: a compact key under the brain; the regions glow in the same colours
+      var y0 = botY + 28 * dpr, rowH = 33 * dpr, kx = canvas.width / 2 - 140 * dpr;
+      var rows = CONCEPTS.map(function (cn, ci) { return [cn.name, ' · ' + cn.area, cn.col, ci === failC, cn.why]; });
+      rows.push(['MEMORY', ' · hippocampus', LTMC, false, 'where the routes come together']);
+      rows.forEach(function (rw, ri) {
+        var yy = y0 + ri * rowH;
+        ctx.globalAlpha = w; ctx.fillStyle = 'rgb(' + (rw[3] ? RED : rw[2]) + ')';
+        ctx.beginPath(); ctx.arc(kx, yy, 4 * dpr, 0, Math.PI * 2); ctx.fill();
+        ctx.font = '800 ' + Math.round(11 * dpr) + fam; ctx.fillStyle = 'rgb(' + rw[2] + ')'; ctx.fillText(rw[0], kx + 12 * dpr, yy);
+        var nw = ctx.measureText(rw[0]).width;
+        ctx.font = '500 ' + Math.round(10.5 * dpr) + fam; ctx.fillStyle = 'rgba(200,210,225,0.9)'; ctx.fillText(rw[1], kx + 12 * dpr + nw, yy);
+        ctx.font = '400 ' + Math.round(11 * dpr) + fam; ctx.fillStyle = 'rgba(231,238,248,0.95)'; ctx.fillText(rw[4], kx + 12 * dpr, yy + 14 * dpr);
+      });
+      ctx.restore();
+      return;
+    }
+    var outerBack = frontRight ? -1 : 1, outerFront = -outerBack;
+    var sideX = function (outer) { return (outer < 0 ? Math.min(frontX, backX) : Math.max(frontX, backX)) + outer * gap; };
+    var slots = [
+      { c: 3, x: sideX(outerBack), y: topY + 0.14 * h, align: outerBack },                 // place: parietal, upper back
+      { c: 0, x: sideX(outerBack), y: topY + 0.5 * h, align: outerBack },                  // senses: visual cortex at the back
+      { c: 1, x: null, y: topY - 20 * dpr, align: 0 },                                     // move: motor strip on top
+      { c: 4, x: sideX(outerFront), y: topY + 0.3 * h, align: outerFront },                // imagine: prefrontal cortex at the front
+      { c: 2, x: sideX(outerFront), y: topY + 0.72 * h, align: outerFront }                // feel: amygdala, low and in front
+    ];
+    slots.forEach(function (sl) {
+      var a = anchorOf(sl.c), cn = CONCEPTS[sl.c];
+      if (!a) return;
+      var x = sl.x === null ? a[0] : sl.x;
+      ctx.save();
+      var box = pillLabel(x, sl.y, sl.align, cn.name, '  ' + cn.area, cn.why, cn.col, w, sl.c === failC);
+      ctx.restore();
+      var ex = sl.align < 0 ? box[0] + box[2] : sl.align > 0 ? box[0] : box[0] + box[2] / 2, ey = sl.align === 0 ? box[1] + box[3] : box[1] + box[3] / 2;
+      lead(a, ex, ey, cn.col);
+    });
+    // memory: the hippocampus, where the routes meet
+    var hb = scr(hubPt);
+    if (hb) {
+      var mb = pillLabel(hb[0], botY + 34 * dpr, 0, 'MEMORY', '  hippocampus', 'where the routes come together', LTMC, w, false);
+      lead(hb, mb[0] + mb[2] / 2, mb[1], LTMC);
+    }
+    ctx.restore();
   }
 
   function drawDimLabels(heroW, dimI) {
@@ -2586,6 +2784,7 @@
     fogFar = brain.rz * 2.5;
     var A = mul(mul(FLIP, trans(0, 0, focal)), V);
     var s = cam.s;
+    outroW = outro ? smooth(cards.length - 1 + 0.2, cards.length - 0.15, s) : 0;
 
     for (var i = 0; i < cards.length; i++) {
       var c = cards[i], d = i - s, op;
@@ -2605,14 +2804,14 @@
     }
 
     // before the dive, the brain turns slowly so it reads as 3D (cards are not affected)
-    var spin = (1 - smooth(0, 0.6, s)) * Math.sin(time * 0.25) * 0.2;
+    var spin = (1 - smooth(0, 0.6, s) + outroW) * Math.sin(time * 0.25) * 0.2;
     if (Math.abs(spin) > 1e-4) {
       var bc = brain.c;
       V = mul(V, mul(mul(trans(bc[0], bc[1], bc[2]), rotY(spin)), trans(-bc[0], -bc[1], -bc[2])));
     }
     var support = 1 - smooth(0, 0.85, prog);
     var capability = 0.2 + 0.8 * smooth(0.02, 0.95, prog);
-    drawScene(time, support, capability, 0.1 + 0.9 * smooth(0.25, 0.85, s), s);
+    drawScene(time, support, capability, (0.1 + 0.9 * smooth(0.25, 0.85, s)) * (1 - outroW), s);
     updateStory(s);
 
     progressEl.style.width = (prog * 100).toFixed(2) + '%';
@@ -2626,7 +2825,7 @@
   /* ---------------- navigation (3D view) ---------------- */
   function scrollToCard(index) {
     var max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-    var N = Math.max(2, cards.length);
+    var N = Math.max(2, stopCount());
     window.scrollTo({ top: max * index / (N - 1), behavior: 'smooth' });
   }
   function buildNav() {
@@ -2862,7 +3061,7 @@
 
   addEventListener('keydown', function (e) {
     if (!root.classList.contains('is-3d') || e.target.closest('input,textarea,select,button,a,[contenteditable]')) return;
-    var N = cards.length; if (N < 2) return;
+    var N = stopCount(); if (N < 2) return;
     var s = prog * (N - 1);
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
       e.preventDefault(); scrollToCard(Math.min(N - 1, Math.floor(s + 0.01) + 1));
